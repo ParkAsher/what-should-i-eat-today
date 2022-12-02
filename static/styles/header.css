@@ -1,0 +1,68 @@
+@font-face {
+    font-family: "ONE-Mobile-POP";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.header {
+    width: 100%;
+    height: 100px;
+    background-color: beige;
+}
+
+.header .header-wrap {
+    width: 1320px;
+    height: 100%;
+    background-color: darkgoldenrod;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .header-wrap .logo {
+    height: 100%;
+    font-size: 4rem;
+    font-weight: normal;
+    font-family: "ONE-Mobile-POP";
+
+    display: flex;
+    align-items: center;
+}
+
+.header .header-wrap .logo a {
+    color: #ffffff;
+}
+
+.header .header-wrap .link {
+    height: 100%;
+    font-size: 1.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 0.5rem;
+}
+
+.header .header-wrap .link a {
+    color: #ffffff;
+}
+
+@media (max-width: 1320px) {
+    .header .header-wrap {
+        width: 100%;
+    }
+
+    .header .header-wrap .logo {
+        font-size: 2rem;
+    }
+
+    .header .header-wrap .link {
+        font-size: 1rem;
+    }
+}

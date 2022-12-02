@@ -6,6 +6,8 @@
 
         <!-- styles -->
         <link rel="stylesheet" href="../static/styles/reset.css" />
+        <link rel="stylesheet" href="../static//styles/common.css" />
+        <link rel="stylesheet" href="../static/styles/header.css" />
 
         <!-- bootstrap -->
         <link
@@ -21,15 +23,16 @@
             crossorigin="anonymous"
         ></script>
 
-        <link
-            href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
-            rel="stylesheet"
-        />
-
         <title>오늘뭐먹죠?</title>
     </head>
     <body>
         <!-- Header -->
         {% include "./components/header.html" %}
+
+        <!-- Content -->
+        <section id="main">
+            {% if component_name == 'login' %} {% include
+            "./components/login.html" %} {% endif %}
+        </section>
     </body>
 </html>
