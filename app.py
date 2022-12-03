@@ -22,6 +22,21 @@ def register_page():
 def write_page():
     return render_template('index.html', component_name='write')
 
+# register api
+@app.route('/api/user-register', methods=['POST'])
+def user_register():
+    userId = request.form['id']
+    userPw = request.form['pw']
+    userName = request.form['name']
+    userEmail = request.form['email']
+
+    sql = "INSERT INTO user(user_id, user_pw, user_name, user_email) VALUES (%s, %s, %s, %s)"
+
+    app.database.execute(sql, (userId, userPw, userName, userEmail)).lastrowid
+
+    return jsonify({'msg' : "등록 성공"})
+
+
 
 # register api
 @app.route('/api/user-register', methods=['POST'])
