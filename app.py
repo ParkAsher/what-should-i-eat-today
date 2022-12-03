@@ -12,6 +12,11 @@ def home():
 def login_page():
     return render_template('index.html', component_name='login')
 
+# register.html mapping
+@app.route('/register')
+def register_page():
+    return render_template('index.html', component_name='register')
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
