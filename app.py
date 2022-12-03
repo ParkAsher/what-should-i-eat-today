@@ -12,10 +12,16 @@ def home():
 def login_page():
     return render_template('index.html', component_name='login')
 
+# register.html mapping
+@app.route('/register')
+def register_page():
+    return render_template('index.html', component_name='register')
+
 # write.html mapping
 @app.route('/write')
 def write_page():
     return render_template('index.html', component_name='write')
+
 
 
 if __name__ == '__main__':

@@ -1,0 +1,71 @@
+<style>
+	 /* 섹션 크기 */
+	.bg-light{
+		height: 1053px;
+		padding-top:55px;
+		padding-bottom:75px;
+	}
+	.flex-fill.mx-xl-5.mb-2{
+		margin: 0 auto;
+		width : 700px;
+		padding-right: 7rem;
+		padding-left: 7rem;
+	}
+     /* 입력창  */
+	.container.py-4{
+		margin: 0 auto;
+		width : 503px;
+	}
+     /* 가입하기 */
+	.d-grid.gap-2{
+		padding-top: 30px;
+	}
+    
+    /* 생년월일 */
+	.bir_yy,.bir_mm,.bir_dd{
+		width:160px;
+		display:table-cell;
+	}
+	.bir_mm+.bir_dd, .bir_yy+.bir_mm{
+		padding-left:10px;
+	}
+</style>
+<head>
+	<link rel="stylesheet" href="register.css" type="text/css">
+</head>
+<section class="bg-light">
+    <div class="container py-4">
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1" class="form-label mt-4">아이디</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group has-success">
+                <label class="form-label mt-4" for="inputValid">비밀번호</label>
+                <input type="password" class="form-control is-valid" id="inputValid">
+                <div class="valid-feedback"></div>
+            </div>
+
+            <div class="form-group has-danger">
+                <label class="form-label mt-4" for="inputInvalid">비밀번호 재확인</label> 
+                <input type="password" class="form-control is-invalid" id="inputInvalid">
+                <div class="invalid-feedback">비밀번호가 일치하지 않습니다</div>
+            </div>
+            <div class="form-group">
+                   <label for="exampleInputEmail1" class="form-label mt-4">이름</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="form-group">
+              <label for="exampleSelect1" class="form-label mt-4">성별</label>
+              <select class="form-select" id="exampleSelect1">
+                <option>남자</option>
+                <option>여자</option>
+              </select>
+            </div>                
+            <div class="d-grid gap-2">
+                <button class="btn btn-primary btn-lg" type="button">가입하기</button>
+            </div>
+
+        </form>
+    </div>
+</section>
