@@ -9,6 +9,34 @@ function register() {
 
     let userPwCheck = $('#user-pw-check').val();
 
+    // 예외 처리
+    if (userNickname ==="") {
+        alert("닉네임을 입력해주세요.")
+        return;
+    }
+    if (userId === ""){
+        alert("아이디를 입력해주세요.")
+        return;
+    }
+    if (userPw === ""){
+        alert("비밀번호를 입력해주세요.")
+        return;
+    }
+    if (userName === ""){
+        alert("이름을 입력해주세요.")
+        return;
+    }
+
+    if ( $('#user-nickname').attr('valid') == "default" || ('#user-id').attr('valid') == "default"  ) {
+        alert("닉네임과 아이디의 중복검사를 진행해주세요.")
+        return;
+    }
+
+    if ( $('#user-nickname').attr('valid') == "false" || ('#user-id').attr('valid') == "false"  ) {
+        alert("사용 가능한 닉네임과 아이디를 입력해주세요.")
+        return;
+    }
+
     if (userPw !== userPwCheck) {
         $("#check-msg").css('display', 'block');
         $("#check-msg").append("비밀번호가 일치하지 않습니다.");
@@ -39,10 +67,12 @@ function user_nickname_check() {
 
             console.log(check);
             if (check === true) {
+                $('#user-nickname').attr('valid', "false")
                 $('#nickname-check-msg').empty()
                 $('#nickname-check-msg').css('color', 'blue')
                 $('#nickname-check-msg').append("사용가능한 닉네임입니다.")
             } else {
+                $('#user-nickname').attr('valid', "true")
                 $('#nickname-check-msg').empty()
                 $('#nickname-check-msg').css('color', 'red')
                 $('#nickname-check-msg').append("이미 존재하는 닉네임입니다.")
