@@ -36,7 +36,16 @@ def user_register():
 
     return jsonify({'msg' : "등록 성공"})
 
+# nickname_check api
+@app.route('/api/check-nickname', methods=['POST'])
+def user_nickname_check():
+    userNickName = request.form['nickname']
 
+    sql = "SELECT * FROM user WHERE user_nickname = %s"
+
+    rows = app.database.execute(sql, userNickName)
+
+    print(rows)
 
 
 if __name__ == '__main__':
