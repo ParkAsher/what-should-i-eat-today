@@ -25,14 +25,15 @@ def write_page():
 # register api
 @app.route('/api/user-register', methods=['POST'])
 def user_register():
+    userNickname = request.form['nickname']
     userId = request.form['id']
     userPw = request.form['pw']
     userName = request.form['name']
     userEmail = request.form['email']
 
-    sql = "INSERT INTO user(user_id, user_pw, user_name, user_email) VALUES (%s, %s, %s, %s)"
+    sql = "INSERT INTO user(user_nickname, user_id, user_pw, user_name, user_email) VALUES (%s, %s, %s, %s, %s)"
 
-    app.database.execute(sql, (userId, userPw, userName, userEmail)).lastrowid
+    app.database.execute(sql, (userNickname, userId, userPw, userName, userEmail)).lastrowid
 
     return jsonify({'msg' : "등록성공!"})
 
@@ -49,6 +50,27 @@ def user_nickname_check():
     for record in rows:
         temp = {
             'nickname': record[0]
+        }
+        user_list.append(temp)
+
+    if len(user_list) == 1 :
+        return jsonify({'check' : False})
+    else :
+        return jsonify({'check': True})
+
+# id_check api
+@app.route('/api/check-id', methods=['POST'])
+def user_id_check():
+    userId = request.form['id']
+
+    sql = "SELECT user_id FROM user WHERE user_id = %s"
+
+    rows = app.database.execute(sql, userId)
+
+    user_list = []
+    for record in rows:
+        temp = {
+            'id': record[0]
         }
         user_list.append(temp)
 

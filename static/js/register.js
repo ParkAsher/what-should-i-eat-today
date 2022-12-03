@@ -1,3 +1,5 @@
+// 비밀번호 중복 체크
+
 function register() {
     let userNickname = $('#user-nickname').val()
     let userId = $('#user-id').val();
@@ -24,7 +26,7 @@ function register() {
     })
 }
 
-// 닉네임중복체크
+// 닉네임 중복체크
 function user_nickname_check() {
     let userNickname = $('#user-nickname').val();
 
@@ -44,6 +46,32 @@ function user_nickname_check() {
                 $('#nickname-check-msg').empty()
                 $('#nickname-check-msg').css('color', 'red')
                 $('#nickname-check-msg').append("이미 존재하는 닉네임입니다.")
+            }
+        }
+    })
+
+}
+
+// 아이디 중복체크
+function user_id_check() {
+    let userId = $('#user-id').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/check-id",
+        data: { id: userId },
+        success: function (response) {
+            let check = response['check']
+
+            console.log(check);
+            if (check === true) {
+                $('#id-check-msg').empty()
+                $('#id-check-msg').css('color', 'blue')
+                $('#id-check-msg').append("사용가능한 아이디입니다.")
+            } else {
+                $('#id-check-msg').empty()
+                $('#id-check-msg').css('color', 'red')
+                $('#id-check-msg').append("이미 존재하는 아이디입니다.")
             }
         }
     })
