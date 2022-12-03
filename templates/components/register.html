@@ -41,14 +41,18 @@
         <form>
             <div class="form-group">
                 <label for="user-id" class="form-label mt-4">닉네임</label>
-                <input type="text" class="form-control" id="user-nickname" />
-                <button type="button" class="btn btn-primary" onclick="user_nickname_check()">중복체크</button>
+                <input type="text" class="form-control" id="user-nickname" valid="default" />
+                <button type="button" class="btn btn-primary" onclick="user_nickname_check()">
+                    중복체크
+                </button>
                 <div id="nickname-check-msg"></div>
             </div>
             <div class="form-group">
                 <label for="user-id" class="form-label mt-4">아이디</label>
-                <input type="text" class="form-control" id="user-id" />
-                <button type="button" class="btn btn-primary" onclick="user_id_check()">중복체크</button>
+                <input type="text" class="form-control" id="user-id" valid="default" />
+                <button type="button" class="btn btn-primary" onclick="user_id_check()">
+                    중복체크
+                </button>
                 <div id="id-check-msg"></div>
             </div>
             <div class="form-group">
