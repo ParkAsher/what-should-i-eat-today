@@ -9,7 +9,7 @@ links.forEach(
 
             // 추가 작업 요망!
             switch (href) {
-                case "./login.html":
+                case "/login.html":
                     $.ajax({
                         type: "GET",
                         url: "/login",
