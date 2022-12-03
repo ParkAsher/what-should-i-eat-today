@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../static//styles/common.css" />
         <link rel="stylesheet" href="../static/styles/header.css" />
         <link rel="stylesheet" href="../static/styles/main.css" />
+        <link rel="stylesheet" href="../static/styles/write.css" />
 
         <!-- bootstrap -->
         <link
@@ -24,6 +25,9 @@
             crossorigin="anonymous"
         ></script>
 
+        <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+        <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
+
         <title>오늘뭐먹죠?</title>
     </head>
     <body>
@@ -32,9 +36,9 @@
 
         <!-- Content -->
         <section id="content">
-            {% if component_name == 'main' %} {% include
-            "./components/main.html" %} {% elif component_name == 'login' %} {%
-            include "./components/login.html" %} {% endif %}
+            {% if component_name == 'main' %} {% include "./components/main.html" %} {% elif
+            component_name == 'login' %} {% include "./components/login.html" %} {% elif
+            component_name == 'write' %} {% include "./components/write.html" %} {% endif %}
         </section>
     </body>
 </html>

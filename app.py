@@ -12,6 +12,11 @@ def home():
 def login_page():
     return render_template('index.html', component_name='login')
 
+# write.html mapping
+@app.route('/write')
+def write_page():
+    return render_template('index.html', component_name='write')
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
