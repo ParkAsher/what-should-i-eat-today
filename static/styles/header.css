@@ -9,13 +9,13 @@
 .header {
     width: 100%;
     height: 100px;
-    background-color: beige;
+    background-color: #f2c3a7;
 }
 
 .header .header-wrap {
     width: 1320px;
     height: 100%;
-    background-color: darkgoldenrod;
+    background: transparent;
     margin: 0 auto;
     padding: 0 0.5rem;
 
@@ -36,6 +36,7 @@
 
 .header .header-wrap .logo a {
     color: #ffffff;
+    text-shadow: 2px 2px 2px #000;
 }
 
 .header .header-wrap .link {
@@ -49,8 +50,16 @@
     gap: 0.5rem;
 }
 
+.header .header-wrap .link .sign-in-link,
+.header .header-wrap .link .sign-up-link {
+    border: 1px solid #ffffff;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+}
+
 .header .header-wrap .link a {
     color: #ffffff;
+    font-weight: bold;
 }
 
 @media (max-width: 1320px) {
@@ -63,6 +72,13 @@
     }
 
     .header .header-wrap .link {
-        font-size: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .header .header-wrap .link .sign-in-link,
+    .header .header-wrap .link .sign-up-link {
+        border: 1px solid #ffffff;
+        padding: 0.5rem 0.75rem;
+        border-radius: 10px;
     }
 }
