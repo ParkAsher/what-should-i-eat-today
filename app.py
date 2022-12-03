@@ -34,16 +34,36 @@ def user_register():
 
     app.database.execute(sql, (userId, userPw, userName, userEmail)).lastrowid
 
-    return jsonify({'msg' : "등록 성공"})
+    return jsonify({'msg' : "등록성공!"})
 
+# nickname_check api
+@app.route('/api/check-nickname', methods=['POST'])
+def user_nickname_check():
+    userNickname = request.form['nickname']
 
+    sql = "SELECT user_nickname FROM user WHERE user_nickname = %s"
+
+    rows = app.database.execute(sql, userNickname)
+
+    user_list = []
+    for record in rows:
+        temp = {
+            'nickname': record[0]
+        }
+        user_list.append(temp)
+
+    if len(user_list) == 1 :
+        return jsonify({'check' : False})
+    else :
+        return jsonify({'check': True})
+    
 
 
 if __name__ == '__main__':
 
     app.config.from_pyfile("config.py")
 
-    database = create_engine(app.config['DB_URL'], encoding = 'utf-8', max_overflow = 0)
+    database = create_engine(app.config['DB_URL'], encoding='utf-8', max_overflow=0)
     app.database = database
 
     app.run('0.0.0.0', port=5000, debug=True)
