@@ -70,7 +70,7 @@ def user_id_check():
     user_list = []
     for record in rows:
         temp = {
-            'nickname': record[0]
+            'id': record[0]
         }
         user_list.append(temp)
 
