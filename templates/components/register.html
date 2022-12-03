@@ -30,42 +30,40 @@
 		padding-left:10px;
 	}
 </style>
-<head>
-	<link rel="stylesheet" href="register.css" type="text/css">
-</head>
+
+
+<script defer src="../../static/js/register.js"></script>
+
+
 <section class="bg-light">
     <div class="container py-4">
         <form>
             <div class="form-group">
-                <label for="exampleInputEmail1" class="form-label mt-4">아이디</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            </div>
-            <div class="form-group has-success">
-                <label class="form-label mt-4" for="inputValid">비밀번호</label>
-                <input type="password" class="form-control is-valid" id="inputValid">
-                <div class="valid-feedback"></div>
-            </div>
-
-            <div class="form-group has-danger">
-                <label class="form-label mt-4" for="inputInvalid">비밀번호 재확인</label> 
-                <input type="password" class="form-control is-invalid" id="inputInvalid">
-                <div class="invalid-feedback">비밀번호가 일치하지 않습니다</div>
+                <label for="user-id" class="form-label mt-4">아이디</label>
+                <input type="text" class="form-control" id="user-id" aria-describedby="emailHelp"/>
             </div>
             <div class="form-group">
-                   <label for="exampleInputEmail1" class="form-label mt-4">이름</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label class="form-label mt-4" for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password"/>
             </div>
             <div class="form-group">
-              <label for="exampleSelect1" class="form-label mt-4">성별</label>
-              <select class="form-select" id="exampleSelect1">
-                <option>남자</option>
-                <option>여자</option>
-              </select>
-            </div>                
+                <label class="form-label mt-4" for="password">비밀번호 재확인</label>
+                <input type="password" class="form-control" id="password-check"/>
+                <div class="invalid-feedback" id="check-msg"></div>
+            </div>
+            <div class="form-group">
+                <label for="user-name" class="form-label mt-4">이름</label>
+                <input type="text" class="form-control" id="user-name" aria-describedby="emailHelp"/>
+            </div> 
+            <div class="form-group">
+                <label for="user-email" class="form-label mt-4">이메일</label>
+                <input type="text" class="form-control" id="user-email" aria-describedby="emailHelp"/>
+            </div>                     
             <div class="d-grid gap-2">
-                <button class="btn btn-primary btn-lg" type="button">가입하기</button>
+                <button class="btn btn-primary btn-lg" type="button" onclick="register()">sign up</button>
             </div>
 
         </form>
     </div>
 </section>
+
