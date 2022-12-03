@@ -1,0 +1,47 @@
+* {
+    font-family: 'Poor Story', cursive;
+}
+
+
+.mytitle {
+    background-color: white;
+    width: 90%;
+    height: 30%;
+    min-height: 500px;
+    min-width: 135px;
+
+    display: block;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+
+    margin: auto;
+    padding: 30px;
+
+    color: black;
+
+    text-align: center;
+
+    border-radius: 10px;
+
+    padding-top: 40px;
+}
+
+.wrap {
+    background-color: #ffeacd;
+    width: 60%;
+    height: 80%;
+    min-height: 300px;
+    min-width: 135px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 30px;
+    margin: 50px auto;
+}
+
+.d-grid gap-2 col-6 mx-auto {
+    width: 100%;
+}
