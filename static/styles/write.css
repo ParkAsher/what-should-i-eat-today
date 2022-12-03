@@ -1,0 +1,83 @@
+.write-wrap {
+    width: 1320px;
+    margin: 3rem auto;
+    border: 3px solid lightsalmon;
+    box-sizing: border-box;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.title-wrap {
+    width: 100%;
+    padding: 1rem 1.5rem;
+}
+
+.title-wrap input {
+    width: 100%;
+    padding: 0.5rem 0;
+    border: none;
+    background: transparent;
+    border-bottom: 3px solid lightcoral;
+    box-sizing: border-box;
+    font-size: 2rem;
+}
+
+.title-wrap input:focus {
+    outline: none;
+}
+.title-wrap input::placeholder {
+    color: lightgrey;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.file-wrap {
+    width: 100%;
+    padding: 1rem 1.5rem;
+}
+
+.file-wrap input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 0;
+}
+
+.file-wrap input::file-selector-button {
+    border: 2px solid lightcoral;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+}
+
+.editor-wrap {
+    padding: 1rem 1.5rem;
+}
+
+.ql-toolbar {
+    border: 1px solid lightcoral !important;
+}
+.ql-container {
+    border: 1px solid lightcoral !important;
+}
+
+.write-btn {
+    width: 1320px;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 1320px) {
+    .write-wrap {
+        width: 100%;
+    }
+    .write-btn {
+        width: 100%;
+    }
+    .title-wrap,
+    .file-wrap,
+    .editor-wrap {
+        padding: 1rem;
+    }
+}
