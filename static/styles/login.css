@@ -6,32 +6,31 @@
 .mytitle {
     background-color: white;
     width: 90%;
-    height: 30%;
-    min-height: 500px;
+    height: 40%;
+    min-height: 600px;
     min-width: 135px;
 
     display: block;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
 
-    margin: auto;
-    padding: 30px;
+    margin: 130px auto;
+    padding-top: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 100px;
 
     color: black;
 
     text-align: center;
 
-    border-radius: 10px;
+    border-radius: 20px;
 
-    padding-top: 40px;
 }
 
 .wrap {
     background-color: #ffeacd;
     width: 60%;
     height: 80%;
-    min-height: 300px;
+    min-height: 600px;
     min-width: 135px;
 
     display: flex;
@@ -40,8 +39,62 @@
     justify-content: center;
     gap: 30px;
     margin: 50px auto;
+
+    border-radius: 20px;
 }
 
-.d-grid gap-2 col-6 mx-auto {
-    width: 100%;
+.IDPW {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.loginbtn {
+    background-color: #ffeacd;
+    color: black;
+
+    font-size: 1.5em;
+
+    border-radius: 5px;
+    border: none;
+    
+
+    width: 450px;
+    height: 45px;
+    margin-bottom: 20px;
+}
+
+.twobtn {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.signupbtn {
+    background-color: #ffeacd;
+    color: black;
+
+    margin-left: 10px;
+
+    font-size: 1.5em;
+
+    border-radius: 5px;
+    border: none;
+
+    width: 190px;
+    height: 45px;
+}
+
+.findpwbtn {
+    background-color: #ffeacd;
+    color: black;
+
+    margin-right: 20px
+
+    font-size: 1.5em;
+
+    border-radius: 5px;
+    border: none;
+
+    width: 230px;
+    height: 45px;
 }
