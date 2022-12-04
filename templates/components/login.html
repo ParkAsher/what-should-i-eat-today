@@ -1,41 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>로그인 페이지</title>
-
-    <link rel="stylesheet" href="../static/styles/login.css" />
-</head>
-
-<body>
-    <div class="background">
-        <div class="wrap">
-            <div class="mytitle">
-                <h1>🍕오늘 뭐먹죠</h1>
-                <div class="IDPW">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="아이디">
-                        <label for="floatingInput">아이디</label>
-                    </div>
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
-                        <label for="floatingPassword">비밀번호</label>
-                    </div>
+<div class="background">
+    <div class="wrap">
+        <div class="mytitle">
+            <h1>🍕오늘 뭐먹죠</h1>
+            <div class="IDPW">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="user-id" placeholder="아이디" />
+                    <label for="user-id">아이디</label>
+                    <div id="login-err-msg-id"></div>
+                </div>
+                <div class="form-floating">
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="user-pw"
+                        placeholder="비밀번호"
+                    />
+                    <label for="user-pw">비밀번호</label>
+                    <div id="login-err-msg-pw"></div>
+                </div>
+            </div>
+            <div>
+                <button class="loginbtn" type="button" onclick="login_user()">로 그 인</button>
+            </div>
+            <div class="twobtn">
+                <div>
+                    <button class="signupbtn" type="button">회 원 가 입</button>
                 </div>
                 <div>
-                    <button class="loginbtn" type="button">로 그 인</button>
-                </div>    
-                <div class="twobtn">
-                    <div>
-                        <button class="signupbtn" type="button">회 원 가 입</button>
-                    </div>  
-                    <div>
-                        <button class="findpwbtn" type="button">비밀번호 찾기</button>
-                    </div>
+                    <button class="findpwbtn" type="button">비밀번호 찾기</button>
                 </div>
+            </div>
         </div>
     </div>
-</body>
+</div>
 
-</html>
+<script defer src="../../static/js/login.js"></script>
