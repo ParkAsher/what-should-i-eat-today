@@ -1,4 +1,7 @@
 <div class="write-wrap">
+    <!-- session 에 담긴 사용자 정보 저장-->
+    <input id="post-author" type="hidden" value="{{session['user-info']['id']}}" />
+
     <div class="title-wrap">
         <input id="post-title" placeholder="제목을 입력하세요" />
     </div>
@@ -8,15 +11,19 @@
     <div class="thumbnail-wrap">
         <img id="thumbnail-img" src="" alt="thumbnail-img" />
     </div>
+    <!-- 썸네일 이미지 정보 저장 -->
+    <input id="post-thumbnail" type="hidden" />
 
     <div class="editor-wrap">
         <div id="editor"></div>
     </div>
+    <!-- quill editor 안에 작성된 내용들을 저장 -->
+    <input id="post-content" type="hidden" />
 </div>
 
 <div class="write-btn">
     <button type="button" class="write-cancel-btn" onclick="location.href='/'">취소</button>
-    <button type="button" class="write-submit-btn">등록</button>
+    <button type="button" class="write-submit-btn" onclick="post_submit()">등록</button>
 </div>
 
 <!-- Initialize Quill editor -->

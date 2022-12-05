@@ -54,6 +54,9 @@ function quillInit() {
     quill.getModule('toolbar').addHandler('image', function () {
         imageHandler();
     });
+    quill.on('text-change', function () {
+        document.getElementById("post-content").value = quill.root.innerHTML;
+    })
 }
 
 // upload image func
@@ -75,8 +78,41 @@ function upload_image(e) {
             let img_url = response['img_url'];
             $('.thumbnail-wrap').css('display', 'block');
             $('#thumbnail-img').attr('src', img_url);
+
+            document.getElementById("post-thumbnail").value = img_url;
         }
     })
+}
+
+// 글 등록
+function post_submit() {
+    // 제목
+    let title = $('#post-title').val();
+    // 작성자
+    let author = $('#post-author').val();
+    // 썸네일 주소
+    let thumbnail = $('#post-thumbnail').val();
+    // 내용
+    let content = $('#post-content').val();
+
+    if (title === "") {
+        alert("제목을 입력해주세요.")
+        return;
+    }
+    if (content === "") {
+        alert("내용을 입력해주세요.")
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post-write",
+        data: { title: title, author: author, thumbnail: thumbnail, content: content },
+        success: function (response) {
+            window.location.href = "/"
+        }
+    })
+
 }
 
 
