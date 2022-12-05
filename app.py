@@ -6,7 +6,9 @@ import datetime
 app = Flask(__name__)
 app.secret_key = "session_test"
 
-# aws s3 connect
+##################
+# aws s3 connect #
+##################
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -25,7 +27,9 @@ def s3_connection():
 def home():
     return render_template('index.html', component_name='main')
 
-# login.html mapping
+######################
+# login.html mapping #
+######################
 @app.route('/login')
 def login_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -35,13 +39,17 @@ def login_page():
     else :
         return render_template('index.html', component_name='login')
 
-# logout mapping
+##################
+# logout mapping #
+##################
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home'))
 
-# register.html mapping
+#########################
+# register.html mapping #
+#########################
 @app.route('/register')
 def register_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -51,7 +59,9 @@ def register_page():
     else :
         return render_template('index.html', component_name='register')
 
-# write.html mapping
+######################
+# write.html mapping #
+######################
 @app.route('/write')
 def write_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -61,7 +71,9 @@ def write_page():
     else:
         return render_template('index.html', component_name='write')
 
-# login api
+#############
+# login api #
+#############
 @app.route('/api/user-login', methods=['POST'])
 def user_login():
     userId = request.form['id']
@@ -99,7 +111,9 @@ def user_login():
         # 일치하는 아이디가 없다면?
         return jsonify({'result' : "Id-Not-Found"}); 
 
-# register api
+################
+# register api #
+################
 @app.route('/api/user-register', methods=['POST'])
 def user_register():
     userNickname = request.form['nickname']
@@ -114,7 +128,9 @@ def user_register():
 
     return jsonify({'msg' : "등록성공!"})
 
-# nickname check api
+######################
+# nickname check api #
+######################
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
@@ -135,7 +151,9 @@ def user_nickname_check():
     else :
         return jsonify({'check': True})
 
-# id check api
+################
+# id check api #
+################
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -155,8 +173,27 @@ def user_id_check():
         return jsonify({'check' : False})
     else :
         return jsonify({'check': True})
+
+###################
+# post write api #
+###################
+@app.route('/api/post-write', methods=['POST'])
+def post_write():
+    title = request.form['title']
+    author = request.form['author']
+    thumbnail = request.form['thumbnail']
+    content = request.form['content']
+
+    sql = "INSERT INTO post(author, title, content, thumbnail, recommend, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
+
+    row = app.database.execute(sql, (author, title, content, thumbnail, 0, datetime.datetime.now())).lastrowid
     
-# file upload
+    return jsonify({'msg': '등록성공!'})
+
+
+###############    
+# file upload #
+###############
 @app.route('/api/file-upload', methods=['POST'])
 def file_upload():
     file = request.files['file']
@@ -173,7 +210,9 @@ def file_upload():
 
     return jsonify({'img_url' : image_url})
 
-# image insert to aws s3
+##########################
+# image insert to aws s3 #
+##########################
 def s3_put_object(s3, bucket, file, filename):
     try:
         s3.put_object(
