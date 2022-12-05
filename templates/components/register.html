@@ -1,82 +1,87 @@
 <style>
-    /* 섹션 크기 */
+    /* 섹션 크기 
 .bg-light {
     height: 1053px;
     padding-top: 55px;
     padding-bottom: 75px;
-}
+} */
 
-.flex-fill.mx-xl-5.mb-2 {
-    margin: 0 auto;
-    width: 700px;
-    padding-right: 7rem;
-    padding-left: 7rem;
-}
+    /* 입력창  */
+    .container {
+        margin: 0 auto;
+        width: 500px;
+    }
 
-/* 입력창  */
-.container.py-4 {
-    margin: 0 auto;
-    width: 503px;
-}
+    .signup {
+        text-align: center
+    }
 
-/* 가입하기 */
-.d-grid.gap-2 {
-    padding-top: 30px;
-}
+    .btn {
+        float: right
+    }
 
-/* 생년월일 */
-.bir_yy,
-.bir_mm,
-.bir_dd {
-    width: 160px;
-    display: table-cell;
-}
-
-.bir_mm+.bir_dd,
-.bir_yy+.bir_mm {
-    padding-left: 10px;
-}
+    /* 가입하기 */
+    .d-grid {
+        padding-top: 30px;
+    }
 </style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
 <script defer src="../../static/js/register.js"></script>
 
-<section class="bg-light">
-    <div class="container py-4">
-        <form>
-            <div class="form-group">
-                <label for="user-id" class="form-label mt-4">닉네임</label>
-                <input type="text" class="form-control" id="user-nickname" valid="default"/>
-                <button type="button" class="btn btn-primary" onclick="user_nickname_check()">중복체크</button>
-                <div id="nickname-check-msg"></div>
-            </div>
-            <div class="form-group">
-                <label for="user-id" class="form-label mt-4">아이디</label>
-                <input type="text" class="form-control" id="user-id" valid="default"/>
-                <button type="button" class="btn btn-primary" onclick="user_id_check()">중복체크</button>
-                <div id="id-check-msg"></div>
-            </div>
-            <div class="form-group">
-                <label class="form-label mt-4" for="password">비밀번호</label>
-                <input type="password" class="form-control" id="user-pw" />
-            </div>
-            <div class="form-group">
-                <label class="form-label mt-4" for="password">비밀번호 재확인</label>
-                <input type="password" class="form-control" id="user-pw-check" />
-                <div class="invalid-feedback" id="check-msg"></div>
-            </div>
-            <div class="form-group">
-                <label for="user-name" class="form-label mt-4">이름</label>
-                <input type="text" class="form-control" id="user-name" />
-            </div>
-            <div class="form-group">
-                <label for="user-email" class="form-label mt-4">이메일</label>
-                <input type="text" class="form-control" id="user-email" />
-            </div>
-            <div class="d-grid gap-2">
-                <button class="btn btn-primary btn-lg" type="button" onclick="register()">
-                    sign up
-                </button>
-            </div>
-        </form>
-    </div>
-</section>
+<body>
+    
+<div class="container py-4">
+    <form>
+        <div class="signup py-4 ">
+            <h2>회원가입</h2>
+        </div>
+        <div class="form-group">
+            <label for="user-id" class="form-label mt-4">닉네임</label>
+            <input type="text" class="form-control" id="user-nickname" valid="default" placeholder="닉네임을 입력해주세요 (최대 12자)" />
+            <button type="button" class="btn btn-primary" onclick="user_nickname_check()">중복체크</button>
+            <div id="nickname-check-msg"></div>
+        </div>
+        <div class="form-group">
+            <label for="user-id" class="form-label mt-4">아이디</label>
+            <input type="text" class="form-control" id="user-id" name="user_id" valid="default" placeholder="아이디 입력 (5~20자)" />
+            <button type="button" class="btn btn-primary" onclick="user_id_check()">중복체크</button>
+            <div id="id-check-msg"></div>
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="password">비밀번호</label>
+            <input type="password" class="form-control" id="user-pw" placeholder="비밀번호 입력(8~20자)" />
+        </div>
+        <div class="form-group">
+            <label class="form-label mt-4" for="password">비밀번호 확인</label>
+            <input type="password" class="form-control" id="user-pw-check" placeholder="비밀번호 재입력" />
+            <div class="invalid-feedback" id="check-msg"></div>
+        </div>
+        <div class="form-group">
+            <label for="user-name" class="form-label mt-4">이름</label>
+            <input type="text" class="form-control" id="user-name" placeholder="이름을 입력해주세요" />
+        </div>
+        <div class="form-group">
+            <label for="user-email" class="form-label mt-4">이메일</label>
+            <input type="text" class="form-control" id="user-email" placeholder="이메일 주소@sparta.com" />
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary btn-lg" type="button" onclick="register()">
+                회원가입
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
