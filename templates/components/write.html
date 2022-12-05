@@ -3,16 +3,20 @@
         <input id="post-title" placeholder="제목을 입력하세요" />
     </div>
     <div class="file-wrap">
-        <input type="file" accept="image/*" />
+        <input id="post-image" type="file" accept="image/*" />
     </div>
+    <div class="thumbnail-wrap">
+        <img id="thumbnail-img" src="" alt="thumbnail-img" />
+    </div>
+
     <div class="editor-wrap">
         <div id="editor"></div>
     </div>
 </div>
 
 <div class="write-btn">
-    <a href="/">취소</a>
-    <a href="/">등록</a>
+    <button type="button" class="write-cancel-btn" onclick="location.href='/'">취소</button>
+    <button type="button" class="write-submit-btn">등록</button>
 </div>
 
 <!-- Initialize Quill editor -->
