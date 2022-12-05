@@ -26,19 +26,7 @@
     }
 </style>
 
-
-<!DOCTYPE html>
-<html lang="en">
-    
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
 <script defer src="../../static/js/register.js"></script>
-
-<body>
     
 <div class="container py-4">
     <form>
@@ -47,19 +35,19 @@
         </div>
         <div class="form-group">
             <label for="user-id" class="form-label mt-4">닉네임</label>
-            <input type="text" class="form-control" id="user-nickname" valid="default" placeholder="닉네임을 입력해주세요 (최대 12자)" />
+            <input type="text" class="form-control" id="user-nickname" valid="default" placeholder="유저 닉네임 입력 (최대 12자)" />
             <button type="button" class="btn btn-primary" onclick="user_nickname_check()">중복체크</button>
             <div id="nickname-check-msg"></div>
         </div>
         <div class="form-group">
             <label for="user-id" class="form-label mt-4">아이디</label>
-            <input type="text" class="form-control" id="user-id" name="user_id" valid="default" placeholder="아이디 입력 (5~20자)" />
+            <input type="text" class="form-control" id="user-id" name="user_id" valid="default" placeholder="아이디 입력 (5~20자) (특수기호 사용 불가능)" />
             <button type="button" class="btn btn-primary" onclick="user_id_check()">중복체크</button>
             <div id="id-check-msg"></div>
         </div>
         <div class="form-group">
             <label class="form-label mt-4" for="password">비밀번호</label>
-            <input type="password" class="form-control" id="user-pw" placeholder="비밀번호 입력(8~20자)" />
+            <input type="password" class="form-control" id="user-pw" placeholder="비밀번호 입력 (8~20자)" />
         </div>
         <div class="form-group">
             <label class="form-label mt-4" for="password">비밀번호 확인</label>
@@ -81,7 +69,3 @@
         </div>
     </form>
 </div>
-</body>
-</html>
-
-
