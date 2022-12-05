@@ -25,7 +25,7 @@ def s3_connection():
 
 @app.route('/')
 def home():
-    return render_template('index.html', component_name='main')
+    return render_template('index.html', component_name='postlist')
 
 ######################
 # login.html mapping #
@@ -187,7 +187,7 @@ def post_write():
     sql = "INSERT INTO post(author, title, content, thumbnail, recommend, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
     row = app.database.execute(sql, (author, title, content, thumbnail, 0, datetime.datetime.now())).lastrowid
-    
+
     return jsonify({'msg': '등록성공!'})
 
 
