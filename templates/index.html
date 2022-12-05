@@ -1,3 +1,10 @@
+<!-- flask 에서 동적으로 alert message 띄우기 -->
+{% with messages = get_flashed_messages() %} {% if messages %}
+<script>
+    alert("{{messages[-1]}}");
+</script>
+{% endif %} {% endwith %}
+
 <html lang="ko">
     <head>
         <meta charset="UTF-8" />
@@ -10,6 +17,7 @@
         <link rel="stylesheet" href="../static/styles/header.css" />
         <link rel="stylesheet" href="../static/styles/main.css" />
         <link rel="stylesheet" href="../static/styles/write.css" />
+        <link rel="stylesheet" href="../static/styles/login.css" />
 
         <!-- bootstrap -->
         <link
@@ -36,11 +44,10 @@
 
         <!-- Content -->
         <section id="content">
-            {% if component_name == 'main' %} {% include "./components/main.html" %} 
-            {% elif component_name == 'login' %} {% include "./components/login.html" %} 
-            {% elif component_name == 'write' %} {% include "./components/write.html" %} 
-            {% elif component_name == 'register' %} {% include "./components/register.html" %}
-            {% endif %}
+            {% if component_name == 'main' %} {% include "./components/main.html" %} {% elif
+            component_name == 'login' %} {% include "./components/login.html" %} {% elif
+            component_name == 'write' %} {% include "./components/write.html" %} {% elif
+            component_name == 'register' %} {% include "./components/register.html" %} {% endif %}
         </section>
     </body>
 </html>
