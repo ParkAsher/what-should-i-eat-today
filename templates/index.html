@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="../static/styles/reset.css" />
         <link rel="stylesheet" href="../static//styles/common.css" />
         <link rel="stylesheet" href="../static/styles/header.css" />
-        <link rel="stylesheet" href="../static/styles/main.css" />
+        <link rel="stylesheet" href="../static/styles/postlist.css" />
         <link rel="stylesheet" href="../static/styles/write.css" />
         <link rel="stylesheet" href="../static/styles/login.css" />
 
@@ -44,7 +44,7 @@
 
         <!-- Content -->
         <section id="content">
-            {% if component_name == 'main' %} {% include "./components/main.html" %} {% elif
+            {% if component_name == 'postlist' %} {% include "./components/postlist.html" %} {% elif
             component_name == 'login' %} {% include "./components/login.html" %} {% elif
             component_name == 'write' %} {% include "./components/write.html" %} {% elif
             component_name == 'register' %} {% include "./components/register.html" %} {% endif %}
