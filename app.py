@@ -20,6 +20,12 @@ def login_page():
     else :
         return render_template('index.html', component_name='login')
 
+# logout mapping
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
+
 # register.html mapping
 @app.route('/register')
 def register_page():

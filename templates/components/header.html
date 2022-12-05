@@ -3,6 +3,7 @@
         <div class="logo">
             <a href="/">🍕오늘 뭐먹죠</a>
         </div>
+        {% if 'user-info' not in session %}
         <div class="link">
             <div class="sign-in-link">
                 <a href="/login">로그인</a>
@@ -11,5 +12,15 @@
                 <a href="/register">회원가입</a>
             </div>
         </div>
+        {% else %}
+        <div class="link">
+            <div class="my-page-link">
+                <a href="/mypage">마이페이지</a>
+            </div>
+            <div class="log-out-link">
+                <a href="/logout">로그아웃</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
