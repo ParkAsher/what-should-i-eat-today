@@ -41,7 +41,7 @@
 
 .header .header-wrap .link {
     height: 100%;
-    font-size: 1.5rem;
+    font-size: 1rem;
 
     display: flex;
     justify-content: center;
@@ -51,7 +51,9 @@
 }
 
 .header .header-wrap .link .sign-in-link,
-.header .header-wrap .link .sign-up-link {
+.header .header-wrap .link .sign-up-link,
+.header .header-wrap .link .my-page-link,
+.header .header-wrap .link .log-out-link {
     border: 1px solid #ffffff;
     padding: 0.75rem 1rem;
     border-radius: 10px;
@@ -59,7 +61,6 @@
 
 .header .header-wrap .link a {
     color: #ffffff;
-    font-weight: bold;
 }
 
 @media (max-width: 1320px) {
@@ -72,11 +73,13 @@
     }
 
     .header .header-wrap .link {
-        font-size: 0.8rem;
+        font-size: 0.5rem;
     }
 
     .header .header-wrap .link .sign-in-link,
-    .header .header-wrap .link .sign-up-link {
+    .header .header-wrap .link .sign-up-link,
+    .header .header-wrap .link .my-page-link,
+    .header .header-wrap .link .log-out-link {
         border: 1px solid #ffffff;
         padding: 0.5rem 0.75rem;
         border-radius: 10px;
