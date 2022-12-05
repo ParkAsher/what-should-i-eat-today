@@ -1,0 +1,135 @@
+-- users 테이블 생성
+
+CREATE TABLE Users
+(
+    `users_id`      INT NOT NULL AUTO_INCREMENT , 
+    `user_id`       VARCHAR(45) NULL , 
+    `user_pw`       VARCHAR(45) NULL , 
+    `user_name`     VARCHAR(45) NULL , 
+    `user_nickname` VARCHAR(45) NULL , 
+    `user_email`    VARCHAR(45) NULL , 
+    `user_intro`    TEXT        NULL , 
+    `signupAt`      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     PRIMARY KEY (users_id)
+);
+
+-- 값 삽입(예시)
+INSERT INTO users VALUES (
+ NULL
+, 'kang'
+,'11'
+, 'sjkang123'
+, 'babo4'
+, 'cow234@gmail.com'
+, 'stupid5'
+, DEFAULT
+)
+
+-- 정보수정
+
+UPDATE users SET user_id = 'ksj123' WHERE users_id = 3 
+
+-- Posts 테이블 생성
+
+CREATE TABLE Posts
+(
+    `posts_id`   INT            NOT NULL    AUTO_INCREMENT , 
+    `author`     INT            NULL        , 
+    `subject`    VARCHAR(255)    NULL        , 
+    `contents`   VARCHAR(45)    NULL        , 
+    `photo_url`  VARCHAR(255)     NULL        ,
+    `recommend`  INT            NULL        , 
+    `postedAt`  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+     PRIMARY KEY (posts_id)
+);
+
+
+ALTER TABLE Posts
+    ADD CONSTRAINT FK_Posts_author_Users_users_id FOREIGN KEY (author)
+        REFERENCES Users (users_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+    
+INSERT INTO posts VALUES (
+    NULL,
+    5,
+    "오늘 짜장면 먹음",
+    "오늘 노량진역 중화각 갔는데 사람 엄청많았음",
+    NULL,
+    5,
+    DEFAULT
+);
+
+-- Comments 테이블 생성
+
+    CREATE TABLE Comments
+(
+    `comments_id`       INT         NOT NULL    AUTO_INCREMENT, 
+    `author_comment`    INT         NULL  ,       
+    `parents_id`        INT         NULL  ,      
+    `comments_content`  TEXT        NULL  , 
+    `commentedAt`       TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+     PRIMARY KEY (comments_id)
+);
+
+ALTER TABLE Comments
+    ADD CONSTRAINT FK_Comments_parents_id_Posts_posts_id FOREIGN KEY (parents_id)
+        REFERENCES Posts (posts_id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  
+ALTER TABLE Comments
+    ADD CONSTRAINT FK_Comments_author_comment_Users_users_id FOREIGN KEY (author_comment)
+        REFERENCES Users (users_id) ON DELETE RESTRICT ON UPDATE RESTRICT;    
+    
+INSERT INTO comments VALUES(
+    NULL,
+    2,
+    1,
+    '와 요즘도 엽떡 먹을만함?'
+    DEFAULT    
+)
+
+
+CREATE TABLE sparta_test.student(
+    users_id int PRIMARY KEY AUTO_INCREMENT
+    ,
+    user_id varchar(50) NOT NULL
+    ,
+    user_pw varchar(50) UNIQUE
+    ,
+    user_name varchar(50)
+    ,
+    user_nickname varchar(50)
+    ,
+    user_email varchar(50)
+    ,
+    user_intro varchar(50)
+    ,
+    signupAt TIMESTAMP DEFAULT NOW() 
+) 
+
+-- 테이블 삭제
+
+DROP TABLE student;
+
+-- 테이블 Auto Increment 수정
+
+ALTER TABLE date AUTO_INCREMENT = 1; 
+
+-- 최신순
+
+SELECT * FROM posts
+ORDER BY postedAt DESC; 
+
+-- 과거순
+
+SELECT * FROM posts
+ORDER BY postedAt;
+
+-- 추천순
+
+SELECT * FROM posts
+ORDER BY recommend ;
+
+-- 특정 아이디만
+
+SELECT * FROM posts p
+WHERE author = 1;
