@@ -50,6 +50,16 @@
     padding: 0.5rem 0.75rem;
 }
 
+.thumbnail-wrap {
+    display: none;
+    padding: 0 1.5rem;
+}
+
+.thumbnail-wrap img {
+    width: 100px;
+    object-fit: cover;
+}
+
 .editor-wrap {
     padding: 1rem 1.5rem;
 }
@@ -66,6 +76,25 @@
     margin: 2rem auto;
     display: flex;
     justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.write-btn .write-submit-btn,
+.write-btn .write-cancel-btn {
+    border: 2px solid coral;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.write-btn .write-submit-btn {
+    background: coral;
+    color: #ffffff;
+}
+
+.write-btn .write-cancel-btn {
+    background-color: transparent;
+    color: coral;
 }
 
 @media (max-width: 1320px) {
@@ -79,5 +108,14 @@
     .file-wrap,
     .editor-wrap {
         padding: 1rem;
+    }
+    .thumbnail-wrap {
+        padding: 0 1rem;
+    }
+
+    .write-btn .write-submit-btn,
+    .write-btn .write-cancel-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
     }
 }
