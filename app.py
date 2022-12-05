@@ -46,6 +46,11 @@ def write_page():
     else:
         return render_template('index.html', component_name='write')
 
+# mypage.html mapping
+@app.route('/mypage')
+def userinfo_page():
+    return render_template('index.html', component_name='mypage')
+
 # login api
 @app.route('/api/user-login', methods=['POST'])
 def user_login():
@@ -98,6 +103,8 @@ def user_register():
     app.database.execute(sql, (userNickname, userId, userPw, userName, userEmail)).lastrowid
 
     return jsonify({'msg' : "등록성공!"})
+
+
 
 # nickname_check api
 @app.route('/api/check-nickname', methods=['POST'])
