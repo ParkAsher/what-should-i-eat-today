@@ -1,38 +1,33 @@
-    <div class="loginpage_background">    
-        <div class="loginwrap">
-            <div class="logintitle">
-                <h1><a href="/">🍕오늘 뭐먹죠</a></h1>
-                <div class="IDPW">
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="user-id" placeholder="아이디" />
-                            <label for="user-id">아이디</label>
-                            <div id="login-err-msg-id"></div>
-                        </div>
-                        <div class="form-floating">
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="user-pw"
-                                placeholder="비밀번호"
-                            />
-                            <label for="user-pw">비밀번호</label>
-                            <div id="login-err-msg-pw"></div>
-                        </div>
+<div class="loginpage_background">
+    <div class="loginwrap">
+        <div class="logintitle">
+            <h1><a href="/">🍕오늘 뭐먹죠</a></h1>
+            <div class="IDPW">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="user-id" placeholder="아이디" />
+                    <label for="user-id">아이디</label>
+                    <div id="login-err-msg-id"></div>
                 </div>
-                <div>
-                    <button class="loginbtn" type="button" onclick="login_user()">로 그 인</button>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="user-pw" placeholder="비밀번호" />
+                    <label for="user-pw">비밀번호</label>
+                    <div id="login-err-msg-pw"></div>
                 </div>
-                <div class="signup_find_btn">
-                        <button class="signupbtn" type="button" onclick="location.href='/register';">회 원 가 입</button>
-                        <button class="findpwbtn" type="button">비밀번호 찾기</button>
-                </div>
-                    <pre class="emoji">
-    
-                        <h1>🍔    🍖    🥧    🎂</h1>
-                    </pre>   
             </div>
+            <div>
+                <button class="loginbtn" type="button" onclick="login_user()">로 그 인</button>
+            </div>
+            <div class="signup_find_btn">
+                <button class="signupbtn" type="button" onclick="location.href='/register';">회 원 가 입</button>
+                <button class="findpwbtn" type="button" onclick="location.href='/find_id';">회원정보 찾기</button>
+            </div>
+            <pre class="emoji">
+
+                        <h1>🍔    🍖    🥧    🎂</h1>
+                    </pre>
         </div>
     </div>
+</div>
 
 
 <script defer src="../../static/js/login.js"></script>
