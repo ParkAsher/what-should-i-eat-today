@@ -243,7 +243,9 @@ def s3_put_object(s3, bucket, file, filename):
         return False    
     return True
 
-# post detail get
+#######################
+# post detail get api #
+#######################
 @app.route("/api/post-detail", methods=["POST"])
 def post_detail_get():
     post_id = request.form['post_id']
@@ -276,6 +278,21 @@ def post_detail_get():
     else :
         return jsonify({'success': False})
 
+##########################
+# post detail delete api #
+##########################
+@app.route("/api/post-detail/delete", methods=["POST"])
+def post_detail_delete():
+    post_id = request.form['post_id']
+
+    sql="""
+            DELETE FROM Posts 
+            WHERE id = %s
+        """
+    
+    row = app.database.execute(sql, post_id)
+
+    return jsonify({'msg': '글 삭제완료!'})
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")

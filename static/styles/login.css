@@ -1,56 +1,148 @@
-* {
-    font-family: "Poor Story", cursive;
+@font-face {
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "ONE-Mobile-POP";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
 }
 
-.mytitle {
+@media (max-width: 650px) {
+    .emoji {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .loginpage_background .loginwrap {
+        width: 100%;
+    }
+
+    .loginpage_background .loginwrap .logintitle {
+        width: 80%;
+    }
+
+    .loginpage_background .loginwrap .logintitle .loginbtn,
+    .loginpage_background .loginwrap .logintitle .signup_find_btn,
+    .loginpage_background .loginwrap .logintitle .signupbtn,
+    .loginpage_background .loginwrap .logintitle .findpwbtn,
+    .loginpage_background .loginwrap .logintitle .emoji {
+        width: 100%;
+    }
+
+}
+
+@media (max-height: 850px) {
+    .emoji {
+        display: none;
+    }
+}
+
+@media (max-height: 1000px) {
+    .loginpage_background .loginwrap {
+        height: 90%;
+    }
+
+    .loginpage_background .loginwrap .logintitle {
+        height: 70%;
+        
+        padding-top: 30px;
+    }    
+
+    .loginpage_background .loginwrap .logintitle .IDPW {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .loginbtn {
+        height: 39px;
+        margin-bottom: 3px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .signup_find_btn {
+        margin-top: 3px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .signupbtn {
+        height: 39px;
+        margin-right: 2px;
+
+        font-size: 0.75rem;
+    }
+
+    .loginpage_background .loginwrap .logintitle .findpwbtn {
+        height: 39px;
+        margin-left: 2px;
+        padding: 0px;
+
+        font-size: 0.70rem;
+    }
+    
+}
+   
+
+
+.loginpage_background {
+    width: 100%;
+    height: 100%;
+
+    padding : 50px 30px 30px 30px ;
+}
+
+.loginwrap {
+    width: 750px;
+    height: 1000px;
+    background-color: #ffeacd;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: auto;
+
+    border-radius: 25px;
+}
+
+.logintitle {
     background-color: white;
-    width: 1000px;
-    height: 40%;
-    min-height: 600px;
-    min-width: 135px;
+    width: 590px;
+    height: 600px;
 
     display: block;
 
-    margin: 130px auto;
-    padding-top: 100px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 100px;
-
-    color: black;
+    margin: 100px auto;
+    padding: 100px 40px 100px 40px;
 
     text-align: center;
+    font-weight: normal;
+    font-family: "ONE-Mobile-POP";
 
-    border-radius: 20px;
+    border-radius: 35px;
 }
 
-.wrap {
-    background-color: #ffeacd;
-    width: 60%;
-    height: 80%;
-    min-height: 600px;
-    min-width: 135px;
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 30px;
-    margin: 50px auto;
-
-    border-radius: 20px;
+.logintitle a {
+    color: black;
 }
 
 .IDPW {
     margin-top: 50px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B';
 }
 
 .loginbtn {
     background-color: #ffeacd;
     color: black;
 
-    font-size: 1.5em;
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    font-size: 1.2em;
 
     border-radius: 5px;
     border: none;
@@ -60,19 +152,22 @@
     margin-bottom: 20px;
 }
 
-.twobtn {
+.signup_find_btn {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
+
 
 .signupbtn {
     background-color: #ffeacd;
     color: black;
 
-    margin-left: 10px;
+    margin-right: 15px;
 
-    font-size: 1.5em;
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    font-size: 1.2em;
 
     border-radius: 5px;
     border: none;
@@ -85,9 +180,11 @@
     background-color: #ffeacd;
     color: black;
 
-    margin-right: 20px;
+    margin-left: 15px;
 
-    font-size: 1.5em;
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    font-size: 1.2em;
 
     border-radius: 5px;
     border: none;
@@ -95,3 +192,4 @@
     width: 230px;
     height: 45px;
 }
+
