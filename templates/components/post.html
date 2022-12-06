@@ -43,4 +43,29 @@
     </div>
 </div>
 
+{% if 'user-info' in session %}
+<div class="comment-wrap">
+    <div class="comment-title">
+        <p>댓글입력</p>
+    </div>
+    <div class="comment-input">
+        <textarea id="comment-content"></textarea>
+    </div>
+    <div class="comment-btn">
+        <button type="button" class="comment-submit-btn" onclick="comment_submit()">등록</button>
+    </div>
+    <!-- 댓글 작성자(로그인 유저) 의 유저 번호 -->
+    <input id="logined-user-num" type="hidden" value="{{session['user-info']['id']}}" />
+</div>
+{% endif %}
+
+<div id="comment-list" class="comment-list"></div>
+<div class="comment-pagination-wrap">
+    {% for i in range(comment_page) %}
+    <button type="button" class="comment-pagination" onclick="get_comment_list('{{i+1}}')">
+        {{i+1}}
+    </button>
+    {% endfor %}
+</div>
+
 <script defer src="../../static/js/post.js"></script>
