@@ -1,0 +1,18 @@
+/* 입력창  */
+.container {
+    margin: 0 auto;
+    width: 500px;
+}
+
+.signup {
+    text-align: left
+}
+
+.btn {
+    float: right
+}
+
+/* 가입하기 */
+.d-grid {
+    padding-top: 30px;
+}
