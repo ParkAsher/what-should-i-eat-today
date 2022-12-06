@@ -77,7 +77,7 @@ def write_page():
 #####################
 @app.route('/post')
 def post_page():
-    post_id = request.args.get('post_id')
+    post_id = request.args.get('postid')
 
     #댓글 갯수 카운트
     sql="""
@@ -302,9 +302,9 @@ def post_detail_delete():
 
     return jsonify({'msg': '글 삭제완료!'})
 
-###############
-# comment api #
-###############
+####################
+# comment save api #
+####################
 @app.route("/api/comment", methods=['POST'])
 def comment_save():
     c_post_id = request.form['c_post_id']
@@ -319,7 +319,44 @@ def comment_save():
     row = app.database.execute(sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
 
     return jsonify({'msg': '등록성공!'})   
+
+###################
+# comment get api #
+###################
+@app.route("/api/comment-list", methods=['GET'])
+def get_comment_list():
+    post_id = request.args.get('postid')
+    page = request.args.get('page')
+
+    comment_count = (int(page)-1) * 5
     
+    sql="""
+            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at 
+            FROM Comments as c
+            LEFT JOIN Users as u
+            ON c.c_author = u.id
+            WHERE c_post_id = %s
+            ORDER BY created_at desc
+            LIMIT %s, 5
+        """
+    
+    rows = app.database.execute(sql, (post_id, comment_count))
+
+    comment_list=[]
+    for record in rows:
+        print(record)
+        temp = {
+            'c_author_id' : record[0],
+            'c_author_nickname' : record[1],
+            'c_content' : record[2],
+            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+        }
+        comment_list.append(temp)  
+    
+    if len(comment_list) == 0:
+        return jsonify({'success': False})
+    
+    return  jsonify({'success': True, 'comment_list': comment_list})
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
