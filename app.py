@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from sqlalchemy import create_engine
 import boto3
 import datetime
+import math
 
 app = Flask(__name__)
 app.secret_key = "session_test"
@@ -77,8 +78,23 @@ def write_page():
 @app.route('/post')
 def post_page():
     post_id = request.args.get('post_id')
-    return render_template('index.html', component_name='post', post_id=post_id)
-    
+
+    #댓글 갯수 카운트
+    sql="""
+            SELECT COUNT(*) FROM Comments
+            WHERE c_post_id = %s
+        """
+    rows = app.database.execute(sql, post_id)
+
+    for record in rows:
+        comment_list_count = record[0] 
+
+    if comment_list_count / 5 == 0:
+        comment_page = comment_list_count / 5
+    else :
+        comment_page = math.ceil(comment_list_count / 5)
+
+    return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)    
 
 # mypage.html mapping
 @app.route('/mypage')
@@ -108,8 +124,7 @@ def user_login():
             "user_name" : record[3],
             "user_nickname" : record[4],
             "user_email" : record[5],
-            "user_intro" : record[6],
-            "signup_at" : record[7],     
+            "signup_at" : record[6],     
         }
         user_data.append(temp)
 
@@ -293,6 +308,25 @@ def post_detail_delete():
     row = app.database.execute(sql, post_id)
 
     return jsonify({'msg': '글 삭제완료!'})
+
+###############
+# comment api #
+###############
+@app.route("/api/comment", methods=['POST'])
+def comment_save():
+    c_post_id = request.form['c_post_id']
+    c_content = request.form['c_content']
+    c_author = request.form['c_author']
+
+    sql="""
+            INSERT INTO Comments(c_author, c_content, created_at, c_post_id)
+            VALUES (%s, %s, %s, %s)
+        """
+    
+    row = app.database.execute(sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
+
+    return jsonify({'msg': '등록성공!'})   
+    
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
