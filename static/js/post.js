@@ -1,6 +1,6 @@
 $(document).ready(function () {
     get_post_detail();
-
+    get_comment_list(1)
 })
 
 function get_post_detail() {
@@ -51,6 +51,60 @@ function post_delete() {
         success: function (response) {
             alert(response['msg'])
             window.location.href = "/"
+        }
+    })
+}
+
+function comment_submit() {
+    // 글 번호
+    let postId = $('#post-id').val();
+    // 댓글 내용
+    let commentContent = $('#comment-content').val();
+    // 작성자
+    let loginedUserNum = $('#logined-user-num').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/comment",
+        data: { c_post_id: postId, c_content: commentContent, c_author: loginedUserNum },
+        success: function (response) {
+            alert(response['msg']);
+            window.location.reload();
+        }
+    })
+}
+
+function get_comment_list(page) {
+    // 글 번호
+    let postId = $('#post-id').val();
+    let pageNum = page; // string
+
+    let Url = "/api/comment-list?postid=" + postId + "&page=" + pageNum;
+
+    $.ajax({
+        type: "GET",
+        url: Url,
+        success: function (response) {
+            if (response['success'] === false) {
+                return;
+            }
+
+            $('#comment-list').empty();
+
+            for (let i = 0; i < response['comment_list'].length; i++) {
+                let temp = `
+                    <div class="comment">
+                        <div class="comment-info">
+                            <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
+                            <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
+                        </div>
+                        <div class="comment-content">
+                            <p>${response['comment_list'][i]['c_content']}</p>
+                        </div>
+                    </div>
+                `;
+                $('#comment-list').append(temp)
+            }
         }
     })
 }
