@@ -24,7 +24,7 @@ function imageHandler() {
                 let img_url = response['img_url'];
 
                 const range = quill.getSelection();
-                quill.insertEmbed(range.index + 1, 'image', img_url)
+                quill.insertEmbed(range.index, 'image', img_url)
             }
         })
     }

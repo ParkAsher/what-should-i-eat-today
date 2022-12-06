@@ -1,5 +1,6 @@
 $(document).ready(function () {
     get_post_detail();
+
 })
 
 function get_post_detail() {
@@ -25,10 +26,31 @@ function get_post_detail() {
                 let postContent = postData['post_content'];
                 $('#detail-content').append(postContent)
 
+                // 수정, 삭제를 로그인되어있는 해당 글의 글 작성자만 볼수있게 처리
+                let postAuthorId = postData['user_id'];
+                let loginedUserId = $('#logined-user-id').val();
+                if (postAuthorId !== loginedUserId) {
+                    $('.post-btn-right').css('display', 'none');
+                }
+
             } else {
                 alert("해당하는 번호의 글이 없습니다.")
                 window.location.href = "/"
             }
+        }
+    })
+}
+
+function post_delete() {
+    let postId = $('#post-id').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post-detail/delete",
+        data: { post_id: postId },
+        success: function (response) {
+            alert(response['msg'])
+            window.location.href = "/"
         }
     })
 }
