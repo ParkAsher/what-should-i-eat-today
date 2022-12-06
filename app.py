@@ -1,10 +1,25 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
 from sqlalchemy import create_engine
-
-
+import boto3
+import datetime
 
 app = Flask(__name__)
 app.secret_key = "session_test"
+
+# aws s3 connect
+def s3_connection():
+    try:
+        s3 = boto3.client(
+            service_name="s3",
+            region_name="ap-northeast-2",
+            aws_access_key_id="AKIAUJLR4DBQHDDEG25B",
+            aws_secret_access_key="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"
+        )
+    except Exception as e :
+        print(e)
+    else:
+        print("s3 bucket connected!")
+        return s3
 
 @app.route('/')
 def home():
@@ -104,9 +119,7 @@ def user_register():
 
     return jsonify({'msg' : "등록성공!"})
 
-
-
-# nickname_check api
+# nickname check api
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
@@ -127,7 +140,7 @@ def user_nickname_check():
     else :
         return jsonify({'check': True})
 
-# id_check api
+# id check api
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -148,12 +161,44 @@ def user_id_check():
     else :
         return jsonify({'check': True})
     
+# file upload
+@app.route('/api/file-upload', methods=['POST'])
+def file_upload():
+    file = request.files['file']
 
+    filename = file.filename.split('.')[0]
+    ext = file.filename.split('.')[-1]
+    img_name = datetime.datetime.now().strftime(f"{filename}-%Y-%m-%d-%H-%M-%S.{ext}")
+
+    # s3에 이미지파일 업로드
+    s3_put_object(s3, 'what-should-i-eat-today', file, img_name)
+
+    # 올라간 이미지의 url
+    image_url = f'https://what-should-i-eat-today.s3.ap-northeast-2.amazonaws.com/{img_name}'
+
+    return jsonify({'img_url' : image_url})
+
+# image insert to aws s3
+def s3_put_object(s3, bucket, file, filename):
+    try:
+        s3.put_object(
+            Body=file,
+            Bucket=bucket,
+            Key=f'{filename}',
+            ContentType="image/*",
+            ACL='public-read'
+        )
+    except Exception as e:
+        print(e)
+        return False    
+    return True
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
-
     database = create_engine(app.config['DB_URL'], encoding='utf-8', max_overflow=0)
     app.database = database
+
+    # aws s3 connected
+    s3 = s3_connection()
 
     app.run('0.0.0.0', port=5000, debug=True)
