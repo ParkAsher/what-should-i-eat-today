@@ -71,10 +71,23 @@ def write_page():
     else:
         return render_template('index.html', component_name='write')
 
+#####################
+# post.html mapping #
+#####################
+@app.route('/post')
+def post_page():
+    post_id = request.args.get('post_id')
+    return render_template('index.html', component_name='post', post_id=post_id)
+    
+
 # mypage.html mapping
 @app.route('/mypage')
 def userinfo_page():
-    return render_template('index.html', component_name='mypage')
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        return render_template('index.html', component_name='mypage')
 
 # login api
 @app.route('/api/user-login', methods=['POST'])
@@ -83,7 +96,7 @@ def user_login():
     userPw = request.form['pw']
 
     # 1. 아이디 있는지 없는지 판별
-    sql_is_id_check = "SELECT * FROM user WHERE user_id = %s"
+    sql_is_id_check = "SELECT * FROM Users WHERE user_id = %s"
     rows = app.database.execute(sql_is_id_check, userId)
 
     user_data = []
@@ -98,7 +111,7 @@ def user_login():
             "user_intro" : record[6],
             "signup_at" : record[7],     
         }
-        user_data.append(temp)  
+        user_data.append(temp)
 
     if len(user_data) == 1 :
          # 2. 아이디는 있는데 비밀번호 비교
@@ -112,7 +125,7 @@ def user_login():
             return jsonify({'result' : "Pw-Not-Correct"})
     else :
         # 일치하는 아이디가 없다면?
-        return jsonify({'result' : "Id-Not-Found"}); 
+        return jsonify({'result' : "Id-Not-Found"});
 
 ################
 # register api #
@@ -125,9 +138,9 @@ def user_register():
     userName = request.form['name']
     userEmail = request.form['email']
 
-    sql = "INSERT INTO user(user_nickname, user_id, user_pw, user_name, user_email) VALUES (%s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Users(user_nickname, user_id, user_pw, user_name, user_email, signup_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
-    app.database.execute(sql, (userNickname, userId, userPw, userName, userEmail)).lastrowid
+    app.database.execute(sql, (userNickname, userId, userPw, userName, userEmail, datetime.datetime.now())).lastrowid
 
     return jsonify({'msg' : "등록성공!"})
 
@@ -138,7 +151,7 @@ def user_register():
 def user_nickname_check():
     userNickname = request.form['nickname']
 
-    sql = "SELECT user_nickname FROM user WHERE user_nickname = %s"
+    sql = "SELECT user_nickname FROM Users WHERE user_nickname = %s"
 
     rows = app.database.execute(sql, userNickname)
 
@@ -161,7 +174,7 @@ def user_nickname_check():
 def user_id_check():
     userId = request.form['id']
 
-    sql = "SELECT user_id FROM user WHERE user_id = %s"
+    sql = "SELECT user_id FROM Users WHERE user_id = %s"
 
     rows = app.database.execute(sql, userId)
 
@@ -187,7 +200,7 @@ def post_write():
     thumbnail = request.form['thumbnail']
     content = request.form['content']
 
-    sql = "INSERT INTO post(author, title, content, thumbnail, recommend, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Posts(author, title, content, thumbnail, recommend, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
     row = app.database.execute(sql, (author, title, content, thumbnail, 0, datetime.datetime.now())).lastrowid
 
@@ -229,6 +242,40 @@ def s3_put_object(s3, bucket, file, filename):
         print(e)
         return False    
     return True
+
+# post detail get
+@app.route("/api/post-detail", methods=["POST"])
+def post_detail_get():
+    post_id = request.form['post_id']
+
+    sql="""
+            SELECT p.id, u.user_id, u.user_nickname, p.title, p.content, p.created_at
+            FROM Posts as p 
+            LEFT JOIN Users as u 
+            ON p.author = u.id 
+            WHERE p.id = %s
+        """
+
+    rows = app.database.execute(sql, post_id)
+
+    post_data_list = []
+    for record in rows:
+        temp = {
+            'post_id': record[0],
+            'user_id': record[1],
+            'user_nickname': record[2],
+            'post_title': record[3],
+            'post_content': record[4],
+            'post_created_at': record[5].strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        post_data_list.append(temp)
+
+    if len(post_data_list) == 1:
+        # post_id 에 해당하는 게시글이 있으면?
+        return jsonify({'success': True ,'post_detail' : post_data_list})
+    else :
+        return jsonify({'success': False})
+
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")

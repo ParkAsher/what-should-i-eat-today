@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="../static/styles/login.css" />
         <link rel="stylesheet" href="../static/styles/register.css" />
         <link rel="stylesheet" href="../static/styles/mypage.css" />
+        <link rel="stylesheet" href="../static/styles/post.css" />
 
         <!-- bootstrap -->
         <link
@@ -50,7 +51,8 @@
             component_name == 'login' %} {% include "./components/login.html" %} {% elif
             component_name == 'write' %} {% include "./components/write.html" %} {% elif
             component_name == 'register' %} {% include "./components/register.html" %} {% elif
-            component_name == 'mypage' %} {% include "./components/mypage.html" %} {% endif %}
+            component_name == 'mypage' %} {% include "./components/mypage.html" %} {% elif
+            component_name == 'post' %} {% include "./components/post.html" %} {% endif %}
         </section>
     </body>
 </html>

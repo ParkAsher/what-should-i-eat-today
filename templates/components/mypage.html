@@ -1,22 +1,39 @@
-<div class=container py-4>
-    <form>
-        <div class="signup py-4 ">
-            <h2>My Page</h2>
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <button type="button" class="btn btn-primary">
-            Profile
-            <span
-                class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                <span class="visually-hidden">New alerts</span>
-            </span>
-        </button>
-    <form>
-</div>
+<script defer src="../../static/js/mypage.js"></script>
+
+<body>
+    <!-- Flask 진자 문법으로 세션에 걸려있는 유저 값을 가져옴 -->
+    {% if session ["user-info"] %}
+    <div class=container py-4>
+        <form>
+            <div class="signup py-4">
+                <h2>My Page</h2>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nickname</label>
+                <input type="text" class="form-control" value="{{session['user-info']['user_nickname']}}" id="user-nickname" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID</label>
+                <input type="text" class="form-control" id="user-id" value="{{session['user-info']['user_id']}}" aria-label="Disabled input" disabled readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="user-pw" value="{{session['user-info']['user_pw']}}" aria-label="Disabled input" disabled readonly />
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" class="form-control" id="user-name" value="{{session['user-info']['user_name']}}" aria-label="Disabled input" disabled readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" id="user-email" value="{{session['user-info']['user_email']}}" aria-label="Disabled input" disabled readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label py-4">Self Introductions</label>
+                <textarea class="form-control" id="self-intro" rows="6" placeholder="100자 이내로 짧은 자기소개를 작성해주세요."
+                    maxlength="100"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary">Update</button>
+            <form>
+    </div>
+    {% endif %}
+</body>

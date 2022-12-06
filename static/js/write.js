@@ -24,7 +24,7 @@ function imageHandler() {
                 let img_url = response['img_url'];
 
                 const range = quill.getSelection();
-                quill.insertEmbed(range.index, 'image', img_url)
+                quill.insertEmbed(range.index + 1, 'image', img_url)
             }
         })
     }
@@ -40,7 +40,7 @@ function quillInit() {
                     ['bold', 'underline', 'strike', 'blockquote', 'code-block'],
                     [{ 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' },],
                     [{ 'color': [] }, { 'background': [] }],
-                    [{ 'align': [] }],
+                    [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
                     ['link', 'image'],
                 ],
                 handlers: {
@@ -57,6 +57,7 @@ function quillInit() {
     quill.on('text-change', function () {
         document.getElementById("post-content").value = quill.root.innerHTML;
     })
+
 }
 
 // upload image func
@@ -121,5 +122,7 @@ $(document).ready(function () {
 
     $("#post-image").on("change", upload_image);
 })
+
+
 
 

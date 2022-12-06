@@ -81,7 +81,6 @@ function register() {
     }
     if (emailCheck !== 0){
         alert("알맞는 이메일 형식이 아닙니다.")
-        console.log(emailCheck)
         return;
     }
     if (userPw !== userPwCheck) {
