@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from sqlalchemy import create_engine
 import boto3
 import datetime
+import bcrypt
 import math
+
 
 app = Flask(__name__)
 app.secret_key = "session_test"
@@ -18,11 +20,12 @@ def s3_connection():
             aws_access_key_id="AKIAUJLR4DBQHDDEG25B",
             aws_secret_access_key="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"
         )
-    except Exception as e :
+    except Exception as e:
         print(e)
     else:
         print("s3 bucket connected!")
         return s3
+
 
 @app.route('/')
 def home():
@@ -37,7 +40,7 @@ def login_page():
     if 'user-info' in session:
         flash("이미 로그인된 유저입니다.")
         return redirect(url_for('home'))
-    else :
+    else:
         return render_template('index.html', component_name='login')
 
 ##################
@@ -57,7 +60,7 @@ def register_page():
     if 'user-info' in session:
         flash("이미 가입된 유저입니다.")
         return redirect(url_for('home'))
-    else :
+    else:
         return render_template('index.html', component_name='register')
 
 ######################
@@ -96,7 +99,9 @@ def post_page():
 
     return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)    
 
-# mypage.html mapping
+#######################
+# mypage.html mapping #
+#######################
 @app.route('/mypage')
 def userinfo_page():
     if 'user-info' not in session:
@@ -125,22 +130,23 @@ def user_login():
             "user_nickname" : record[4],
             "user_email" : record[5],
             "signup_at" : record[6],     
+
         }
         user_data.append(temp)
 
-    if len(user_data) == 1 :
-         # 2. 아이디는 있는데 비밀번호 비교
-        if userPw == user_data[0]['user_pw'] :
+    if len(user_data) == 1:
+        # 2. 아이디는 있는데 비밀번호 비교
+        if userPw == user_data[0]['user_pw']:
             # 비밀번호가 같다면?
             # session
             session['user-info'] = user_data[0]
-            return jsonify({'result' : "Login-Success"})
-        else :
+            return jsonify({'result': "Login-Success"})
+        else:
             # 비밀번호가 틀리다면?
-            return jsonify({'result' : "Pw-Not-Correct"})
-    else :
+            return jsonify({'result': "Pw-Not-Correct"})
+    else:
         # 일치하는 아이디가 없다면?
-        return jsonify({'result' : "Id-Not-Found"});
+        return jsonify({'result': "Id-Not-Found"})
 
 ################
 # register api #
@@ -149,15 +155,18 @@ def user_login():
 def user_register():
     userNickname = request.form['nickname']
     userId = request.form['id']
-    userPw = request.form['pw']
+    userPw = request.form['pw'].encode('utf-8')
     userName = request.form['name']
     userEmail = request.form['email']
 
+    hashed_pw = bcrypt.hashpw(userPw, bcrypt.gensalt(rounds=10))
+
     sql = "INSERT INTO Users(user_nickname, user_id, user_pw, user_name, user_email, signup_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
-    app.database.execute(sql, (userNickname, userId, userPw, userName, userEmail, datetime.datetime.now())).lastrowid
+    app.database.execute(sql, (userNickname, userId, hashed_pw,
+                         userName, userEmail, datetime.datetime.now())).lastrowid
 
-    return jsonify({'msg' : "등록성공!"})
+    return jsonify({'msg': "등록성공!"})
 
 ######################
 # nickname check api #
@@ -177,9 +186,9 @@ def user_nickname_check():
         }
         user_list.append(temp)
 
-    if len(user_list) == 1 :
-        return jsonify({'check' : False})
-    else :
+    if len(user_list) == 1:
+        return jsonify({'check': False})
+    else:
         return jsonify({'check': True})
 
 ################
@@ -200,9 +209,9 @@ def user_id_check():
         }
         user_list.append(temp)
 
-    if len(user_list) == 1 :
-        return jsonify({'check' : False})
-    else :
+    if len(user_list) == 1:
+        return jsonify({'check': False})
+    else:
         return jsonify({'check': True})
 
 ###################
@@ -217,12 +226,13 @@ def post_write():
 
     sql = "INSERT INTO Posts(author, title, content, thumbnail, recommend, created_at) VALUES (%s, %s, %s, %s, %s, %s)"
 
-    row = app.database.execute(sql, (author, title, content, thumbnail, 0, datetime.datetime.now())).lastrowid
+    row = app.database.execute(
+        sql, (author, title, content, thumbnail, 0, datetime.datetime.now())).lastrowid
 
     return jsonify({'msg': '등록성공!'})
 
 
-###############    
+###############
 # file upload #
 ###############
 @app.route('/api/file-upload', methods=['POST'])
@@ -231,7 +241,8 @@ def file_upload():
 
     filename = file.filename.split('.')[0]
     ext = file.filename.split('.')[-1]
-    img_name = datetime.datetime.now().strftime(f"{filename}-%Y-%m-%d-%H-%M-%S.{ext}")
+    img_name = datetime.datetime.now().strftime(
+        f"{filename}-%Y-%m-%d-%H-%M-%S.{ext}")
 
     # s3에 이미지파일 업로드
     s3_put_object(s3, 'what-should-i-eat-today', file, img_name)
@@ -239,7 +250,7 @@ def file_upload():
     # 올라간 이미지의 url
     image_url = f'https://what-should-i-eat-today.s3.ap-northeast-2.amazonaws.com/{img_name}'
 
-    return jsonify({'img_url' : image_url})
+    return jsonify({'img_url': image_url})
 
 ##########################
 # image insert to aws s3 #
@@ -255,7 +266,7 @@ def s3_put_object(s3, bucket, file, filename):
         )
     except Exception as e:
         print(e)
-        return False    
+        return False
     return True
 
 #######################
@@ -265,7 +276,7 @@ def s3_put_object(s3, bucket, file, filename):
 def post_detail_get():
     post_id = request.form['post_id']
 
-    sql="""
+    sql = """
             SELECT p.id, u.user_id, u.user_nickname, p.title, p.content, p.created_at
             FROM Posts as p 
             LEFT JOIN Users as u 
@@ -289,8 +300,8 @@ def post_detail_get():
 
     if len(post_data_list) == 1:
         # post_id 에 해당하는 게시글이 있으면?
-        return jsonify({'success': True ,'post_detail' : post_data_list})
-    else :
+        return jsonify({'success': True, 'post_detail': post_data_list})
+    else:
         return jsonify({'success': False})
 
 ##########################
@@ -300,11 +311,11 @@ def post_detail_get():
 def post_detail_delete():
     post_id = request.form['post_id']
 
-    sql="""
+    sql = """
             DELETE FROM Posts 
             WHERE id = %s
         """
-    
+
     row = app.database.execute(sql, post_id)
 
     return jsonify({'msg': '글 삭제완료!'})
@@ -326,11 +337,11 @@ def comment_save():
     row = app.database.execute(sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
 
     return jsonify({'msg': '등록성공!'})   
-    
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
-    database = create_engine(app.config['DB_URL'], encoding='utf-8', max_overflow=0)
+    database = create_engine(
+        app.config['DB_URL'], encoding='utf-8', max_overflow=0)
     app.database = database
 
     # aws s3 connected

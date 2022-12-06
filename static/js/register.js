@@ -1,7 +1,7 @@
 // 비밀번호 중복 체크
 
 function register() {
-    let userNickname = $('#user-nickname').val()
+    let userNickname = $('#user-nickname').val();
     let userId = $('#user-id').val();
     let userPw = $('#user-pw').val();
     let userPwCheck = $('#user-pw-check').val();
@@ -90,7 +90,7 @@ function register() {
     }
     if (userNickname.search(/\s/) != -1 || userId.search(/\s/) != -1 || userPw.search(/\s/) != -1 || userName.search(/\s/) != -1 || userEmail.search(/\s/) != -1) {
         alert("입력란에 공백(스페이스바)이 존재합니다. 다시 작성해주세요.");
-        return ;
+        return;
     }
 
     $.ajax({
