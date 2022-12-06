@@ -12,47 +12,102 @@
     font-style: normal;
 }
 
-@media (max-width: 750px) {
-    .loginpage_background {
-        width: 100%;
+@media (max-width: 650px) {
+    .emoji {
+        display: none;
     }
-    
+}
+
+@media (max-width: 768px) {
     .loginpage_background .loginwrap {
-        width: 86%;
+        width: 100%;
     }
 
     .loginpage_background .loginwrap .logintitle {
-        width: 70%;
+        width: 80%;
+    }
+
+    .loginpage_background .loginwrap .logintitle .loginbtn,
+    .loginpage_background .loginwrap .logintitle .signup_find_btn,
+    .loginpage_background .loginwrap .logintitle .signupbtn,
+    .loginpage_background .loginwrap .logintitle .findpwbtn,
+    .loginpage_background .loginwrap .logintitle .emoji {
+        width: 100%;
+    }
+
+}
+
+@media (max-height: 850px) {
+    .emoji {
+        display: none;
     }
 }
 
-/* @media (max-height: 1080px) {
-    .loginpage_background {
-        height: 100%;
+@media (max-height: 1000px) {
+    .loginpage_background .loginwrap {
+        height: 90%;
     }
-} */
+
+    .loginpage_background .loginwrap .logintitle {
+        height: 70%;
+        
+        padding-top: 30px;
+    }    
+
+    .loginpage_background .loginwrap .logintitle .IDPW {
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .loginbtn {
+        height: 39px;
+        margin-bottom: 3px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .signup_find_btn {
+        margin-top: 3px;
+    }
+
+    .loginpage_background .loginwrap .logintitle .signupbtn {
+        height: 39px;
+        margin-right: 2px;
+
+        font-size: 0.75rem;
+    }
+
+    .loginpage_background .loginwrap .logintitle .findpwbtn {
+        height: 39px;
+        margin-left: 2px;
+        padding: 0px;
+
+        font-size: 0.70rem;
+    }
+    
+}
+   
+
 
 .loginpage_background {
     width: 100%;
-    height: 1000px;
+    height: 100%;
 
-    padding : 0px 30px 30px 30px ;
+    padding : 50px 30px 30px 30px ;
 }
 
-.loginpage_background .loginwrap {
-    background-color: #ffeacd;
+.loginwrap {
     width: 750px;
     height: 1000px;
+    background-color: #ffeacd;
 
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    margin: 70px auto;
+    margin: auto;
 
     border-radius: 25px;
 }
 
-.loginpage_background .loginwrap .logintitle {
+.logintitle {
     background-color: white;
     width: 590px;
     height: 600px;
@@ -69,11 +124,11 @@
     border-radius: 35px;
 }
 
-.loginpage_background .loginwrap .logintitle a {
+.logintitle a {
     color: black;
 }
 
-.loginpage_background .loginwrap .logintitle .IDPW {
+.IDPW {
     margin-top: 50px;
     margin-bottom: 40px;
 
@@ -81,7 +136,7 @@
     font-family: 'KOFIHDrLEEJWTTF-B';
 }
 
-.loginpage_background .loginwrap .logintitle .loginbtn {
+.loginbtn {
     background-color: #ffeacd;
     color: black;
 
@@ -97,13 +152,14 @@
     margin-bottom: 20px;
 }
 
-.loginpage_background .loginwrap .logintitle .signup_find_btn {
+.signup_find_btn {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.loginpage_background .loginwrap .logintitle .signup_find_btn .signupbtn {
+
+.signupbtn {
     background-color: #ffeacd;
     color: black;
 
@@ -120,7 +176,7 @@
     height: 45px;
 }
 
-.loginpage_background .loginwrap .logintitle .signup_find_btn .findpwbtn {
+.findpwbtn {
     background-color: #ffeacd;
     color: black;
 
@@ -136,3 +192,4 @@
     width: 230px;
     height: 45px;
 }
+
