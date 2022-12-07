@@ -8,7 +8,6 @@
 .main-wrap {
     width: 1320px;
     height: 100%;
-    background: lightsalmon;
     margin: 0 auto;
     padding: 0 0.5rem;
 
@@ -21,6 +20,7 @@
     width: 100%;
     height: 5rem;
     display: flex;
+    margin-bottom: 1rem;
     justify-content: space-between;
 }
 
@@ -32,12 +32,81 @@
 }
 
 .main-menu-right .write-link-btn {
-    border: 1px solid #ffffff;
-    padding: 0.75rem 1rem;
+    background: burlywood;
+    font-weight: bold;
+    border: 2px solid burlywood;
+    padding: 0.75rem 1.25rem;
     border-radius: 10px;
-    box-sizing: border-box;
-
     color: #ffffff;
+}
+
+.main-content {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4%;
+}
+
+.post-wrap {
+    width: 48%;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    margin-bottom: 2rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.post-thumbnail {
+    width: 100%;
+    height: 20rem;
+    border-radius: 10px 10px 0 0;
+}
+
+.post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.post-title {
+    width: 100%;
+    padding: 1rem 0.5rem;
+}
+
+.post-author,
+.post-created-at {
+    width: 100%;
+    padding: 0 0.5rem;
+}
+
+.post-title p,
+.post-author p,
+.post-created-at p {
+    margin: 0;
+    font-weight: bold;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+}
+
+.post-pagination-wrap {
+    width: 100%;
+    margin-bottom: 2rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.post-pagination-wrap .post-pagination {
+    border: 2px solid burlywood;
+    border-radius: 10px;
+    background: transparent;
     font-weight: bold;
 }
 
@@ -49,5 +118,17 @@
     .main-menu-right .write-link-btn {
         font-size: 0.8rem;
         padding: 0.5rem 0.75rem;
+    }
+
+    .post-wrap {
+        width: 100%;
+    }
+
+    .post-thumbnail {
+        height: 15rem;
+    }
+
+    .post-pagination-wrap {
+        padding: 1rem 0;
     }
 }
