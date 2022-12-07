@@ -12,6 +12,8 @@ app.secret_key = "session_test"
 ##################
 # aws s3 connect #
 ##################
+
+
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -51,6 +53,8 @@ def home():
 ######################
 # login.html mapping #
 ######################
+
+
 @app.route('/login')
 def login_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -63,6 +67,8 @@ def login_page():
 ##################
 # logout mapping #
 ##################
+
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -85,6 +91,8 @@ def find_pw_page():
 #########################
 # register.html mapping #
 #########################
+
+
 @app.route('/register')
 def register_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -97,6 +105,8 @@ def register_page():
 ######################
 # write.html mapping #
 ######################
+
+
 @app.route('/write')
 def write_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -109,19 +119,21 @@ def write_page():
 #####################
 # post.html mapping #
 #####################
+
+
 @app.route('/post')
 def post_page():
     post_id = request.args.get('postid')
 
-    #댓글 갯수 카운트
-    sql="""
+    # 댓글 갯수 카운트
+    sql = """
             SELECT COUNT(*) FROM Comments
             WHERE c_post_id = %s
         """
     rows = app.database.execute(sql, post_id)
 
     for record in rows:
-        comment_list_count = record[0] 
+        comment_list_count = record[0]
 
     if comment_list_count % 5 == 0 :
         comment_page = comment_list_count / 5
@@ -130,7 +142,8 @@ def post_page():
     else :
         comment_page = math.ceil(comment_list_count / 5)
 
-    return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)    
+    return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
+
 
 #######################
 # mypage.html mapping #
@@ -143,11 +156,13 @@ def userinfo_page():
     else:
         return render_template('index.html', component_name='mypage')
 
-# login api
+#############
+# login api #
+#############
 @app.route('/api/user-login', methods=['POST'])
 def user_login():
     userId = request.form['id']
-    userPw = request.form['pw']
+    userPw = request.form['pw'].encode('utf-8')
 
     # 1. 아이디 있는지 없는지 판별
     sql_is_id_check = "SELECT * FROM Users WHERE user_id = %s"
@@ -156,19 +171,20 @@ def user_login():
     user_data = []
     for record in rows:
         temp = {
-            "id" : record[0],
-            "user_id" : record[1],
-            "user_pw" : record[2],
-            "user_name" : record[3],
-            "user_nickname" : record[4],
-            "user_email" : record[5],
-            "signup_at" : record[6],     
+            "id": record[0],
+            "user_id": record[1],
+            "user_pw": record[2].encode('utf-8'),
+            "user_name": record[3],
+            "user_nickname": record[4],
+            "user_email": record[5],
+            "signup_at": record[6],
         }
         user_data.append(temp)
 
     if len(user_data) == 1:
         # 2. 아이디는 있는데 비밀번호 비교
-        if userPw == user_data[0]['user_pw']:
+        if bcrypt.checkpw(userPw, (user_data[0]['user_pw'])):
+            # if hashed_pw == user_data[0]['user_pw']:
             # 비밀번호가 같다면?
             # session
             session['user-info'] = user_data[0]
@@ -209,6 +225,8 @@ def find_id():
 ################
 # register api #
 ################
+
+
 @app.route('/api/user-register', methods=['POST'])
 def user_register():
     userNickname = request.form['nickname']
@@ -229,6 +247,8 @@ def user_register():
 ######################
 # nickname check api #
 ######################
+
+
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
@@ -253,6 +273,8 @@ def user_nickname_check():
 ################
 # id check api #
 ################
+
+
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -276,6 +298,8 @@ def user_id_check():
 ###################
 # post write api #
 ###################
+
+
 @app.route('/api/post-write', methods=['POST'])
 def post_write():
     title = request.form['title']
@@ -314,6 +338,8 @@ def file_upload():
 ##########################
 # image insert to aws s3 #
 ##########################
+
+
 def s3_put_object(s3, bucket, file, filename):
     try:
         s3.put_object(
@@ -331,6 +357,8 @@ def s3_put_object(s3, bucket, file, filename):
 #######################
 # post detail get api #
 #######################
+
+
 @app.route("/api/post-detail", methods=["POST"])
 def post_detail_get():
     post_id = request.form['post_id']
@@ -366,6 +394,8 @@ def post_detail_get():
 ##########################
 # post detail delete api #
 ##########################
+
+
 @app.route("/api/post-detail/delete", methods=["POST"])
 def post_detail_delete():
     post_id = request.form['post_id']
@@ -379,6 +409,7 @@ def post_detail_delete():
 
     return jsonify({'msg': '글 삭제완료!'})
 
+
 ####################
 # comment save api #
 ####################
@@ -388,14 +419,16 @@ def comment_save():
     c_content = request.form['c_content']
     c_author = request.form['c_author']
 
-    sql="""
+    sql = """
             INSERT INTO Comments(c_author, c_content, created_at, c_post_id)
             VALUES (%s, %s, %s, %s)
         """
-    
-    row = app.database.execute(sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
 
-    return jsonify({'msg': '등록성공!'})   
+    row = app.database.execute(
+        sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
+
+    return jsonify({'msg': '등록성공!'})
+
 
 ###################
 # comment get api #
