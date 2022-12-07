@@ -2,7 +2,7 @@
 
 function mypage() {
     let userNickname = $('#user-nickname').val();
-    let userName = $('#user-name');
+    let userName = $('#user-name').val();
 
     let nickname = userNickname.search(/[ㄱ-ㅎ|ㅏ-ㅣ]/g);
     
