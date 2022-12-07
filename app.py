@@ -12,8 +12,6 @@ app.secret_key = "session_test"
 ##################
 # aws s3 connect #
 ##################
-
-
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -30,8 +28,7 @@ def s3_connection():
 
 
 @app.route('/')
-def home():
-    
+def home():    
     # 전체 게시글 수 넘겨주기
     sql="""
             SELECT count(*) FROM Posts
@@ -53,8 +50,6 @@ def home():
 ######################
 # login.html mapping #
 ######################
-
-
 @app.route('/login')
 def login_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -67,8 +62,6 @@ def login_page():
 ##################
 # logout mapping #
 ##################
-
-
 @app.route('/logout')
 def logout():
     session.clear()
@@ -91,8 +84,6 @@ def find_pw_page():
 #########################
 # register.html mapping #
 #########################
-
-
 @app.route('/register')
 def register_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -105,8 +96,6 @@ def register_page():
 ######################
 # write.html mapping #
 ######################
-
-
 @app.route('/write')
 def write_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -119,8 +108,6 @@ def write_page():
 #####################
 # post.html mapping #
 #####################
-
-
 @app.route('/post')
 def post_page():
     post_id = request.args.get('postid')
@@ -225,8 +212,6 @@ def find_id():
 ################
 # register api #
 ################
-
-
 @app.route('/api/user-register', methods=['POST'])
 def user_register():
     userNickname = request.form['nickname']
@@ -247,8 +232,6 @@ def user_register():
 ######################
 # nickname check api #
 ######################
-
-
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
@@ -273,8 +256,6 @@ def user_nickname_check():
 ################
 # id check api #
 ################
-
-
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -298,8 +279,6 @@ def user_id_check():
 ###################
 # post write api #
 ###################
-
-
 @app.route('/api/post-write', methods=['POST'])
 def post_write():
     title = request.form['title']
@@ -338,8 +317,6 @@ def file_upload():
 ##########################
 # image insert to aws s3 #
 ##########################
-
-
 def s3_put_object(s3, bucket, file, filename):
     try:
         s3.put_object(
@@ -357,8 +334,6 @@ def s3_put_object(s3, bucket, file, filename):
 #######################
 # post detail get api #
 #######################
-
-
 @app.route("/api/post-detail", methods=["POST"])
 def post_detail_get():
     post_id = request.form['post_id']
@@ -394,8 +369,6 @@ def post_detail_get():
 ##########################
 # post detail delete api #
 ##########################
-
-
 @app.route("/api/post-detail/delete", methods=["POST"])
 def post_detail_delete():
     post_id = request.form['post_id']
@@ -508,8 +481,6 @@ def get_post_list():
 
     return jsonify({'post_list': post_list})
 
-
-
 ####################
 # mypage patch api #
 ####################
@@ -522,8 +493,7 @@ def patch_user_info():
 
     app.database.execute(sql, (userNickname, userName)).lastrowid
 
-    return jsonify({'msg': "수정완료!"})
-    
+    return jsonify({'msg': "수정완료!"})  
 
 
 
