@@ -29,7 +29,24 @@ def s3_connection():
 
 @app.route('/')
 def home():
-    return render_template('index.html', component_name='postlist')
+    
+    # 전체 게시글 수 넘겨주기
+    sql="""
+            SELECT count(*) FROM Posts
+        """
+    rows = app.database.execute(sql)
+
+    for record in rows:
+        post_list_count = record[0] 
+
+    if post_list_count % 8 == 0:
+        post_page = post_list_count / 8
+    elif post_list_count == 0:
+        post_page = 0
+    else :
+        post_page = math.ceil(post_list_count / 8)    
+
+    return render_template('index.html', component_name='postlist', post_page=post_page)
 
 ######################
 # login.html mapping #
@@ -106,8 +123,10 @@ def post_page():
     for record in rows:
         comment_list_count = record[0] 
 
-    if comment_list_count / 5 == 0:
+    if comment_list_count % 5 == 0 :
         comment_page = comment_list_count / 5
+    elif comment_list_count == 0 :
+        comment_page = 0
     else :
         comment_page = math.ceil(comment_list_count / 5)
 
@@ -405,6 +424,44 @@ def get_comment_list():
         return jsonify({'success': False})
     
     return  jsonify({'success': True, 'comment_list': comment_list})
+
+#############################
+# get post list in main api #
+#############################
+@app.route("/api/post-list", methods=['GET'])
+def get_post_list():
+    page = request.args.get('page')
+
+    post_count = (int(page)-1) * 8
+
+    sql="""
+            SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at
+            FROM Posts as p
+            LEFT JOIN Users as u
+            ON p.author = u.id
+            ORDER BY created_at DESC
+            LIMIT %s, 8
+        """
+    rows = app.database.execute(sql, (post_count))
+
+    post_list=[]
+    for record in rows:
+        temp = {
+            'post_id' : record[0],
+            'post_title' : record[1],
+            'user_id' : record[2],
+            'user_nickname' : record[3],
+            'post_content' : record[4],
+            'post_thumbnail' : record[5],
+            'created_at' : record[6].strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        post_list.append(temp)
+
+    if len(post_list) == 0 :
+        return jsonify({'msg' : "Posts-Not-Exist"})
+                
+    return jsonify({'post_list': post_list})
+
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
