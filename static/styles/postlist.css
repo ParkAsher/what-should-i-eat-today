@@ -1,13 +1,11 @@
 .main {
     width: 100%;
-    height: 100%;
     background-color: #efefef;
     padding-top: 3rem;
 }
 
 .main-wrap {
     width: 1320px;
-    height: 100%;
     margin: 0 auto;
     padding: 0 0.5rem;
 
