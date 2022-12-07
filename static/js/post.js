@@ -80,6 +80,9 @@ function get_comment_list(page) {
     let pageNum = page; // string
 
     let Url = "/api/comment-list?postid=" + postId + "&page=" + pageNum;
+    $('#comment-list').empty();
+    $('.comment-pagination').removeClass('page-selected');
+    $('.comment-pagination[data-index=' + page + ']').addClass('page-selected');
 
     $.ajax({
         type: "GET",
@@ -89,21 +92,26 @@ function get_comment_list(page) {
                 return;
             }
 
-            $('#comment-list').empty();
-
             for (let i = 0; i < response['comment_list'].length; i++) {
                 let temp = `
                     <div class="comment">
-                        <div class="comment-info">
-                            <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
-                            <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
-                        </div>
+                        <div class="comment-info-wrap">
+                            <div class="comment-info">
+                                <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
+                                <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
+                            </div>
+                            <div class="comment-btn">
+                                <button type="button" class="comment-edit-btn">수정</button>
+                                <button type="button" class="comment-delete-btn">삭제</button>
+                            </div>
+                        </div>                        
                         <div class="comment-content">
                             <p>${response['comment_list'][i]['c_content']}</p>
                         </div>
                     </div>
                 `;
                 $('#comment-list').append(temp)
+                // button 의 data-index속성의 값                
             }
         }
     })

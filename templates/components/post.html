@@ -62,7 +62,12 @@
 <div id="comment-list" class="comment-list"></div>
 <div class="comment-pagination-wrap">
     {% if comment_page != 0 %} {% for i in range(comment_page) %}
-    <button type="button" class="comment-pagination" onclick="get_comment_list('{{i+1}}')">
+    <button
+        data-index="{{i+1}}"
+        type="button"
+        class="comment-pagination"
+        onclick="get_comment_list('{{i+1}}')"
+    >
         {{i+1}}
     </button>
     {% endfor %} {% endif %}
