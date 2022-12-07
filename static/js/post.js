@@ -42,6 +42,11 @@ function get_post_detail() {
 }
 
 function post_delete() {
+
+    if (!confirm("삭제 하시겠습니까?")) {
+        return;
+    }
+
     let postId = $('#post-id').val();
 
     $.ajax({
@@ -74,6 +79,25 @@ function comment_submit() {
     })
 }
 
+function comment_delete(cId) {
+
+    if (!confirm("삭제 하시겠습니까?")) {
+        return;
+    }
+
+    let Url = "/api/comment-delete?cid=" + cId;
+
+    $.ajax({
+        type: "DELETE",
+        url: Url,
+        success: function (response) {
+            console.log(response['msg'])
+            window.location.reload();
+        }
+    })
+
+}
+
 function get_comment_list(page) {
     // 글 번호
     let postId = $('#post-id').val();
@@ -83,6 +107,9 @@ function get_comment_list(page) {
     $('#comment-list').empty();
     $('.comment-pagination').removeClass('page-selected');
     $('.comment-pagination[data-index=' + page + ']').addClass('page-selected');
+
+    // 로그인 된 유저의 id
+    let loginedUserId = $('#logined-user-id').val();
 
     $.ajax({
         type: "GET",
@@ -95,14 +122,10 @@ function get_comment_list(page) {
             for (let i = 0; i < response['comment_list'].length; i++) {
                 let temp = `
                     <div class="comment">
-                        <div class="comment-info-wrap">
+                        <div id="comment-info-wrap" class="comment-info-wrap">
                             <div class="comment-info">
                                 <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
                                 <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
-                            </div>
-                            <div class="comment-btn">
-                                <button type="button" class="comment-edit-btn">수정</button>
-                                <button type="button" class="comment-delete-btn">삭제</button>
                             </div>
                         </div>                        
                         <div class="comment-content">
@@ -111,8 +134,18 @@ function get_comment_list(page) {
                     </div>
                 `;
                 $('#comment-list').append(temp)
-                // button 의 data-index속성의 값                
+
+                if (loginedUserId === response['comment_list'][i]['c_author_id']) {
+                    let temp2 = `
+                        <div class="comment-btn">
+                            <button type="button" class="comment-edit-btn">수정</button>
+                            <button type="button" class="comment-delete-btn" onclick="comment_delete(${response['comment_list'][i]['c_id']})">삭제</button>
+                        </div>
+                    `
+                    $("#comment-info-wrap").append(temp2)
+                }
             }
+
         }
     })
 }

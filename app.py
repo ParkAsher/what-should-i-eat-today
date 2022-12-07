@@ -141,6 +141,7 @@ def userinfo_page():
         flash("로그인을 먼저 해주세요.")
         return redirect(url_for('login_page'))
     else:
+        print(session['user-info'])
         return render_template('index.html', component_name='mypage')
 
 #############
@@ -195,17 +196,17 @@ def find_id():
     sql = "SELECT user_id FROM Users WHERE user_name = %s and user_email = %s"
     rows = app.database.execute(sql, (userName, userEmail))
     
-    user_list = []
+    user_lists = []
     for record in rows:
         temp = {
             "user_id": record[0]
         }
-        user_list.append(temp)
+        user_lists.append(temp)
 
-    if len(user_list) == 0:
+    if len(user_lists) == 0:
         return jsonify({'success': False})
     else:
-        return jsonify({'success': True, 'user_id_find': user_list})
+        return jsonify({'success': True, 'user_id_find': user_lists})
 
 ###############
 # find pw api #
@@ -437,7 +438,7 @@ def get_comment_list():
     comment_count = (int(page)-1) * 5
     
     sql="""
-            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at 
+            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at, c.id 
             FROM Comments as c
             LEFT JOIN Users as u
             ON c.c_author = u.id
@@ -455,7 +456,8 @@ def get_comment_list():
             'c_author_id' : record[0],
             'c_author_nickname' : record[1],
             'c_content' : record[2],
-            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S"),
+            'c_id' : record[4]
         }
         comment_list.append(temp)  
     
@@ -464,7 +466,21 @@ def get_comment_list():
     
     return  jsonify({'success': True, 'comment_list': comment_list})
 
+######################
+# comment delete api #
+######################
+@app.route("/api/comment-delete", methods=['DELETE'])
+def comment_delete():
+    c_id = request.args.get('cid')
 
+    sql="""
+            DELETE FROM Comments 
+            WHERE id = %s 
+        """
+    
+    app.database.execute(sql, int(c_id))
+
+    return jsonify({'msg' : "삭제성공!"})
     
 #############################
 # get post list in main api #
@@ -511,14 +527,37 @@ def get_post_list():
 def patch_user_info():
     userNickname = request.form['nickname']
     userName = request.form['name']
+    idNumber = request.form['number']
+    userId = request.form['id']
     
-    sql = "UPDATE INTO Users(user_nickname, user_name) VALUES (%s, %s)"
+    sql = "UPDATE Users SET user_nickname = %s, user_name = %s WHERE id = %s"
 
-    app.database.execute(sql, (userNickname, userName)).lastrowid
+    app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
+    
+    # 세션 삭제 
+    # db에서 해당 유저 정보다찾아오기 
+    # 세션에 수정 값 넣어주기
+    session.clear()
+    sql = "SELECT * FROM Users WHERE user_id = %s"
+    rows = app.database.execute(sql, userId)
 
-    return jsonify({'msg': "수정완료!"})  
+    user_data = []
+    for record in rows:
+        temp = {
+            "id": record[0],
+            "user_id": record[1],
+            "user_pw": record[2].encode('utf-8'),  
+            "user_name": record[3],
+            "user_nickname": record[4],
+            "user_email": record[5],
+            "signup_at": record[6],
+        }
+        user_data.append(temp)
 
-
+    session['user-info'] = user_data[0]
+    print(session['user-info'])
+    return jsonify({'msg': "수정완료!"})
+    
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
