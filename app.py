@@ -339,7 +339,7 @@ def post_detail_get():
     post_id = request.form['post_id']
 
     sql = """
-            SELECT p.id, u.user_id, u.user_nickname, p.title, p.content, p.created_at
+            SELECT p.id, u.user_id, u.user_nickname, p.title, p.content, p.created_at, p.recommend
             FROM Posts as p 
             LEFT JOIN Users as u 
             ON p.author = u.id 
@@ -357,6 +357,7 @@ def post_detail_get():
             'post_title': record[3],
             'post_content': record[4],
             'post_created_at': record[5].strftime("%Y-%m-%d %H:%M:%S"),
+            'post_recommend': record[6]
         }
         post_data_list.append(temp)
 
@@ -427,7 +428,6 @@ def get_comment_list():
 
     comment_list=[]
     for record in rows:
-        print(record)
         temp = {
             'c_author_id' : record[0],
             'c_author_nickname' : record[1],
@@ -464,6 +464,7 @@ def comment_delete():
 @app.route("/api/post-list", methods=['GET'])
 def get_post_list():
     page = request.args.get('page')
+    
 
     post_count = (int(page)-1) * 8
 
@@ -532,7 +533,50 @@ def patch_user_info():
 
     session['user-info'] = user_data[0]
     print(session['user-info'])
-    return jsonify({'msg': "수정완료!"})
+    return jsonify({'msg': "수정완료!"})  
+
+######################
+# post recommend api #
+######################
+@app.route("/api/post-recommend", methods=['POST'])
+def post_recommend():
+    post_id = request.form['post_id']
+    user_num = request.form['user_num']
+
+    sql="""
+            UPDATE Posts SET recommend = Posts.recommend + 1
+            WHERE Posts.id = %s
+        """
+    
+    app.database.execute(sql, post_id)
+
+    sql2="""
+            INSERT INTO Recommends(r_user, p_id)
+            VALUES(%s, %s)
+        """
+    app.database.execute(sql2, (user_num, post_id))
+
+    return({'msg' : "추천하였습니다!"})
+
+############################
+# is recommended check api #
+############################
+@app.route("/api/post-recommend/is-recommended-check", methods=['POST'])
+def is_recommended_check():
+    post_id = request.form['post_id']
+    user_num = request.form['user_num']
+
+    sql="""
+            SELECT exists(SELECT * FROM Recommends WHERE p_id = %s AND r_user = %s)
+        """
+
+    rows = app.database.execute(sql, (post_id, user_num))
+
+    for record in rows:
+        is_recommended = record[0]
+
+    return({'is_recommended' : is_recommended})
+
     
 
 if __name__ == '__main__':

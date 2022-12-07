@@ -41,12 +41,34 @@
     color: grey;
 }
 
+.detail-info-wrap p.detail-recommend {
+    color: purple;
+    margin-left: 0.2rem;
+}
+
 .detail-content-wrap {
     padding: 5rem 1.5rem;
 }
 .detail-content-wrap .ql-editor {
     padding: 0;
     height: auto !important;
+}
+
+.detail-recommend-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.detail-recommend-wrap .detail-recommend-btn {
+    background: none;
+    border: none;
+}
+
+.detail-recommend-wrap .detail-recommend-btn i {
+    color: red;
+    font-size: 5rem;
 }
 
 .post-btn {
