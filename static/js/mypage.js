@@ -1,13 +1,14 @@
 // 회원 정보 업데이트
-
 function mypage() {
     let userNickname = $('#user-nickname').val();
-    let userName = $('#user-name');
+    let userName = $('#user-name').val();
 
     let nickname = userNickname.search(/[ㄱ-ㅎ|ㅏ-ㅣ]/g);
     
     let nameNumber = userName.search(/[0-9]/g);
     let nameSpace = userName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+    let idNumber = $('#number').val();
 
     // 예외 처리
     if (userNickname === "") {
@@ -46,7 +47,7 @@ function mypage() {
     $.ajax({
         type: "PATCH",
         url: "/api/user-info",
-        data: { nickname: userNickname, name: userName },
+        data: { nickname: userNickname, name: userName, id: idNumber },
         success: function (response) {
             alert(response['msg']);
             window.location.href = "/";
