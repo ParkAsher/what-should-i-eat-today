@@ -112,15 +112,15 @@ def write_page():
 def post_page():
     post_id = request.args.get('postid')
 
-    #댓글 갯수 카운트
-    sql="""
+    # 댓글 갯수 카운트
+    sql = """
             SELECT COUNT(*) FROM Comments
             WHERE c_post_id = %s
         """
     rows = app.database.execute(sql, post_id)
 
     for record in rows:
-        comment_list_count = record[0] 
+        comment_list_count = record[0]
 
     if comment_list_count % 5 == 0 :
         comment_page = comment_list_count / 5
@@ -129,7 +129,8 @@ def post_page():
     else :
         comment_page = math.ceil(comment_list_count / 5)
 
-    return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)    
+    return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
+
 
 #######################
 # mypage.html mapping #
@@ -140,13 +141,16 @@ def userinfo_page():
         flash("로그인을 먼저 해주세요.")
         return redirect(url_for('login_page'))
     else:
+        print(session['user-info'])
         return render_template('index.html', component_name='mypage')
 
-# login api
+#############
+# login api #
+#############
 @app.route('/api/user-login', methods=['POST'])
 def user_login():
     userId = request.form['id']
-    userPw = request.form['pw']
+    userPw = request.form['pw'].encode('utf-8')
 
     # 1. 아이디 있는지 없는지 판별
     sql_is_id_check = "SELECT * FROM Users WHERE user_id = %s"
@@ -155,19 +159,20 @@ def user_login():
     user_data = []
     for record in rows:
         temp = {
-            "id" : record[0],
-            "user_id" : record[1],
-            "user_pw" : record[2],
-            "user_name" : record[3],
-            "user_nickname" : record[4],
-            "user_email" : record[5],
-            "signup_at" : record[6],     
+            "id": record[0],
+            "user_id": record[1],
+            "user_pw": record[2].encode('utf-8'),
+            "user_name": record[3],
+            "user_nickname": record[4],
+            "user_email": record[5],
+            "signup_at": record[6],
         }
         user_data.append(temp)
 
     if len(user_data) == 1:
         # 2. 아이디는 있는데 비밀번호 비교
-        if userPw == user_data[0]['user_pw']:
+        if bcrypt.checkpw(userPw, (user_data[0]['user_pw'])):
+            # if hashed_pw == user_data[0]['user_pw']:
             # 비밀번호가 같다면?
             # session
             session['user-info'] = user_data[0]
@@ -204,7 +209,6 @@ def find_id():
         return jsonify({'success': True, 'user_id_find': user_list})
 
      
-
 ################
 # register api #
 ################
@@ -378,6 +382,7 @@ def post_detail_delete():
 
     return jsonify({'msg': '글 삭제완료!'})
 
+
 ####################
 # comment save api #
 ####################
@@ -387,14 +392,16 @@ def comment_save():
     c_content = request.form['c_content']
     c_author = request.form['c_author']
 
-    sql="""
+    sql = """
             INSERT INTO Comments(c_author, c_content, created_at, c_post_id)
             VALUES (%s, %s, %s, %s)
         """
-    
-    row = app.database.execute(sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
 
-    return jsonify({'msg': '등록성공!'})   
+    row = app.database.execute(
+        sql, (c_author, c_content, datetime.datetime.now(), c_post_id))
+
+    return jsonify({'msg': '등록성공!'})
+
 
 ###################
 # comment get api #
@@ -407,7 +414,7 @@ def get_comment_list():
     comment_count = (int(page)-1) * 5
     
     sql="""
-            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at 
+            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at, c.id 
             FROM Comments as c
             LEFT JOIN Users as u
             ON c.c_author = u.id
@@ -425,7 +432,8 @@ def get_comment_list():
             'c_author_id' : record[0],
             'c_author_nickname' : record[1],
             'c_content' : record[2],
-            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S"),
+            'c_id' : record[4]
         }
         comment_list.append(temp)  
     
@@ -486,10 +494,12 @@ def patch_user_info():
     sql = "UPDATE Users SET user_nickname = %s, user_name = %s WHERE id = %s"
 
     app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
+    
+    # 세션 삭제 (로그아웃)
+    # db에서 해당 유저 정보다찾아오기 (로그인)
+    # 세션에 넣는거 (로그인)
 
     return jsonify({'msg': "수정완료!"})  
-
-
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
