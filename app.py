@@ -174,36 +174,28 @@ def user_login():
 ###############
 # find id api #
 ###############
-
 @app.route('/api/find-user-id', methods=['POST'])
 def find_id():
     userName = request.form['name']
     userEmail = request.form['email']
 
     # 1. 이름이 있는지 없는지 판별
-    sql_is_name_check = "SELECT * FROM Users WHERE user_name = %s"
-    rows = app.database.execute(sql_is_name_check, userName)
+    sql = "SELECT user_id FROM Users WHERE user_name = %s and user_email = %s"
+    rows = app.database.execute(sql, (userName, userEmail))
     
     user_list = []
     for record in rows:
-        user_list.append(record)
-    print(user_list[0][5])    
-    
-    # if len(user_list) == 1:
-    #     # 2. 이름은 있는데 이메일 비교
-    #     if userEmail == user_list[0][1][1]:
-    #         # 이메일이 같다면?
-    #         # session
-    #         session['user-info'] = user_list[0]
-    #         return jsonify({'result':"Find-Success"})
-    #     else:
-    #         # 이메일이 틀리다면?
-    #         return jsonify({'result': "Email-Not-Correct"})
-    # else:
-    #     # 일치하는 이름이 없다면?
-    #     return jsonify({'result':"Name-Not_Found"})
+        temp = {
+            "user_id": record[0]
+        }
+        user_list.append(temp)
 
-    return "test"
+    if len(user_list) == 0:
+        return jsonify({'success': False})
+    else:
+        return jsonify({'success': True, 'user_id_find': user_list})
+
+     
 
 ################
 # register api #
