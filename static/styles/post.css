@@ -80,6 +80,102 @@
     background-color: coral;
 }
 
+.comment-wrap {
+    width: 1320px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 2px solid coral;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-wrap .comment-title p {
+    margin: 0;
+    font-weight: bold;
+    color: gray;
+}
+
+.comment-wrap .comment-input {
+    width: 100%;
+}
+
+.comment-wrap .comment-input textarea {
+    width: 100%;
+    height: 5rem;
+    resize: none;
+    border: 1px solid coral;
+    margin: 10px 0;
+}
+
+.comment-wrap .comment-input textarea:focus {
+    outline: 1px solid coral;
+}
+
+.comment-wrap .comment-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.comment-wrap .comment-btn .comment-submit-btn {
+    background: burlywood;
+    font-weight: bold;
+    border: 2px solid burlywood;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.comment-list {
+    width: 1320px;
+    margin: 1rem auto;
+}
+
+.comment-list .comment {
+    width: 100%;
+    border: 2px solid burlywood;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-list .comment-info,
+.comment-list .comment-content {
+    width: 100%;
+}
+
+.comment-list .comment-info .comment-author {
+    font-weight: bold;
+    color: blueviolet;
+}
+
+.comment-list .comment-info .comment-created-at {
+    font-weight: bold;
+    color: gray;
+}
+
+.comment-pagination-wrap {
+    width: 1320px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.comment-pagination-wrap .comment-pagination {
+    border: 2px solid burlywood;
+    border-radius: 10px;
+    background: transparent;
+    font-weight: bold;
+}
+
 @media (max-width: 1320px) {
     .detail-wrap {
         width: 100%;
@@ -90,7 +186,9 @@
     .detail-info-wrap p {
         font-size: 1rem;
     }
-    .detail-title-wrap,
+    .detail-title-wrap {
+        padding: 1rem;
+    }
     .detail-info-wrap {
         padding: 0 1rem;
     }
@@ -112,5 +210,19 @@
     .post-btn .post-edit-btn {
         padding: 0.5rem 0.75rem;
         font-size: 0.75rem;
+    }
+
+    .comment-wrap {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .comment-list,
+    .comment-pagination-wrap {
+        width: 100%;
+    }
+
+    .comment-list .comment {
+        padding: 1rem;
     }
 }

@@ -1,0 +1,147 @@
+@font-face {
+    font-family: "ONE-Mobile-POP";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.find_pw {
+    width: 100%;
+    height: 100%;
+
+    padding : 50px 30px 30px 30px ;
+}
+
+.find_pw_wrap {
+    width: 750px;
+    height: 1000px;
+    background-color: #ffeacd;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: auto;
+
+    border-radius: 25px;
+}
+
+.find_pw_title {
+    background-color: white;
+    width: 590px;
+    height: 600px;
+
+    display: block;
+
+    margin: 100px auto;
+    padding: 100px 40px 100px 40px;
+
+    text-align: left;
+    font-weight: normal;
+    font-family: "ONE-Mobile-POP";
+
+    border-radius: 35px;
+}
+
+.fine_pw_innertitle {
+    text-align: center;
+}
+
+.find_pw_name_box {
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B'
+    !important;
+}
+
+.find_pw_id_box {
+    margin-bottom: 20px;
+
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B'
+    !important;
+}
+
+.find_pw_email_box {
+    margin-bottom: 20px;
+
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B'
+    !important;
+}
+
+.find_pw_btn {
+    background-color: #ffeacd;
+    color: black;
+
+    width: 510px;
+    height: 50px;
+
+    margin: auto;
+
+    font-weight: 700;
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    font-size: 1.2em;
+
+    border-radius: 5px;
+    border: none;
+}
+
+
+@media (max-width: 768px) {
+    .find_pw .find_pw_wrap {
+        width: 100%;
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title {
+        width: 80%;
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title .fine_pw_innertitle {
+        width: 100%;
+        
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title .find_pw_btn {
+        width: 100%;
+    }
+}
+
+@media (max-width:315px) {
+    .find_pw .find_pw_wrap .find_pw_title .find_pw_btn {
+        font-size: 0.70rem;
+    }
+}
+
+@media (max-height: 1000px) {
+    .find_pw .find_pw_wrap {
+        height: 90%;
+
+        padding-top: 0px;
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title {
+        height: 85%;
+        
+        padding-top: 30px;
+        margin: 50px 0px 10px 0px;
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title .name_id_email .find_pw_name_box {
+       margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .find_pw .find_pw_wrap .find_pw_title .find_pw_btn {
+        height: 39px;
+    }
+}
