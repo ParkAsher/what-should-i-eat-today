@@ -207,7 +207,30 @@ def find_id():
     else:
         return jsonify({'success': True, 'user_id_find': user_list})
 
-     
+###############
+# find pw api #
+###############
+@app.route('/api/find-user-pw', methods=['POST'])
+def find_pw():
+    userName = request.form['name']
+    userId = request.form['id']
+    userEmail = request.form['email']
+
+    sql = "SELECT user_pw FROM Users WHERE user_name = %s and user_id = %s and user_email = %s"
+    rows = app.database.execute(sql, (userName, userId, userEmail))
+    
+    user_list = []
+    for record in rows:
+        temp = {
+            "user_id": record[0]
+        }
+        user_list.append(temp)
+
+    if len(user_list) == 0:
+        return jsonify({'success': False})
+    else:
+        return jsonify({'success': True, 'user_pw_find': user_list})  
+        
 
 ################
 # register api #
