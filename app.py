@@ -503,17 +503,35 @@ def get_post_list():
 def patch_user_info():
     userNickname = request.form['nickname']
     userName = request.form['name']
-    idNumber = request.form['id']
+    idNumber = request.form['number']
+    userId = request.form['id']
     
     sql = "UPDATE Users SET user_nickname = %s, user_name = %s WHERE id = %s"
 
     app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
     
-    # 세션 삭제 (로그아웃)
-    # db에서 해당 유저 정보다찾아오기 (로그인)
-    # 세션에 넣는거 (로그인)
+    # 세션 삭제 
+    # db에서 해당 유저 정보다찾아오기 
+    # 세션에 넣는거 
+    session.clear()
+    # rows = app.database.execute(userId)
+    # print(userId)
 
+    # user_data = []
+    # for record in rows:
+    #     temp = {
+    #         "id": record[0],
+    #         "user_id": record[1],
+    #         "user_pw": record[2].encode('utf-8'),
+    #         "user_name": record[3],
+    #         "user_nickname": record[4],
+    #         "user_email": record[5],
+    #         "signup_at": record[6],
+    #     }
+    #     user_data.append(temp)
+    #     print(user_data)
     return jsonify({'msg': "수정완료!"})
+    
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")

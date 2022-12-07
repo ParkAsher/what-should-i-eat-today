@@ -2,6 +2,7 @@
 function mypage() {
     let userNickname = $('#user-nickname').val();
     let userName = $('#user-name').val();
+    let userId = $('#user-id').val();
 
     let nickname = userNickname.search(/[ㄱ-ㅎ|ㅏ-ㅣ]/g);
     
@@ -47,7 +48,7 @@ function mypage() {
     $.ajax({
         type: "PATCH",
         url: "/api/user-info",
-        data: { nickname: userNickname, name: userName, id: idNumber },
+        data: { nickname: userNickname, name: userName, number: idNumber, id: userId},
         success: function (response) {
             alert(response['msg']);
             window.location.href = "/";
