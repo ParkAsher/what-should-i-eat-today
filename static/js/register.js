@@ -38,6 +38,7 @@ function register() {
     }
     if (nickname > -1){
         alert("올바르지 못한 닉네임 형식입니다.")
+        return;
     }
     if (userId === "") {
         alert("아이디를 입력해주세요.")

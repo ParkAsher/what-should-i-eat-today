@@ -1,5 +1,6 @@
 // 회원 정보 업데이트
-function mypage(){
+
+function mypage() {
     let userNickname = $('#user-nickname').val();
     let userName = $('#user-name');
 
@@ -7,9 +8,6 @@ function mypage(){
     
     let nameNumber = userName.search(/[0-9]/g);
     let nameSpace = userName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-
-
-    console.log($('#user-nickname').attr('valid'))
 
     // 예외 처리
     if (userNickname === "") {
@@ -22,12 +20,13 @@ function mypage(){
     }
     if (nickname > -1){
         alert("올바르지 못한 닉네임 형식입니다.")
+        return;
     }
     if (userName === "") {
         alert("이름을 입력해주세요.")
         return;
     }
-    if (nameNumber > -1 || nameSpace > -1) {
+    if (nameNumber > -1 || nameSpace > -1) {    
         alert("이름은 한글 또는 영어만 입력 가능합니다.");
         return;
     }
@@ -36,7 +35,7 @@ function mypage(){
         return;
     }
     if ($('#user-nickname').attr('valid') == "false") {
-        alert("사용 가능한 닉네임을 입력해주세요.")
+        alert("사용 가능한 닉네임을 입력해주세요.") 
         return;
     }
     if (userNickname.search(/\s/) != -1 || userName.search(/\s/) != -1) {
@@ -54,6 +53,18 @@ function mypage(){
         }
     })
     
+}
+
+// 닉네임 체크박스 활성 | 비활성
+function check_box() {
+
+    if (document.getElementById("user-nickname").value === "" || document.getElementById("user-nickname").value === $('#nickname').val()) {
+        document.getElementById("btn").disabled = true;
+    }
+    else {
+        document.getElementById("btn").disabled = false;
+        return;
+    }
 }
 
 // 닉네임 중복체크

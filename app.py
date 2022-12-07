@@ -174,8 +174,9 @@ def user_register():
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
-
-    sql = "SELECT user_nickname FROM Users WHERE user_nickname = %s"
+    
+    # WHERE 컬럼명 NOT IN (SELECT절)
+    sql = "SELECT * FROM Users WHERE user_nickname = %s"
 
     rows = app.database.execute(sql, userNickname)
 
@@ -376,6 +377,22 @@ def get_comment_list():
     
     return  jsonify({'success': True, 'comment_list': comment_list})
 
+####################
+# mypage patch api #
+####################
+    
+@app.route("/api/user-info", methods=['PATCH'])
+def patch_user_info():
+    userNickname = request.form['nickname']
+    userName = request.form['name']
+    
+    sql = "UPDATE INTO Users(user_nickname, user_name) VALUES (%s, %s)"
+
+    app.database.execute(sql, (userNickname, userName)).lastrowid
+
+    return jsonify({'msg': "수정완료!"})
+    
+
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
     database = create_engine(
@@ -386,3 +403,6 @@ if __name__ == '__main__':
     s3 = s3_connection()
 
     app.run('0.0.0.0', port=5000, debug=True)
+
+
+
