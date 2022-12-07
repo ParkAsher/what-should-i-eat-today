@@ -1,18 +1,64 @@
-/* 입력창  */
-.container {
+@font-face {
+    font-family: "ONE-Mobile-POP";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media (max-width: 768px) {
+    .mypage_bg .mypage_wrap {
+        width: 100%;
+    }
+
+    .mypage_bg .mypage_wrap .mypage_title {
+        width: 80%;
+    }
+
+    .mypage_bg .mypage_wrap .nickname,
+    .mypage_bg .mypage_wrap .btn,
+    .mypage_bg .mypage_wrap .id,
+    .mypage_bg .mypage_wrap .pw,
+    .mypage_bg .mypage_wrap .name,
+    .mypage_bg .mypage_wrap .email {
+        width: 100%;
+    }
+
+}
+
+.mypage_bg {
+    width: 100%;
+    height: 100%;
+
+    padding : 50px 30px 30px 30px ;
+}
+
+.mypage_wrap {
+    width: 750px;
+    height: 1000px;
+    background-color: #ffeacd;
+    padding: 50px 50px 50px 50px;
     margin: 0 auto;
-    width: 500px;
+
+    border-radius: 25px;
 }
 
-.signup {
-    text-align: left
+.title {
+    text-align: center;
 }
 
-.btn {
-    float: right
-}
+.mypage_title {
+    background-color: white;
+    width: 590px;
+    height: 600px;
 
-/* 가입하기 */
-.d-grid {
-    padding-top: 30px;
+    display: block;
+
+    margin: 100px auto;
+    padding: 100px 40px 100px 40px;
+    
+    font-weight: normal;
+    font-family: "ONE-Mobile-POP";
+
+    border-radius: 35px;
 }
