@@ -1,6 +1,3 @@
-<!-- flask에서 넘어온 게시글 번호를 들고있기 위한 input -->
-<input id="post-id" type="hidden" value="{{post_id}}" />
-
 <div class="detail-wrap">
     <div class="detail-title-wrap">
         <p id="detail-title"></p>
@@ -12,9 +9,18 @@
         <div class="detail-date-wrap">
             <p id="detail-date" class="detail-date"></p>
         </div>
+        <div class="detail-recommend-wrap">
+            <span>추천수</span>
+            <p id="detail-recommend" class="detail-recommend"></p>
+        </div>
     </div>
     <div class="detail-content-wrap">
         <div id="detail-content" class="ql-editor"></div>
+    </div>
+    <div class="detail-recommend-wrap">
+        <button type="button" class="detail-recommend-btn" onclick="recommend()">
+            <i id="not-recommended" class="bi bi-hand-thumbs-up"></i>
+        </button>
     </div>
 </div>
 
