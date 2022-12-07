@@ -146,9 +146,41 @@
     flex-direction: column;
 }
 
-.comment-list .comment-info,
+.comment-list .comment-info-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-list .comment-info-wrap .comment-info {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comment-list .comment-info-wrap .comment-btn button {
+    background: none;
+    font-weight: bold;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.comment-list .comment-info-wrap .comment-btn .comment-edit-btn {
+    border: 2px solid burlywood;
+    color: burlywood;
+}
+
+.comment-list .comment-info-wrap .comment-btn .comment-delete-btn {
+    border: 2px solid red;
+    color: #ffffff;
+    background: red;
+}
+
 .comment-list .comment-content {
     width: 100%;
+}
+
+.comment-list .comment-content p {
+    margin: 0;
 }
 
 .comment-list .comment-info .comment-author {
@@ -163,8 +195,7 @@
 
 .comment-pagination-wrap {
     width: 1320px;
-    margin: 0 auto;
-
+    margin: 2rem auto;
     display: flex;
     justify-content: center;
     gap: 0.5rem;
@@ -174,6 +205,11 @@
     border-radius: 10px;
     background: transparent;
     font-weight: bold;
+}
+
+.page-selected {
+    background: burlywood !important;
+    color: #ffffff;
 }
 
 @media (max-width: 1320px) {
@@ -224,5 +260,14 @@
 
     .comment-list .comment {
         padding: 1rem;
+    }
+
+    .comment-list .comment-info-wrap .comment-btn button {
+        font-size: 0.75rem;
+    }
+
+    .comment-author,
+    .comment-created-at {
+        font-size: 0.75rem;
     }
 }
