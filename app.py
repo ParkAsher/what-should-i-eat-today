@@ -28,8 +28,7 @@ def s3_connection():
 
 
 @app.route('/')
-def home():
-    
+def home():    
     # 전체 게시글 수 넘겨주기
     sql="""
             SELECT count(*) FROM Posts
@@ -475,8 +474,6 @@ def get_post_list():
 
     return jsonify({'post_list': post_list})
 
-
-
 ####################
 # mypage patch api #
 ####################
@@ -484,13 +481,13 @@ def get_post_list():
 def patch_user_info():
     userNickname = request.form['nickname']
     userName = request.form['name']
+    idNumber = request.form['id']
     
-    sql = "UPDATE Users SET user_nickname = %s, user_name = %s"
+    sql = "UPDATE Users SET user_nickname = %s, user_name = %s WHERE id = %s"
 
-    app.database.execute(sql, (userNickname, userName)).lastrowid
+    app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
 
-    return jsonify({'msg': "수정완료!"})
-
+    return jsonify({'msg': "수정완료!"})  
 
 
 
