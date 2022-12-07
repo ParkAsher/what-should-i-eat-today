@@ -1,6 +1,8 @@
 $(document).ready(function () {
     get_post_detail();
+    is_recommended();
     get_comment_list(1)
+
 })
 
 function get_post_detail() {
@@ -25,6 +27,9 @@ function get_post_detail() {
 
                 let postContent = postData['post_content'];
                 $('#detail-content').append(postContent)
+
+                let postRecommend = postData['post_recommend'];
+                $('#detail-recommend').append(postRecommend)
 
                 // 수정, 삭제를 로그인되어있는 해당 글의 글 작성자만 볼수있게 처리
                 let postAuthorId = postData['user_id'];
@@ -138,7 +143,6 @@ function get_comment_list(page) {
                 if (loginedUserId === response['comment_list'][i]['c_author_id']) {
                     let temp2 = `
                         <div class="comment-btn">
-                            <button type="button" class="comment-edit-btn">수정</button>
                             <button type="button" class="comment-delete-btn" onclick="comment_delete(${response['comment_list'][i]['c_id']})">삭제</button>
                         </div>
                     `
@@ -146,6 +150,50 @@ function get_comment_list(page) {
                 }
             }
 
+        }
+    })
+}
+
+function recommend() {
+    let postId = $('#post-id').val();
+    let loginedUserNum = $('#logined-user-num').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post-recommend",
+        data: { post_id: postId, user_num: loginedUserNum },
+        success: function (response) {
+            alert("추천하였습니다.")
+            $('#not-recommended').css('display', 'none')
+            temp = `
+                <i class="bi bi-hand-thumbs-up-fill"></i>
+            `
+            $('.detail-recommend-btn').append(temp);
+        }
+    })
+
+}
+
+function is_recommended() {
+    let postId = $('#post-id').val();
+    let loginedUserNum = $('#logined-user-num').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/post-recommend/is-recommended-check",
+        data: { post_id: postId, user_num: loginedUserNum },
+        success: function (response) {
+            if (response['is_recommended'] == 0) {
+                return;
+            } else {
+                $('#not-recommended').css('display', 'none')
+                temp = `
+                    <i class="bi bi-hand-thumbs-up-fill"></i>
+                `
+                $('.detail-recommend-btn').append(temp);
+                $('.detail-recommend-btn').attr('disabled', true);
+                return;
+            }
         }
     })
 }
