@@ -69,6 +69,20 @@ def logout():
     return redirect(url_for('home'))
 
 #########################
+# find_id.html mapping #
+#########################
+@app.route('/find_id')
+def find_id_page():
+    return render_template('index.html', component_name='find_id')
+
+#########################
+# find_pw.html mapping #
+#########################
+@app.route('/find_pw')
+def find_pw_page():
+    return render_template('index.html', component_name='find_pw')    
+
+#########################
 # register.html mapping #
 #########################
 @app.route('/register')
@@ -140,7 +154,6 @@ def user_login():
             "user_nickname" : record[4],
             "user_email" : record[5],
             "signup_at" : record[6],     
-
         }
         user_data.append(temp)
 
@@ -157,6 +170,40 @@ def user_login():
     else:
         # 일치하는 아이디가 없다면?
         return jsonify({'result': "Id-Not-Found"})
+
+###############
+# find id api #
+###############
+
+@app.route('/api/find-user-id', methods=['POST'])
+def find_id():
+    userName = request.form['name']
+    userEmail = request.form['email']
+
+    # 1. 이름이 있는지 없는지 판별
+    sql_is_name_check = "SELECT * FROM Users WHERE user_name = %s"
+    rows = app.database.execute(sql_is_name_check, userName)
+    
+    user_list = []
+    for record in rows:
+        user_list.append(record)
+    print(user_list[0][5])    
+    
+    # if len(user_list) == 1:
+    #     # 2. 이름은 있는데 이메일 비교
+    #     if userEmail == user_list[0][1][1]:
+    #         # 이메일이 같다면?
+    #         # session
+    #         session['user-info'] = user_list[0]
+    #         return jsonify({'result':"Find-Success"})
+    #     else:
+    #         # 이메일이 틀리다면?
+    #         return jsonify({'result': "Email-Not-Correct"})
+    # else:
+    #     # 일치하는 이름이 없다면?
+    #     return jsonify({'result':"Name-Not_Found"})
+
+    return "test"
 
 ################
 # register api #
