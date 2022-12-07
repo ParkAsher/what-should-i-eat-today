@@ -414,7 +414,7 @@ def get_comment_list():
     comment_count = (int(page)-1) * 5
     
     sql="""
-            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at 
+            SELECT u.user_id, u.user_nickname, c.c_content, c.created_at, c.id 
             FROM Comments as c
             LEFT JOIN Users as u
             ON c.c_author = u.id
@@ -432,7 +432,8 @@ def get_comment_list():
             'c_author_id' : record[0],
             'c_author_nickname' : record[1],
             'c_content' : record[2],
-            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S"),
+            'c_id' : record[4]
         }
         comment_list.append(temp)  
     

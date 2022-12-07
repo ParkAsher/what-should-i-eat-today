@@ -74,6 +74,21 @@ function comment_submit() {
     })
 }
 
+function comment_delete(commentId) {
+
+    let Url = "/api/comment-delete?cid=" + commentId
+
+    $.ajax({
+        type: "DELETE",
+        url: Url,
+        success: function (response) {
+            console.log(response['msg'])
+            window.location.reload();
+        }
+    })
+
+}
+
 function get_comment_list(page) {
     // 글 번호
     let postId = $('#post-id').val();
@@ -102,7 +117,7 @@ function get_comment_list(page) {
                             </div>
                             <div class="comment-btn">
                                 <button type="button" class="comment-edit-btn">수정</button>
-                                <button type="button" class="comment-delete-btn">삭제</button>
+                                <button type="button" class="comment-delete-btn" onclick="comment_delete(${response['comment_list'][i]['c_id']})">삭제</button>
                             </div>
                         </div>                        
                         <div class="comment-content">
