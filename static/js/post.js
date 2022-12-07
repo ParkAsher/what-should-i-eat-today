@@ -6,7 +6,7 @@ $(document).ready(function () {
 })
 
 function get_post_detail() {
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
 
     $.ajax({
         type: "POST",
@@ -52,7 +52,7 @@ function post_delete() {
         return;
     }
 
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
 
     $.ajax({
         type: "POST",
@@ -67,7 +67,7 @@ function post_delete() {
 
 function comment_submit() {
     // 글 번호
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
     // 댓글 내용
     let commentContent = $('#comment-content').val();
     // 작성자
@@ -105,7 +105,7 @@ function comment_delete(cId) {
 
 function get_comment_list(page) {
     // 글 번호
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
     let pageNum = page; // string
 
     let Url = "/api/comment-list?postid=" + postId + "&page=" + pageNum;
@@ -155,7 +155,7 @@ function get_comment_list(page) {
 }
 
 function recommend() {
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
     let loginedUserNum = $('#logined-user-num').val();
 
     $.ajax({
@@ -175,7 +175,7 @@ function recommend() {
 }
 
 function is_recommended() {
-    let postId = $('#post-id').val();
+    let postId = new URL(location.href).searchParams.get('postid')
     let loginedUserNum = $('#logined-user-num').val();
 
     $.ajax({
