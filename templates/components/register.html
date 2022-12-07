@@ -1,33 +1,5 @@
-<style>
-    /* 섹션 크기 
-.bg-light {
-    height: 1053px;
-    padding-top: 55px;
-    padding-bottom: 75px;
-} */
-
-    /* 입력창  */
-    .container {
-        margin: 0 auto;
-        width: 500px;
-    }
-
-    .signup {
-        text-align: center
-    }
-
-    .btn {
-        float: right
-    }
-
-    /* 가입하기 */
-    .d-grid {
-        padding-top: 30px;
-    }
-</style>
-
 <script defer src="../../static/js/register.js"></script>
-    
+
 <div class="container py-4">
     <form>
         <div class="signup py-4 ">
@@ -35,13 +7,15 @@
         </div>
         <div class="form-group">
             <label for="user-id" class="form-label mt-4">닉네임</label>
-            <input type="text" class="form-control" id="user-nickname" valid="default" placeholder="유저 닉네임 입력 (최대 12자)" />
+            <input type="text" class="form-control" id="user-nickname" valid="default"
+                placeholder="유저 닉네임 입력 (최대 12자)" />
             <button type="button" class="btn btn-primary" onclick="user_nickname_check()">중복체크</button>
             <div id="nickname-check-msg"></div>
         </div>
         <div class="form-group">
             <label for="user-id" class="form-label mt-4">아이디</label>
-            <input type="text" class="form-control" id="user-id" name="user_id" valid="default" placeholder="아이디 입력 (5~20자) (특수기호 사용 불가능)" />
+            <input type="text" class="form-control" id="user-id" name="user_id" valid="default"
+                placeholder="아이디 입력 (5~20자) (특수기호 사용 불가능)" />
             <button type="button" class="btn btn-primary" onclick="user_id_check()">중복체크</button>
             <div id="id-check-msg"></div>
         </div>
@@ -62,7 +36,7 @@
             <label for="user-email" class="form-label mt-4">이메일</label>
             <input type="text" class="form-control" id="user-email" placeholder="이메일 주소@sparta.com" />
         </div>
-        <div class="d-grid">
+        <div class="d-grid gap-2 col-6 mx-auto">
             <button class="btn btn-primary btn-lg" type="button" onclick="register()">
                 회원가입
             </button>

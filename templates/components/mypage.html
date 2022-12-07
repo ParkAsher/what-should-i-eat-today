@@ -1,17 +1,44 @@
-<style>
-    .container {
-        margin: 0 auto;
-        width: 500px;
-    }
-</style>
+<script defer src="../../static/js/mypage.js"></script>
 
-<section>
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-</section>
+
+<!-- 현재 세션의 값을 가져옴 -->
+<input id="nickname" type="hidden" value="{{session['user-info']['user_nickname']}}" />
+<div class=container py-4>
+    <form>
+        <div class="mypage py-4">
+            <h2>My Page</h2>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nickname</label>
+            <input type="text" class="form-control" onkeyup="check_box()"
+                value="{{session['user-info']['user_nickname']}}" id="user-nickname" />
+            <button type="button" class="btn btn-primary" id="btn" disabled
+                onclick="user_nickname_check()">중복체크</button>
+            <div id="nickname-check-msg"></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">ID</label>
+            <input type="text" class="form-control" id="user-id" value="{{session['user-info']['user_id']}}"
+                aria-label="Disabled input" disabled readonly />
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" class="form-control" id="user-pw" value="{{session['user-info']['user_pw']}}"
+                aria-label="Disabled input" disabled readonly />
+        </div>
+        <div class="mb-3">
+            <label for="user-name" class="form-label">Username</label>
+            <input type="text" class="form-control" id="user-name" value="{{session['user-info']['user_name']}}" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email address</label>
+            <input type="email" class="form-control" id="user-email" value="{{session['user-info']['user_email']}}"
+                aria-label="Disabled input" disabled readonly />
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-primary btn-lg" type="button" onclick="mypage()">
+                Update
+            </button>
+        </div>
+    </form>
+</div>

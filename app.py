@@ -144,11 +144,21 @@ def post_page():
 
     return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
 
+
+#######################
+# mypage.html mapping #
+#######################
+@app.route('/mypage')
+def userinfo_page():
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        return render_template('index.html', component_name='mypage')
+
 #############
 # login api #
 #############
-
-
 @app.route('/api/user-login', methods=['POST'])
 def user_login():
     userId = request.form['id']
@@ -242,8 +252,9 @@ def user_register():
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
-
-    sql = "SELECT user_nickname FROM Users WHERE user_nickname = %s"
+    
+    # WHERE 컬럼명 NOT IN (SELECT절)
+    sql = "SELECT * FROM Users WHERE user_nickname = %s"
 
     rows = app.database.execute(sql, userNickname)
 
@@ -457,6 +468,8 @@ def get_comment_list():
     
     return  jsonify({'success': True, 'comment_list': comment_list})
 
+
+    
 #############################
 # get post list in main api #
 #############################
@@ -492,7 +505,26 @@ def get_post_list():
     if len(post_list) == 0 :
         return jsonify({'msg' : "Posts-Not-Exist"})
                 
+
     return jsonify({'post_list': post_list})
+
+
+
+####################
+# mypage patch api #
+####################
+@app.route("/api/user-info", methods=['PATCH'])
+def patch_user_info():
+    userNickname = request.form['nickname']
+    userName = request.form['name']
+    
+    sql = "UPDATE INTO Users(user_nickname, user_name) VALUES (%s, %s)"
+
+    app.database.execute(sql, (userNickname, userName)).lastrowid
+
+    return jsonify({'msg': "수정완료!"})
+    
+
 
 
 if __name__ == '__main__':
@@ -505,3 +537,6 @@ if __name__ == '__main__':
     s3 = s3_connection()
 
     app.run('0.0.0.0', port=5000, debug=True)
+
+
+
