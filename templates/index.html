@@ -21,6 +21,8 @@
         <link rel="stylesheet" href="../static/styles/register.css" />
         <link rel="stylesheet" href="../static/styles/mypage.css" />
         <link rel="stylesheet" href="../static/styles/post.css" />
+        <link rel="stylesheet" href="../static/styles/find_id.css" />
+        <link rel="stylesheet" href="../static/styles/find_pw.css" />
 
         <!-- bootstrap -->
         <link
@@ -51,7 +53,12 @@
             component_name == 'login' %} {% include "./components/login.html" %} {% elif
             component_name == 'write' %} {% include "./components/write.html" %} {% elif
             component_name == 'register' %} {% include "./components/register.html" %} {% elif
+<<<<<<< HEAD
             component_name == 'mypage' %} {% include "./components/mypage.html" %} {% elif
+=======
+            component_name == 'find_id' %} {% include "./components/find_id.html" %} {% elif
+            component_name == 'find_pw' %} {% include "./components/find_pw.html" %} {% elif
+>>>>>>> 41108735aae483ab74d80c971706c5c81401ea95
             component_name == 'post' %} {% include "./components/post.html" %} {% endif %}
         </section>
     </body>
