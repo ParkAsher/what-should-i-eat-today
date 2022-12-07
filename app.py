@@ -487,7 +487,7 @@ def patch_user_info():
 
     app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
 
-    return jsonify({'msg': "수정완료!"})  
+    return jsonify({'msg': "수정완료!"})
 
 
 
