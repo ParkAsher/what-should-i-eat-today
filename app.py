@@ -442,7 +442,21 @@ def get_comment_list():
     
     return  jsonify({'success': True, 'comment_list': comment_list})
 
+######################
+# comment delete api #
+######################
+@app.route("/api/comment-delete", methods=['DELETE'])
+def comment_delete():
+    c_id = request.args.get('cid')
 
+    sql="""
+            DELETE FROM Comments 
+            WHERE id = %s 
+        """
+    
+    app.database.execute(sql, int(c_id))
+
+    return jsonify({'msg' : "삭제성공!"})
     
 #############################
 # get post list in main api #

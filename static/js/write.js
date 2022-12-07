@@ -33,6 +33,9 @@ function imageHandler() {
 function quillInit() {
     let options = {
         modules: {
+            imageResize: {
+                displaySize: true
+            },
             toolbar: {
                 container: [
                     [{ 'font': [] }, { 'size': [] }],
@@ -57,6 +60,7 @@ function quillInit() {
     quill.on('text-change', function () {
         document.getElementById("post-content").value = quill.root.innerHTML;
     })
+
 
 }
 
