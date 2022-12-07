@@ -86,6 +86,7 @@ function register() {
     }
     if (userPw !== userPwCheck) {
         $("#check-msg").css('display', 'block');
+        $('#check-msg').empty()
         $("#check-msg").append("비밀번호가 일치하지 않습니다.");
         return;
     }
