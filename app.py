@@ -4,7 +4,7 @@ import boto3
 import datetime
 import bcrypt
 import math
- 
+
 
 app = Flask(__name__)
 app.secret_key = "session_test"
@@ -12,6 +12,8 @@ app.secret_key = "session_test"
 ##################
 # aws s3 connect #
 ##################
+
+
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -28,35 +30,37 @@ def s3_connection():
 
 
 @app.route('/')
-def home():    
+def home():
     # 정렬 종류
     sort = request.args.get('sort')
 
     # 첫 로딩 시 최신순으로
-    if sort == "" :
+    if sort == "":
         sort = "newest"
 
     # 전체 게시글 수 넘겨주기
-    sql="""
+    sql = """
             SELECT count(*) FROM Posts
         """
     rows = app.database.execute(sql)
 
     for record in rows:
-        post_list_count = record[0] 
+        post_list_count = record[0]
 
     if post_list_count == 0:
         post_page = 0
     elif post_list_count % 8 == 0:
         post_page = post_list_count // 8
-    else :
-        post_page = math.ceil(post_list_count / 8)    
+    else:
+        post_page = math.ceil(post_list_count / 8)
 
     return render_template('index.html', component_name='postlist', post_page=post_page, sort=sort)
 
 ######################
 # login.html mapping #
 ######################
+
+
 @app.route('/login')
 def login_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -69,6 +73,8 @@ def login_page():
 ##################
 # logout mapping #
 ##################
+
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -77,6 +83,8 @@ def logout():
 #########################
 # find_id.html mapping #
 #########################
+
+
 @app.route('/find_id')
 def find_id_page():
     return render_template('index.html', component_name='find_id', user_lists="", len=0)
@@ -84,6 +92,8 @@ def find_id_page():
 #########################
 # find_pw.html mapping #
 #########################
+
+
 @app.route('/find_pw')
 def find_pw_page():
     return render_template('index.html', component_name='find_pw')
@@ -91,6 +101,8 @@ def find_pw_page():
 #########################
 # update_pw.html mapping #
 #########################
+
+
 @app.route('/update_pw')
 def update_pw_page():
     return render_template('index.html', component_name='update_pw')
@@ -98,6 +110,8 @@ def update_pw_page():
 #########################
 # register.html mapping #
 #########################
+
+
 @app.route('/register')
 def register_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -110,6 +124,8 @@ def register_page():
 ######################
 # write.html mapping #
 ######################
+
+
 @app.route('/write')
 def write_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -122,6 +138,8 @@ def write_page():
 #####################
 # edit.html mapping #
 #####################
+
+
 @app.route('/edit')
 def edit_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -134,6 +152,8 @@ def edit_page():
 #####################
 # post.html mapping #
 #####################
+
+
 @app.route('/post')
 def post_page():
     post_id = request.args.get('postid')
@@ -150,11 +170,11 @@ def post_page():
 
     print(comment_list_count)
 
-    if comment_list_count == 0 :
+    if comment_list_count == 0:
         comment_page = 0
-    elif comment_list_count % 5 == 0 :
+    elif comment_list_count % 5 == 0:
         comment_page = comment_list_count // 5
-    else :
+    else:
         comment_page = math.ceil(comment_list_count / 5)
 
     return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
@@ -197,7 +217,7 @@ def mypage_upadate():
     else:
         print(session['user-info'])
         return render_template('index.html', component_name='mypage_my_post')
-        
+
 
 #############
 # login api #
@@ -229,6 +249,10 @@ def user_login():
         if bcrypt.checkpw(userPw, (user_data[0]['user_pw'])):
             # if hashed_pw == user_data[0]['user_pw']:
             # 비밀번호가 같다면?
+            sql = "INSERT INTO Log(user_id, login_time) VALUES (%s, %s)"
+            app.database.execute(
+                sql, (user_data[0]['id'], datetime.datetime.now()))
+
             # session
             session['user-info'] = user_data[0]
             return jsonify({'result': "Login-Success"})
@@ -242,6 +266,8 @@ def user_login():
 ###############
 # find id api #
 ###############
+
+
 @app.route('/api/find-user-id', methods=['POST'])
 def find_id():
     userName = request.form['name']
@@ -250,7 +276,7 @@ def find_id():
     # 1. 이름이 있는지 없는지 판별
     sql = "SELECT user_id FROM Users WHERE user_name = %s and user_email = %s"
     rows = app.database.execute(sql, (userName, userEmail))
-    
+
     user_lists = []
     for record in rows:
         temp = {
@@ -266,6 +292,8 @@ def find_id():
 ###############
 # find pw api #
 ###############
+
+
 @app.route('/api/find-user-pw', methods=['POST'])
 def find_pw():
     userName = request.form['name']
@@ -274,7 +302,7 @@ def find_pw():
 
     sql = "SELECT user_pw FROM Users WHERE user_name = %s and user_id = %s and user_email = %s"
     rows = app.database.execute(sql, (userName, userId, userEmail))
-    
+
     user_list = []
     for record in rows:
         temp = {
@@ -288,7 +316,7 @@ def find_pw():
         session['id'] = userId
         print(session['id'])
         return jsonify({'success': True})
-        
+
 
 ################
 # register api #
@@ -313,10 +341,12 @@ def user_register():
 ######################
 # nickname check api #
 ######################
+
+
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
-    
+
     # WHERE 컬럼명 NOT IN (SELECT절)
     sql = "SELECT * FROM Users WHERE user_nickname = %s"
 
@@ -337,6 +367,8 @@ def user_nickname_check():
 ################
 # id check api #
 ################
+
+
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -360,6 +392,8 @@ def user_id_check():
 ###################
 # post write api #
 ###################
+
+
 @app.route('/api/post-write', methods=['POST'])
 def post_write():
     title = request.form['title']
@@ -398,6 +432,8 @@ def file_upload():
 ##########################
 # image insert to aws s3 #
 ##########################
+
+
 def s3_put_object(s3, bucket, file, filename):
     try:
         s3.put_object(
@@ -415,6 +451,8 @@ def s3_put_object(s3, bucket, file, filename):
 #######################
 # post detail get api #
 #######################
+
+
 @app.route("/api/post-detail", methods=["POST"])
 def post_detail_get():
     post_id = request.form['post_id']
@@ -451,6 +489,8 @@ def post_detail_get():
 ##########################
 # post detail delete api #
 ##########################
+
+
 @app.route("/api/post-detail/delete", methods=["POST"])
 def post_detail_delete():
     post_id = request.form['post_id']
@@ -494,8 +534,8 @@ def get_comment_list():
     page = request.args.get('page')
 
     comment_count = (int(page)-1) * 5
-    
-    sql="""
+
+    sql = """
             SELECT u.user_id, u.user_nickname, c.c_content, c.created_at, c.id 
             FROM Comments as c
             LEFT JOIN Users as u
@@ -504,54 +544,58 @@ def get_comment_list():
             ORDER BY created_at desc
             LIMIT %s, 5
         """
-    
+
     rows = app.database.execute(sql, (post_id, comment_count))
 
-    comment_list=[]
+    comment_list = []
     for record in rows:
         temp = {
-            'c_author_id' : record[0],
-            'c_author_nickname' : record[1],
-            'c_content' : record[2],
-            'created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S"),
-            'c_id' : record[4]
+            'c_author_id': record[0],
+            'c_author_nickname': record[1],
+            'c_content': record[2],
+            'created_at': record[3].strftime("%Y-%m-%d %H:%M:%S"),
+            'c_id': record[4]
         }
-        comment_list.append(temp)  
-    
+        comment_list.append(temp)
+
     if len(comment_list) == 0:
         return jsonify({'success': False})
-    
-    return  jsonify({'success': True, 'comment_list': comment_list})
+
+    return jsonify({'success': True, 'comment_list': comment_list})
 
 ######################
 # comment delete api #
 ######################
+
+
 @app.route("/api/comment-delete", methods=['DELETE'])
 def comment_delete():
     c_id = request.args.get('cid')
 
-    sql="""
+    sql = """
             DELETE FROM Comments 
             WHERE id = %s 
         """
-    
+
     app.database.execute(sql, int(c_id))
 
-    return jsonify({'msg' : "삭제성공!"})
-    
+    return jsonify({'msg': "삭제성공!"})
+
 #############################
 # get post list in main api #
 #############################
+
+
 @app.route("/api/post-list", methods=['GET'])
 def get_post_list():
     page = request.args.get('page')
     sort = request.args.get('sort')
 
     post_count = (int(page)-1) * 8
-    
+
     if sort == "recommend":
         # 추천순
-        sql="""
+        sql = """
             SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at, p.recommend
             FROM Posts as p
             LEFT JOIN Users as u
@@ -560,9 +604,9 @@ def get_post_list():
             LIMIT %s, 8
         """
         rows = app.database.execute(sql, (post_count))
-    else :
+    else:
         # 최신순
-        sql="""
+        sql = """
             SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at, p.recommend
             FROM Posts as p
             LEFT JOIN Users as u
@@ -572,42 +616,44 @@ def get_post_list():
         """
         rows = app.database.execute(sql, (post_count))
 
-    post_list=[]
+    post_list = []
     for record in rows:
         temp = {
-            'post_id' : record[0],
-            'post_title' : record[1],
-            'user_id' : record[2],
-            'user_nickname' : record[3],
-            'post_content' : record[4],
-            'post_thumbnail' : record[5],
-            'created_at' : record[6].strftime("%Y-%m-%d %H:%M:%S"),
-            'post_recommend' : record[7]
+            'post_id': record[0],
+            'post_title': record[1],
+            'user_id': record[2],
+            'user_nickname': record[3],
+            'post_content': record[4],
+            'post_thumbnail': record[5],
+            'created_at': record[6].strftime("%Y-%m-%d %H:%M:%S"),
+            'post_recommend': record[7]
         }
         post_list.append(temp)
 
-    if len(post_list) == 0 :
-        return jsonify({'msg' : "Posts-Not-Exist"})
-                
+    if len(post_list) == 0:
+        return jsonify({'msg': "Posts-Not-Exist"})
 
     return jsonify({'post_list': post_list})
 
 ####################
 # mypage patch api #
 ####################
+
+
 @app.route("/api/user-info", methods=['PATCH'])
 def patch_user_info():
     userNickname = request.form['nickname']
     userName = request.form['name']
     idNumber = request.form['number']
     userId = request.form['id']
-    
+
     sql = "UPDATE Users SET user_nickname = %s, user_name = %s WHERE id = %s"
 
-    app.database.execute(sql, (userNickname, userName, int(idNumber))).lastrowid
-    
-    # 세션 삭제 
-    # db에서 해당 유저 정보다찾아오기 
+    app.database.execute(
+        sql, (userNickname, userName, int(idNumber))).lastrowid
+
+    # 세션 삭제
+    # db에서 해당 유저 정보다찾아오기
     # 세션에 수정 값 넣어주기
     session.clear()
     sql = "SELECT * FROM Users WHERE user_id = %s"
@@ -618,7 +664,7 @@ def patch_user_info():
         temp = {
             "id": record[0],
             "user_id": record[1],
-            "user_pw": record[2].encode('utf-8'),  
+            "user_pw": record[2].encode('utf-8'),
             "user_name": record[3],
             "user_nickname": record[4],
             "user_email": record[5],
@@ -628,40 +674,44 @@ def patch_user_info():
 
     session['user-info'] = user_data[0]
     print(session['user-info'])
-    return jsonify({'msg': "수정완료!"})  
+    return jsonify({'msg': "수정완료!"})
 
 ######################
 # post recommend api #
 ######################
+
+
 @app.route("/api/post-recommend", methods=['POST'])
 def post_recommend():
     post_id = request.form['post_id']
     user_num = request.form['user_num']
 
-    sql="""
+    sql = """
             UPDATE Posts SET recommend = Posts.recommend + 1
             WHERE Posts.id = %s
         """
-    
+
     app.database.execute(sql, post_id)
 
-    sql2="""
+    sql2 = """
             INSERT INTO Recommends(r_user, p_id)
             VALUES(%s, %s)
         """
     app.database.execute(sql2, (user_num, post_id))
 
-    return({'msg' : "추천하였습니다!"})
+    return ({'msg': "추천하였습니다!"})
 
 ############################
 # is recommended check api #
 ############################
+
+
 @app.route("/api/post-recommend/is-recommended-check", methods=['POST'])
 def is_recommended_check():
     post_id = request.form['post_id']
     user_num = request.form['user_num']
 
-    sql="""
+    sql = """
             SELECT exists(SELECT * FROM Recommends WHERE p_id = %s AND r_user = %s)
         """
 
@@ -670,11 +720,13 @@ def is_recommended_check():
     for record in rows:
         is_recommended = record[0]
 
-    return({'is_recommended' : is_recommended})
+    return ({'is_recommended': is_recommended})
 
 #################
 # update_pw api #
 #################
+
+
 @app.route('/api/find-user-pw/update-pw', methods=['POST'])
 def update_pw():
     newPw = request.form['pw'].encode('utf-8')
@@ -687,8 +739,8 @@ def update_pw():
 
     app.database.execute(sql, (hashed_pw, userId)).lastrowid
 
-    # 세션 삭제 
-    # db에서 해당 유저 정보다찾아오기 
+    # 세션 삭제
+    # db에서 해당 유저 정보다찾아오기
     # 세션에 수정 값 넣어주기
     session.clear()
 
@@ -697,11 +749,13 @@ def update_pw():
 ############################
 # edit post detail get api #
 ############################
+
+
 @app.route('/api/edit-detail', methods=['GET'])
 def edit_detail():
     post_id = request.args.get('postid')
 
-    sql="""
+    sql = """
             SELECT title, thumbnail, content
             FROM Posts
             WHERE id = %s
@@ -712,20 +766,22 @@ def edit_detail():
     for record in rows:
         print(record)
         temp = {
-            'post_title' : record[0],
-            'post_thumbnail' : record[1],
-            'post_content' : record[2],
+            'post_title': record[0],
+            'post_thumbnail': record[1],
+            'post_content': record[2],
         }
         post_detail_list.append(temp)
 
-    if len(post_detail_list) == 0 :
-        return jsonify({'success' : False, 'msg' : '글이 존재하지 않습니다.'})
-    else :
-        return jsonify({'success' : True, 'post_detail' : post_detail_list})
+    if len(post_detail_list) == 0:
+        return jsonify({'success': False, 'msg': '글이 존재하지 않습니다.'})
+    else:
+        return jsonify({'success': True, 'post_detail': post_detail_list})
 
 #################
 # edit post api #
 #################
+
+
 @app.route("/api/post-edit", methods=['PATCH'])
 def post_edit():
     post_id = request.form['postid']
