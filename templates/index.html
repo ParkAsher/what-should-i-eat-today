@@ -19,6 +19,8 @@
         <link rel="stylesheet" href="../static/styles/write.css" />
         <link rel="stylesheet" href="../static/styles/login.css" />
         <link rel="stylesheet" href="../static/styles/register.css" />
+        <link rel="stylesheet" href="../static/styles/my_like_post.css" />
+        <link rel="stylesheet" href="../static/styles/my_post.css" />
         <link rel="stylesheet" href="../static/styles/mypage.css" />
         <link rel="stylesheet" href="../static/styles/post.css" />
         <link rel="stylesheet" href="../static/styles/find_id.css" />
@@ -48,6 +50,8 @@
         <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
 
+        <link rel="icon" href="../static/image/favicon_pizza.ico" />
+
         <title>오늘뭐먹죠?</title>
     </head>
     <body>
@@ -55,16 +59,19 @@
         {% include "./components/header.html" %}
 
         <!-- Content -->
-        <section id="content">
+        <section id="content" class="content">
             {% if component_name == 'postlist' %} {% include "./components/postlist.html" %} {% elif
             component_name == 'login' %} {% include "./components/login.html" %} {% elif
             component_name == 'write' %} {% include "./components/write.html" %} {% elif
             component_name == 'register' %} {% include "./components/register.html" %} {% elif
-            component_name == 'mypage' %} {% include "./components/mypage.html" %} {% elif
             component_name == 'find_id' %} {% include "./components/find_id.html" %} {% elif
             component_name == 'find_pw' %} {% include "./components/find_pw.html" %} {% elif
             component_name == 'update_pw' %} {% include "./components/update_pw.html" %} {% elif
-            component_name == 'post' %} {% include "./components/post.html" %} {% endif %}
+            component_name == 'post' %} {% include "./components/post.html" %} {% elif
+            component_name == 'mypage' %} {% include "./components/mypage.html" %} {% elif
+            component_name == 'mypage_like_post' %} {% include "./components/my_like_post.html" %}
+            {% elif component_name == 'mypage_my_post' %} {% include "./components/my_post.html"
+            %}{% endif %}
         </section>
     </body>
 </html>

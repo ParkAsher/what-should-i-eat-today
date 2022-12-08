@@ -18,7 +18,7 @@
             </ol>
         </nav>
         <div class="mypage_title">
-            <h2 class="title">회원 정보 수정</h2>
+            <h2 class="title">좋아요 한 게시글</h2>
             <div class="nickname mb-3">
                 <label class="form-label">Nickname</label>
                 <input
@@ -64,30 +64,6 @@
                     disabled
                     readonly
                 />
-            </div>
-            <div class="name mb-3">
-                <label for="user-name" class="form-label">Username</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    id="user-name"
-                    value="{{session['user-info']['user_name']}}"
-                />
-            </div>
-            <div class="email mb-3">
-                <label class="form-label">Email address</label>
-                <input
-                    type="email"
-                    class="form-control"
-                    id="user-email"
-                    value="{{session['user-info']['user_email']}}"
-                    aria-label="Disabled input"
-                    disabled
-                    readonly
-                />
-            </div>
-            <div class="d-grid gap-2 col-6 mx-auto">
-                <button class="btn" type="button" onclick="mypage()">Update</button>
             </div>
         </div>
     </div>

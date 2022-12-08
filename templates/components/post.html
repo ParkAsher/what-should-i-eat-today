@@ -1,3 +1,12 @@
+<!-- 로그인 유저의 정보를 들고있기 위한 input -->
+<input
+    id="logined-user-id"
+    type="hidden"
+    value="{% if 'user-info' in session %}{{session['user-info']['user_id']}}{% endif %}"
+/>
+<!-- 댓글 작성자(로그인 유저) 의 유저 번호 -->
+<input id="logined-user-num" type="hidden" value="{{session['user-info']['id']}}" />
+
 <div class="detail-wrap">
     <div class="detail-title-wrap">
         <p id="detail-title"></p>
@@ -10,7 +19,7 @@
             <p id="detail-date" class="detail-date"></p>
         </div>
         <div class="detail-recommend-wrap">
-            <span>추천수</span>
+            <p>추천수</p>
             <p id="detail-recommend" class="detail-recommend"></p>
         </div>
     </div>
@@ -23,14 +32,6 @@
         </button>
     </div>
 </div>
-
-<!-- 로그인 유저의 정보를 들고있기 위한 input -->
-<!-- 로그인이 되어있으면(세션이 있으면)? value에 user_id 없으면 빈 문자 -->
-<input
-    id="logined-user-id"
-    type="hidden"
-    value="{% if 'user-info' in session %}{{session['user-info']['user_id']}}{% endif %}"
-/>
 
 <div class="post-btn">
     <div class="post-btn-left">
@@ -60,8 +61,6 @@
     <div class="comment-btn">
         <button type="button" class="comment-submit-btn" onclick="comment_submit()">등록</button>
     </div>
-    <!-- 댓글 작성자(로그인 유저) 의 유저 번호 -->
-    <input id="logined-user-num" type="hidden" value="{{session['user-info']['id']}}" />
 </div>
 {% endif %}
 

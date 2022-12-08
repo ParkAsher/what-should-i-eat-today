@@ -1,18 +1,110 @@
-/* 입력창  */
-.container {
+@font-face {
+    font-family: 'KOFIHDrLEEJWTTF-B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/KOFIHDrLEEJWTTF-B.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "ONE-Mobile-POP";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+        format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@media (max-width: 768px) {
+    .mypage_bg .mypage_wrap {
+        width: 100%;
+    }
+
+    .mypage_bg .mypage_wrap .mypage_title {
+        width: 80%;
+    }
+
+    .mypage_bg .mypage_wrap .nickname,
+    .mypage_bg .mypage_wrap .btn,
+    .mypage_bg .mypage_wrap .id,
+    .mypage_bg .mypage_wrap .pw,
+    .mypage_bg .mypage_wrap .name,
+    .mypage_bg .mypage_wrap .email {
+        width: 100%;
+    }
+
+}
+
+.mypage_bg {
+    width: 100%;
+    height: 100%;
+
+    padding : 50px 30px 30px 30px ;
+}
+
+.mypage_wrap {
+    width: 750px;
+    height: 1000px;
+    background-color: #ffeacd;
+    padding: 50px 50px 50px 50px;
     margin: 0 auto;
-    width: 500px;
+
+    border-radius: 25px;
+}
+.breadcrumb-item{
+    background-color: #ffeacd;
+
+    margin: auto;
+
+    font-family: "ONE-Mobile-POP";
+    font-weight: normal;
+    font-style: normal;
+}
+.a {
+    color: black;
 }
 
-.signup {
-    text-align: left
+.title {
+    text-align: center;
 }
 
-.btn {
-    float: right
+.mypage_title {
+    background-color: white;
+    width: 590px;
+    height: 725px;
+
+    display: block;
+
+    margin: 100px auto;
+    padding: 100px 40px 100px 40px;
+    
+    font-weight: normal;
+    font-family: "ONE-Mobile-POP";
+
+    border-radius: 35px;
 }
 
-/* 가입하기 */
+.btn_bg {
+    float: right;
+
+    height: 40px;
+    width: 85px;
+
+    margin: 5px 0 0 0;
+
+    background: #ffeacd;
+    border: 2px solid #ffeacd;
+    border-radius: 10px;
+}
+
 .d-grid {
-    padding-top: 30px;
+    height: 50px;
+    width: 100px;
+
+    font-weight: 700;
+    font-family: "ONE-Mobile-POP";
+    font-size: 2.0rem !important;
+
+    margin: 5px 0 0 0;
+
+    background: #ffeacd;
+    border: 2px solid #ffeacd;
+    border-radius: 10px;
 }

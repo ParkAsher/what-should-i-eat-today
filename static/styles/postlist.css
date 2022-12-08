@@ -1,6 +1,5 @@
 .main {
     width: 100%;
-    background-color: #efefef;
     padding-top: 3rem;
 }
 
@@ -27,6 +26,23 @@
     display: flex;
     align-items: center;
     height: 100%;
+    gap: 0.5rem;
+}
+
+.main-menu-left .postlist-newest-btn,
+.main-menu-left .postlist-recommend-btn {
+    background: transparent;
+    color: burlywood;
+    border: 2px solid burlywood;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.main-menu-selected {
+    background-color: burlywood !important;
+    color: #ffffff !important;
 }
 
 .main-menu-right .write-link-btn {
@@ -36,6 +52,7 @@
     padding: 0.75rem 1.25rem;
     border-radius: 10px;
     color: #ffffff;
+    box-sizing: border-box;
 }
 
 .main-content {
@@ -74,9 +91,18 @@
 }
 
 .post-author,
+.post-recommend,
 .post-created-at {
     width: 100%;
     padding: 0 0.5rem;
+}
+
+.post-recommend {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    font-size: 1.25rem;
 }
 
 .post-title p,
@@ -84,11 +110,33 @@
 .post-created-at p {
     margin: 0;
     font-weight: bold;
-    font-size: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
+}
+
+.post-title p {
+    font-size: 1.625rem !important;
+    color: #000000 !important;
+}
+
+.post-recommend i {
+    color: red;
+}
+
+.post-recommend p {
+    margin: 0;
+    color: red;
+}
+
+.post-author p {
+    font-size: 1.2rem !important;
+    color: cornflowerblue !important;
+}
+
+.post-created-at p {
+    color: gray !important;
 }
 
 .post-pagination-wrap {
@@ -108,9 +156,20 @@
     font-weight: bold;
 }
 
+.page-selected {
+    background: burlywood !important;
+    color: #ffffff;
+}
+
 @media (max-width: 1320px) {
     .main .main-wrap {
         width: 100%;
+    }
+
+    .main-menu-left .postlist-newest-btn,
+    .main-menu-left .postlist-recommend-btn {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
     }
 
     .main-menu-right .write-link-btn {
@@ -124,6 +183,16 @@
 
     .post-thumbnail {
         height: 15rem;
+    }
+
+    .post-title p {
+        font-size: 1.25rem !important;
+    }
+    .post-author p {
+        font-size: 0.825rem !important;
+    }
+    .post-created-at p {
+        font-size: 0.75rem !important;
     }
 
     .post-pagination-wrap {
