@@ -80,7 +80,6 @@
     background: #ffeacd;
     border: 2px solid #ffeacd;
     border-radius: 10px;
-    
 }
 
 .d-grid {
@@ -89,7 +88,7 @@
 
     font-weight: 700;
     font-family: "ONE-Mobile-POP";
-    font-size: 30px ! important;
+    font-size: 2.0rem !important;
 
     margin: 5px 0 0 0;
 

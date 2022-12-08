@@ -136,13 +136,14 @@ def post_page():
 # mypage.html mapping #
 #######################
 @app.route('/mypage')
-def userinfo_page():
+def mypage():
     if 'user-info' not in session:
         flash("로그인을 먼저 해주세요.")
         return redirect(url_for('login_page'))
     else:
         print(session['user-info'])
-        return render_template('index.html', component_name='mypage')
+        return render_template('index.html', component_name='user_update')
+
 
 #############
 # login api #
