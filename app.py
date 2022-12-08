@@ -276,16 +276,17 @@ def find_pw():
     
     user_list = []
     for record in rows:
-        print(record)
         temp = {
-            "user_pwimage.png": record[0]
+            "user_pw": record[0]
         }
         user_list.append(temp)
 
     if len(user_list) == 0:
         return jsonify({'success': False})
     else:
-        return jsonify({'success': True, 'user_pw_find': user_list})  
+        session['id'] = userId
+        print(session['id'])
+        return jsonify({'success': True})
         
 
 ################
@@ -670,7 +671,28 @@ def is_recommended_check():
 
     return({'is_recommended' : is_recommended})
 
-    
+#################
+# update_pw api #
+#################
+@app.route('/api/find-user-pw/update-pw', methods=['POST'])
+def update_pw():
+    newPw = request.form['pw'].encode('utf-8')
+
+    hashed_pw = bcrypt.hashpw(newPw, bcrypt.gensalt(rounds=10))
+
+    userId = session['id']
+
+    sql = "UPDATE Users SET user_pw = %s WHERE user_id = %s"
+
+    app.database.execute(sql, (hashed_pw, userId)).lastrowid
+
+    # 세션 삭제 
+    # db에서 해당 유저 정보다찾아오기 
+    # 세션에 수정 값 넣어주기
+    session.clear()
+
+    return jsonify({'msg': "변경 성공!"})
+
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
@@ -682,43 +704,3 @@ if __name__ == '__main__':
     s3 = s3_connection()
 
     app.run('0.0.0.0', port=5000, debug=True)
-
-#################
-# update_pw api #
-#################
-@app.route('/api/find-user-pw/update-pw', methods=['POST'])
-def update_pw():
-    newPw = request.form['user-pw-update'].encode('utf-8')
-    newPwCheck = request.form['user-pw-update-check'].encode('utf-8')
-
-    hashed_pw = bcrypt.hashpw(newPw, bcrypt.gensalt(rounds=10))
-
-    sql = "UPDATE Users SET user_pw = %s"
-
-    app.database.execute(sql, (hashed_pw)).lastrowid
-
-    # 세션 삭제 
-    # db에서 해당 유저 정보다찾아오기 
-    # 세션에 수정 값 넣어주기
-    session.clear()
-    sql = "SELECT * FROM Users WHERE user_id = %s"
-    rows = app.database.execute(sql, newPw)
-
-    user_data = []
-    for record in rows:
-        temp = {
-            "id": record[0],
-            "user_id": record[1],
-            "user_pw": record[2].encode('utf-8'),  
-            "user_name": record[3],
-            "user_nickname": record[4],
-            "user_email": record[5],
-            "signup_at": record[6],
-        }
-        user_data.append(temp)
-
-    session['user-info'] = user_data[0]
-    print(session['user-info'])
-
-    return jsonify({'msg': "변경 성공!"})
-
