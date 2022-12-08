@@ -32,6 +32,10 @@
         width: 100%;
     }
 
+    .mypage_bg .mypage_wrap .mypage_title .d-grid {
+        width: 100%;
+    }
+
 }
 
 .mypage_bg {
@@ -75,8 +79,8 @@
 
     display: block;
 
-    margin: 100px auto;
-    padding: 100px 40px 100px 40px;
+    margin: 40px auto;
+    padding: 60px 40px 100px 40px;
     
     font-weight: normal;
     font-family: "ONE-Mobile-POP";
