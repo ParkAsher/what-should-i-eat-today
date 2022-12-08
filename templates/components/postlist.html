@@ -14,7 +14,12 @@
         <div id="post-list-err-msg"></div>
         <div class="post-pagination-wrap">
             {% if post_page != 0 %} {% for i in range(post_page) %}
-            <button type="button" class="post-pagination" onclick="get_post_list('{{i+1}}')">
+            <button
+                data-index="{{i+1}}"
+                type="button"
+                class="post-pagination"
+                onclick="get_post_list('{{i+1}}')"
+            >
                 {{i+1}}
             </button>
             {% endfor %} {% endif %}
