@@ -130,6 +130,7 @@ def post_page():
         comment_page = comment_list_count // 5
     else :
         comment_page = math.ceil(comment_list_count / 5)
+        
     """
     if comment_list_count % 5 == 0 :
         comment_page = comment_list_count / 5

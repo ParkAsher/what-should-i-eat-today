@@ -20,6 +20,9 @@ function get_post_list(page) {
             $('#post-list-err-msg').empty();
             $('#main-content').empty();
 
+            $('.post-pagination').removeClass('page-selected');
+            $('.post-pagination[data-index=' + page + ']').addClass('page-selected');
+
             for (let i = 0; i < response['post_list'].length; i++) {
                 let temp = `
                     <div class="post-wrap">
