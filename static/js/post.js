@@ -175,8 +175,6 @@ function recommend() {
     let postId = new URL(location.href).searchParams.get('postid')
     let loginedUserNum = $('#logined-user-num').val();
 
-
-
     $.ajax({
         type: "POST",
         url: "/api/post-recommend",
@@ -188,6 +186,7 @@ function recommend() {
                 <i class="bi bi-hand-thumbs-up-fill"></i>
             `
             $('.detail-recommend-btn').append(temp);
+            $('.detail-recommend-btn').attr('disabled', true);
         }
     })
 

@@ -45,10 +45,10 @@ def home():
     for record in rows:
         post_list_count = record[0] 
 
-    if post_list_count % 8 == 0:
-        post_page = post_list_count / 8
-    elif post_list_count == 0:
+    if post_list_count == 0:
         post_page = 0
+    elif post_list_count % 8 == 0:
+        post_page = post_list_count // 8
     else :
         post_page = math.ceil(post_list_count / 8)    
 
@@ -118,6 +118,18 @@ def write_page():
         return redirect(url_for('login_page'))
     else:
         return render_template('index.html', component_name='write')
+
+#####################
+# edit.html mapping #
+#####################
+@app.route('/edit')
+def edit_page():
+    # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        return render_template('index.html', component_name='edit')
 
 #####################
 # post.html mapping #
