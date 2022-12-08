@@ -79,14 +79,21 @@ def logout():
 #########################
 @app.route('/find_id')
 def find_id_page():
-    return render_template('index.html', component_name='find_id')
+    return render_template('index.html', component_name='find_id', user_lists="", len=0)
 
 #########################
 # find_pw.html mapping #
 #########################
 @app.route('/find_pw')
 def find_pw_page():
-    return render_template('index.html', component_name='find_pw')    
+    return render_template('index.html', component_name='find_pw')
+
+#########################
+# update_pw.html mapping #
+#########################
+@app.route('/update_pw')
+def update_pw_page():
+    return render_template('index.html', component_name='update_pw')
 
 #########################
 # register.html mapping #
@@ -231,19 +238,44 @@ def find_id():
     sql = "SELECT user_id FROM Users WHERE user_name = %s and user_email = %s"
     rows = app.database.execute(sql, (userName, userEmail))
     
-    user_list = []
+    user_lists = []
     for record in rows:
         temp = {
             "user_id": record[0]
+        }
+        user_lists.append(temp)
+
+    if len(user_lists) == 0:
+        return jsonify({'success': False})
+    else:
+        return jsonify({'success': True, 'user_id_find': user_lists})
+
+###############
+# find pw api #
+###############
+@app.route('/api/find-user-pw', methods=['POST'])
+def find_pw():
+    userName = request.form['name']
+    userId = request.form['id']
+    userEmail = request.form['email']
+
+    sql = "SELECT user_pw FROM Users WHERE user_name = %s and user_id = %s and user_email = %s"
+    rows = app.database.execute(sql, (userName, userId, userEmail))
+    
+    user_list = []
+    for record in rows:
+        print(record)
+        temp = {
+            "user_pwimage.png": record[0]
         }
         user_list.append(temp)
 
     if len(user_list) == 0:
         return jsonify({'success': False})
     else:
-        return jsonify({'success': True, 'user_id_find': user_list})
+        return jsonify({'success': True, 'user_pw_find': user_list})  
+        
 
-     
 ################
 # register api #
 ################
@@ -639,5 +671,42 @@ if __name__ == '__main__':
 
     app.run('0.0.0.0', port=5000, debug=True)
 
+#################
+# update_pw api #
+#################
+@app.route('/api/find-user-pw/update-pw', methods=['POST'])
+def update_pw():
+    newPw = request.form['user-pw-update'].encode('utf-8')
+    newPwCheck = request.form['user-pw-update-check'].encode('utf-8')
 
+    hashed_pw = bcrypt.hashpw(newPw, bcrypt.gensalt(rounds=10))
+
+    sql = "UPDATE Users SET user_pw = %s"
+
+    app.database.execute(sql, (hashed_pw)).lastrowid
+
+    # 세션 삭제 
+    # db에서 해당 유저 정보다찾아오기 
+    # 세션에 수정 값 넣어주기
+    session.clear()
+    sql = "SELECT * FROM Users WHERE user_id = %s"
+    rows = app.database.execute(sql, newPw)
+
+    user_data = []
+    for record in rows:
+        temp = {
+            "id": record[0],
+            "user_id": record[1],
+            "user_pw": record[2].encode('utf-8'),  
+            "user_name": record[3],
+            "user_nickname": record[4],
+            "user_email": record[5],
+            "signup_at": record[6],
+        }
+        user_data.append(temp)
+
+    session['user-info'] = user_data[0]
+    print(session['user-info'])
+
+    return jsonify({'msg': "변경 성공!"})
 
