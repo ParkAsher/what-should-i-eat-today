@@ -775,7 +775,39 @@ def get_like_post():
     if len(recommend_list) == 0:
         return jsonify({'success': False, 'msg': "추천한 글이 없습니다."})
     else:
-        return jsonify({'success': True, 'recommend_list': recommend_list})   
+        return jsonify({'success': True, 'recommend_list': recommend_list})  
+
+########################
+# my post get api #
+########################
+@app.route("/api/my-post", methods=['GET'])
+def get_my_post():
+    user_num = request.args.get('id')
+
+    sql="""
+            SELECT p.id, p.title, u.user_nickname, p.created_at
+            FROM Posts as p
+            LEFT JOIN Users as u
+            ON p.author = u.id
+            WHERE p.author = %s
+        """
+    rows = app.database.execute(sql, user_num)
+
+    post_list = []
+    for record in rows:
+        print(record)
+        temp = {
+            'post_id' : record[0],
+            'post_title' : record[1],
+            'post_author_nickname' : record[2],
+            'post_created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+        }
+        post_list.append(temp)
+
+    if len(post_list) == 0:
+        return jsonify({'success': False, 'msg': "작성한 글이 없습니다."})
+    else:
+        return jsonify({'success': True, 'post_list': post_list})   
 
 
 if __name__ == '__main__':

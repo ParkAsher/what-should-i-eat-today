@@ -1,38 +1,33 @@
-<!-- 현재 세션의 값을 가져옴 -->
-<input id="nickname" type="hidden" value="{{session['user-info']['user_nickname']}}" />
 <input id="number" type="hidden" value="{{session['user-info']['id']}}" />
 
 <div class="mypage_bg">
     <div class="mypage_wrap">
         <div id="post-list-err-msg"></div>
-        <nav style="--bs-breadcrumb-divider: '|';" aria-label="breadcrumb">
+        <nav style="--bs-breadcrumb-divider: '|'" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item" aria-current="page"> <a href="/mypage" onclick="get_recommend_list()">내 정보 수정</a> </li>
-                <li class="breadcrumb-item" aria-current="page"> <a href="/mypage/my_like_post">내가 좋아요 한 글 보기</a> </li>
-                <li class="breadcrumb-item" aria-current="page"> <a href="/mypage/my_post">내가 작성한 글 보기</a> </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="/mypage">내 정보 수정</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="/mypage/my_like_post">내가 좋아요 한 글 보기</a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="/mypage/my_post">내가 작성한 글 보기</a>
+                </li>
             </ol>
         </nav>
         <div class="mypage_title">
             <h2 class="title">내가 작성한 게시글</h2>
             <table>
                 <thead>
-                <tr>
-                    <th>글번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                </tr>
-                </thead>
-                <div class="post_list">
                     <tr>
-                        <td>1</td>
-                        <td><a href="http://localhost:5000/post?postid=7">제목이10자가넘으면</td>
-                        <td>닉네임표현몇자까지</td>
-                        <td>20201208</td>
+                        <th>글번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
                     </tr>
-                </div>
-                <tbody id="my_like_table">
-                </tbody>
+                </thead>
+                <tbody id="my_post_table"></tbody>
             </table>
         </div>
     </div>

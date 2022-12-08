@@ -7,7 +7,14 @@ function my_like_post() {
         success: function (response) {
 
             if (response['success'] === false) {
-                // 추천한 글이 없습니다.
+                let temp = `
+                    <tr>
+                        <td>
+                        ${response['msg']}
+                        </td>
+                    </tr>
+                `
+                $('#my_like_table').append(temp)
                 return;
             }
 
@@ -15,7 +22,9 @@ function my_like_post() {
                 let temp = `
                     <tr>
                         <td>${response['recommend_list'][i]['post_id']}</td>
-                        <td>${response['recommend_list'][i]['post_title']}</td>
+                        <td>
+                            <a href="/post?postid=${response['recommend_list'][i]['post_id']}">${response['recommend_list'][i]['post_title']}</a>
+                        </td>
                         <td>${response['recommend_list'][i]['post_author_nickname']}</td>
                         <td>${response['recommend_list'][i]['post_created_at']}</td>
                     </tr>  
