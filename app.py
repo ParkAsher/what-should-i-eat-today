@@ -277,16 +277,17 @@ def find_pw():
     
     user_list = []
     for record in rows:
-        print(record)
         temp = {
-            "user_pwimage.png": record[0]
+            "user_pw": record[0]
         }
         user_list.append(temp)
 
     if len(user_list) == 0:
         return jsonify({'success': False})
     else:
-        return jsonify({'success': True, 'user_pw_find': user_list})  
+        session['id'] = userId
+        print(session['id'])
+        return jsonify({'success': True})
         
 
 ################
@@ -671,79 +672,66 @@ def is_recommended_check():
 
     return({'is_recommended' : is_recommended})
 
-    
 #################
 # update_pw api #
 #################
 @app.route('/api/find-user-pw/update-pw', methods=['POST'])
 def update_pw():
-    newPw = request.form['user-pw-update'].encode('utf-8')
-    newPwCheck = request.form['user-pw-update-check'].encode('utf-8')
+    newPw = request.form['pw'].encode('utf-8')
 
     hashed_pw = bcrypt.hashpw(newPw, bcrypt.gensalt(rounds=10))
 
-    sql = "UPDATE Users SET user_pw = %s"
+    userId = session['id']
 
-    app.database.execute(sql, (hashed_pw)).lastrowid
+    sql = "UPDATE Users SET user_pw = %s WHERE user_id = %s"
+
+    app.database.execute(sql, (hashed_pw, userId)).lastrowid
 
     # 세션 삭제 
     # db에서 해당 유저 정보다찾아오기 
     # 세션에 수정 값 넣어주기
     session.clear()
-    sql = "SELECT * FROM Users WHERE user_id = %s"
-    rows = app.database.execute(sql, newPw)
-
-    user_data = []
-    for record in rows:
-        temp = {
-            "id": record[0],
-            "user_id": record[1],
-            "user_pw": record[2].encode('utf-8'),  
-            "user_name": record[3],
-            "user_nickname": record[4],
-            "user_email": record[5],
-            "signup_at": record[6],
-        }
-        user_data.append(temp)
-
-    session['user-info'] = user_data[0]
-    print(session['user-info'])
 
     return jsonify({'msg': "변경 성공!"})
 
-########################
-# my_like_post GET API #
-########################
-@app.route('/api/my_like_post', methods=['GET'])
-def my_like_post():
-    id = request.args.get('id')
+############################
+# edit post detail get api #
+############################
+@app.route('/api/edit-detail', methods=['GET'])
+def edit_detail():
+    post_id = request.args.get('postid')
 
     sql="""
-            SELECT p.id, p.title, u.user_nickname, p.created_at
-            FROM Recommends as r
-            INNER JOIN Posts as p
-            ON r.p_id = p.id
-            INNER JOIN Users as u
-            ON p.author = u.id
-            WHERE r_user = %s;
+            SELECT title, thumbnail, content
+            FROM Posts
+            WHERE id = %s
         """
-    rows = app.database.execute(sql)
+    rows = app.database.execute(sql, (post_id))
 
-    like_list=[]
+    post_detail_list = []
     for record in rows:
-        temp ={
-            'r_id' : record[0],
-            'r_title' : record[1],
-            'r_user_nickname' : record[2],
-            'r_create_at' : record[3] 
+        print(record)
+        temp = {
+            'post_title' : record[0],
+            'post_thumbnail' : record[1],
+            'post_content' : record[2],
         }
-        like_list.append(temp)
+        post_detail_list.append(temp)
 
+    if len(post_detail_list) == 0 :
+        return jsonify({'success' : False, 'msg' : '글이 존재하지 않습니다.'})
+    else :
+        return jsonify({'success' : True, 'post_detail' : post_detail_list})
 
-
-    return  jsonify({'success': True, 'like_list' : like_list})
-
-
+#################
+# edit post api #
+#################
+@app.route("/api/post-edit", methods=['PATCH'])
+def post_edit():
+    post_id = request.form['postid']
+    post_title = request.form['title']
+    post_thumbnail = request.form['thumbnail']
+    post_content = request.form['content']
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-.write-wrap {
+.edit-wrap {
     width: 1320px;
     margin: 3rem auto;
     border: 3px solid lightsalmon;
@@ -75,7 +75,8 @@
 .ql-container {
     border: 1px solid lightcoral !important;
 }
-.write-btn {
+
+.edit-btn {
     width: 1320px;
     margin: 2rem auto;
     display: flex;
@@ -83,29 +84,29 @@
     gap: 0.5rem;
 }
 
-.write-btn .write-submit-btn,
-.write-btn .write-cancel-btn {
+.edit-btn .edit-submit-btn,
+.edit-btn .edit-cancel-btn {
     border: 2px solid coral;
     padding: 0.75rem 1.25rem;
     border-radius: 10px;
     font-weight: bold;
 }
 
-.write-btn .write-submit-btn {
+.edit-btn .edit-submit-btn {
     background: coral;
     color: #ffffff;
 }
 
-.write-btn .write-cancel-btn {
+.edit-btn .edit-cancel-btn {
     background-color: transparent;
     color: coral;
 }
 
 @media (max-width: 1320px) {
-    .write-wrap {
+    .edit-wrap {
         width: 100%;
     }
-    .write-btn {
+    .edit-btn {
         width: 100%;
     }
     .title-wrap,
@@ -117,8 +118,8 @@
         padding: 0 1rem;
     }
 
-    .write-btn .write-submit-btn,
-    .write-btn .write-cancel-btn {
+    .edit-btn .edit-submit-btn,
+    .edit-btn .edit-cancel-btn {
         padding: 0.5rem 0.75rem;
         font-size: 0.75rem;
     }
