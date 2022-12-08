@@ -13,50 +13,62 @@
 }
 
 @media (max-width: 768px) {
-    .register_bg .register_wrap {
+    .mypage_bg .mypage_wrap {
         width: 100%;
     }
 
-    .register_bg .register_wrap .register_title {
+    .mypage_bg .mypage_wrap .mypage_title {
         width: 80%;
     }
 
-    .register_bg .register_wrap .nickname,
-    .register_bg .register_wrap .btn,
-    .register_bg .register_wrap .id,
-    .register_bg .register_wrap .pw,
-    .register_bg .register_wrap .name,
-    .register_bg .register_wrap .email {
+    .mypage_bg .mypage_wrap .nickname,
+    .mypage_bg .mypage_wrap .btn,
+    .mypage_bg .mypage_wrap .id,
+    .mypage_bg .mypage_wrap .pw,
+    .mypage_bg .mypage_wrap .name,
+    .mypage_bg .mypage_wrap .email {
         width: 100%;
     }
 
 }
 
-.register_bg {
+.mypage_bg {
     width: 100%;
     height: 100%;
 
     padding : 50px 30px 30px 30px ;
 }
 
-.register_wrap {
+.mypage_wrap {
     width: 750px;
-    height: 1100px;
+    height: 1000px;
     background-color: #ffeacd;
     padding: 50px 50px 50px 50px;
     margin: 0 auto;
 
     border-radius: 25px;
 }
+.breadcrumb-item{
+    background-color: #ffeacd;
+
+    margin: auto;
+
+    font-family: "ONE-Mobile-POP";
+    font-weight: normal;
+    font-style: normal;
+}
+.a {
+    color: black;
+}
 
 .title {
     text-align: center;
 }
 
-.register_title {
+.mypage_title {
     background-color: white;
     width: 590px;
-    height: 850px;
+    height: 725px;
 
     display: block;
 
@@ -95,13 +107,4 @@
     background: #ffeacd;
     border: 2px solid #ffeacd;
     border-radius: 10px;
-}
-
-.nickname {
-    margin: 0 0 50px 0;
-}
-
-.form-control{
-    font-weight: 700;
-    font-family: 'KOFIHDrLEEJWTTF-B';
 }

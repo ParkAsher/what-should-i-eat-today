@@ -145,13 +145,52 @@ def post_page():
 # mypage.html mapping #
 #######################
 @app.route('/mypage')
-def userinfo_page():
+def mypage():
     if 'user-info' not in session:
         flash("로그인을 먼저 해주세요.")
         return redirect(url_for('login_page'))
     else:
         print(session['user-info'])
         return render_template('index.html', component_name='mypage')
+
+#######################
+# mypage.html mapping #
+#######################
+@app.route('/mypage')
+def mypage_my_like_post():
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        print(session['user-info'])
+        return render_template('index.html', component_name='mypage')
+
+
+#######################
+# mypage.html mapping #
+#######################
+@app.route('/mypage/my_post')
+def mypage_my_post():
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        print(session['user-info'])
+        return render_template('index.html', component_name='my_post')
+
+
+#######################
+# mypage.html mapping #
+#######################
+@app.route('/mypage/user_update')
+def mypage_upadate():
+    if 'user-info' not in session:
+        flash("로그인을 먼저 해주세요.")
+        return redirect(url_for('login_page'))
+    else:
+        print(session['user-info'])
+        return render_template('index.html', component_name='user_update')
+        
 
 #############
 # login api #
