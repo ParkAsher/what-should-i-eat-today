@@ -626,7 +626,7 @@ def patch_user_info():
             "user_name": record[3],
             "user_nickname": record[4],
             "user_email": record[5],
-            "signup_at": record[6],
+            "signup_at": record[6].strftime("%Y-%m-%d %H:%M:%S"),
         }
         user_data.append(temp)
 
