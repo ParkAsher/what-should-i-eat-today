@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="../static/styles/find_pw.css" />
         <link rel="stylesheet" href="../static/styles/update_pw.css" />
         <link rel="stylesheet" href="../static/styles/edit.css" />
+        <link rel="stylesheet" href="../static/styles/log.css" />
 
         <!-- bootstrap -->
         <link
@@ -61,18 +62,19 @@
 
         <!-- Content -->
         <section id="content" class="content">
-            {% if component_name == 'postlist' %} {% include "./components/postlist.html" %} {% elif
-            component_name == 'login' %} {% include "./components/login.html" %} {% elif
-            component_name == 'write' %} {% include "./components/write.html" %} {% elif
-            component_name == 'register' %} {% include "./components/register.html" %} {% elif
-            component_name == 'find_id' %} {% include "./components/find_id.html" %} {% elif
-            component_name == 'find_pw' %} {% include "./components/find_pw.html" %} {% elif
-            component_name == 'update_pw' %} {% include "./components/update_pw.html" %} {% elif
-            component_name == 'post' %} {% include "./components/post.html" %} {% elif
-            component_name == 'mypage' %} {% include "./components/mypage.html" %} {% elif
-            component_name == 'mypage_like_post' %} {% include "./components/my_like_post.html" %}
-            {% elif component_name == 'mypage_my_post' %} {% include "./components/my_post.html" %}
-            {% elif component_name == 'edit' %} {% include "./components/edit.html" %} {% endif %}
+            {% include "./components/log.html" %} {% if component_name == 'postlist' %} {% include
+            "./components/postlist.html" %} {% elif component_name == 'login' %} {% include
+            "./components/login.html" %} {% elif component_name == 'write' %} {% include
+            "./components/write.html" %} {% elif component_name == 'register' %} {% include
+            "./components/register.html" %} {% elif component_name == 'find_id' %} {% include
+            "./components/find_id.html" %} {% elif component_name == 'find_pw' %} {% include
+            "./components/find_pw.html" %} {% elif component_name == 'update_pw' %} {% include
+            "./components/update_pw.html" %} {% elif component_name == 'post' %} {% include
+            "./components/post.html" %} {% elif component_name == 'mypage' %} {% include
+            "./components/mypage.html" %} {% elif component_name == 'mypage_like_post' %} {% include
+            "./components/my_like_post.html" %} {% elif component_name == 'mypage_my_post' %} {%
+            include "./components/my_post.html" %} {% elif component_name == 'edit' %} {% include
+            "./components/edit.html" %} {% endif %}
         </section>
     </body>
 </html>

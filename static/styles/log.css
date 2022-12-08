@@ -1,0 +1,55 @@
+.log-wrap {
+    width: 1320px;
+    margin: 2rem auto;
+    border: 2px solid burlywood;
+    background: #ffffff;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.user-nickname-wrap p,
+.user-log-wrap p {
+    margin: 0;
+}
+
+.user-nickname {
+    font-weight: bold;
+    font-size: 2rem;
+    color: darkblue;
+}
+
+.user-log-wrap .user-signup-at,
+.user-log-wrap .user-login-at,
+.user-log-wrap .user-post-count,
+.user-log-wrap .user-comment-count {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.user-log-wrap .user-signup-at p:first-child,
+.user-log-wrap .user-login-at p:first-child,
+.user-log-wrap .user-post-count p:first-child,
+.user-log-wrap .user-comment-count p:first-child {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.user-log-wrap .user-signup-at p:last-child,
+.user-log-wrap .user-login-at p:last-child,
+.user-log-wrap .user-post-count p:last-child,
+.user-log-wrap .user-comment-count p:last-child {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: gray;
+}
+
+@media (max-width: 1320px) {
+    .log-wrap {
+        display: none;
+    }
+}
