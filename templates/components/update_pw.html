@@ -1,0 +1,29 @@
+<div class="update_pw">
+    <div class="update_pw_wrap">
+        <div class="update_pw_title">
+            <div class="update_pw_innertitle">
+                <h1>비밀번호 변경</h1>
+            </div>
+            <div class="pw_check">
+                <div class="new_pw_box">
+                    <label for="update_pw" class="form-label">새로운 비밀번호</label>
+                </br>
+                    <input type="password" class="form-control" id="user-pw-update"
+                        placeholder="새로운 비밀번호 입력 (8~20자)">
+                </div>
+                <div class="new_pw_check_box">
+                    <label for="password" class="form-label">새로운 비밀번호 확인</label>
+                </br>
+                    <input type="password" class="form-control" id="user-pw-update-check"
+                        placeholder="새로운 비밀번호 재입력">
+                    <div class="invalid-feedback" id="pw-check-msg"></div>
+                </div>
+            </div>
+            <div class="register_pw_btn_box">
+                <button class="register_pw_btn" type="button" onclick="update_pw()">변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script defer src="../../static/js/update_pw.js"></script>

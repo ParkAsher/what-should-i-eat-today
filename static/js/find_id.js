@@ -13,18 +13,23 @@ function find_id() {
         url: "/api/find-user-id",
         data: { name: userName, email: userEmail },
         success: function (response) {
-            if (response['success'] === false) {
-                $('#find-msg').empty()
-                $('#find-msg').css('color', 'red')
-                $('#find-msg').css('text-align', 'center')
-                $('#find-msg').append("존재하지 않는 회원입니다.")
-            } else {
-                $('#find-msg').empty()
-                $('#find-msg').css('color', 'blue')
-                $('#find-msg').css('text-align', 'center')
-                $('#find-msg').append(response['user_id_find'][0]["user_id"])
+            let user_lists = response['user_id_find']
+            $('#find-msg').empty()
+            for ( i = 0; i < user_lists.length; i++) {
+                if (response['success'] === false) {
+                    // $('#find-msg').empty()
+                    $('#find-msg').css('color', 'red')
+                    $('#find-msg').css('text-align', 'center')
+                    $('#find-msg').append("존재하지 않는 회원 정보입니다.")
+                } else {
+                    // $('#find-msg').empty()
+                    $('#find-msg').css('color', 'blue')
+                    $('#find-msg').css('text-align', 'center')
+                    console.log(user_lists)
+                    $('#find-msg').append(user_lists[i]['user_id'] + '<br>')
+                }
             }
-    
         }
     })
 }
+
