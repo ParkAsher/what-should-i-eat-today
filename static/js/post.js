@@ -125,31 +125,43 @@ function get_comment_list(page) {
             }
 
             for (let i = 0; i < response['comment_list'].length; i++) {
-                let temp = `
-                    <div class="comment">
-                        <div id="comment-info-wrap" class="comment-info-wrap">
-                            <div class="comment-info">
-                                <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
-                                <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
-                            </div>
-                        </div>                        
-                        <div class="comment-content">
-                            <p>${response['comment_list'][i]['c_content']}</p>
-                        </div>
-                    </div>
-                `;
-                $('#comment-list').append(temp)
 
                 if (loginedUserId === response['comment_list'][i]['c_author_id']) {
-                    let temp2 = `
-                        <div class="comment-btn">
-                            <button type="button" class="comment-delete-btn" onclick="comment_delete(${response['comment_list'][i]['c_id']})">삭제</button>
+                    let temp = `
+                        <div class="comment">
+                            <div id="comment-info-wrap" class="comment-info-wrap">
+                                <div class="comment-info">
+                                    <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
+                                    <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
+                                </div>
+                                <div class="comment-btn">
+                                    <button type="button" class="comment-delete-btn" onclick="comment_delete(${response['comment_list'][i]['c_id']})">삭제</button>
+                                </div>
+                            </div>                        
+                            <div class="comment-content">
+                                <p>${response['comment_list'][i]['c_content']}</p>
+                            </div>
                         </div>
-                    `
-                    $("#comment-info-wrap").append(temp2)
+                    `;
+                    $('#comment-list').append(temp)
+                } else {
+                    let temp = `
+                        <div class="comment">
+                            <div id="comment-info-wrap" class="comment-info-wrap">
+                                <div class="comment-info">
+                                    <span class="comment-author">${response['comment_list'][i]['c_author_nickname']}</span>
+                                    <span class="comment-created-at">${response['comment_list'][i]['created_at']}</span>
+                                </div>
+                            </div>                        
+                            <div class="comment-content">
+                                <p>${response['comment_list'][i]['c_content']}</p>
+                            </div>
+                        </div>
+                    `;
+                    $('#comment-list').append(temp)
                 }
-            }
 
+            }
         }
     })
 }
