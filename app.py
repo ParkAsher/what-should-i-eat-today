@@ -122,12 +122,22 @@ def post_page():
     for record in rows:
         comment_list_count = record[0]
 
+    print(comment_list_count)
+
+    if comment_list_count == 0 :
+        comment_page = 0
+    elif comment_list_count % 5 == 0 :
+        comment_page = comment_list_count // 5
+    else :
+        comment_page = math.ceil(comment_list_count / 5)
+    """
     if comment_list_count % 5 == 0 :
         comment_page = comment_list_count / 5
     elif comment_list_count == 0 :
         comment_page = 0
     else :
         comment_page = math.ceil(comment_list_count / 5)
+    """
 
     return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
 
