@@ -80,7 +80,7 @@ function upload_image(e) {
             $('.thumbnail-wrap').css('display', 'block');
             $('#thumbnail-img').attr('src', img_url);
 
-            document.getElementById("post-thumbnail").value = img_url;
+            $('#edit-image').attr('value', img_url);
         }
     })
 }
@@ -91,7 +91,7 @@ function edit_submit() {
     // 글 제목
     let title = $('#edit-title').val();
     // 썸네일
-    let thumbnail = $('#edit-image').val();
+    let thumbnail = $('#edit-image').attr('value');
     // 글 내용
     let content = $('#edit-content').val();
 
@@ -121,7 +121,7 @@ $(document).ready(function () {
     quillInit();
 
     // thumnail upload to AWS S3
-    $("#post-image").on("change", upload_image);
+    $("#edit-image").on("change", upload_image);
 
     // 이 페이지 들어왔을때 글 정보 먼저 불러오기
     // 글 번호

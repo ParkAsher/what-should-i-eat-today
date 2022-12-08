@@ -737,6 +737,8 @@ def post_edit():
     post_thumbnail = request.form['thumbnail']
     post_content = request.form['content']
 
+    print(post_thumbnail)
+
     sql="""
             UPDATE Posts 
             SET title = %s, thumbnail = %s, content = %s 
