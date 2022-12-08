@@ -3,6 +3,11 @@ $(document).ready(function () {
     is_recommended();
     get_comment_list(1)
 
+    // 로그인 하지 않으면 추천 버튼 비활성화
+    if ($('#logined-user-num').val() == "") {
+        $('.detail-recommend-btn').attr('disabled', true);
+    }
+
 })
 
 function get_post_detail() {
@@ -169,6 +174,8 @@ function get_comment_list(page) {
 function recommend() {
     let postId = new URL(location.href).searchParams.get('postid')
     let loginedUserNum = $('#logined-user-num').val();
+
+
 
     $.ajax({
         type: "POST",
