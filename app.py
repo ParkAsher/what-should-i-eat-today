@@ -626,7 +626,7 @@ def patch_user_info():
             "user_name": record[3],
             "user_nickname": record[4],
             "user_email": record[5],
-            "signup_at": record[6],
+            "signup_at": record[6].strftime("%Y-%m-%d %H:%M:%S"),
         }
         user_data.append(temp)
 
@@ -736,6 +736,8 @@ def post_edit():
     post_title = request.form['title']
     post_thumbnail = request.form['thumbnail']
     post_content = request.form['content']
+
+    print(post_thumbnail)
 
     sql="""
             UPDATE Posts 
