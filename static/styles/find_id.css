@@ -128,17 +128,21 @@
 
     .find_id .find_id_wrap .find_id_title .find_idpw_btn {
         width: 100%;
+        margin: 0px;
     }
 
-    .find_id .find_id_wrap .find_id_title .find_id_btn,
-    .find_id .find_id_wrap .find_id_title .find_idpw_btn .find_pw_btn {
+    .find_id .find_id_wrap .find_id_title .find_id_btn {
+        width: 100%;
+    }
+    
+    .find_id .find_id_wrap .find_id_title .find_idpw_btn .find_idpg_pw_btn {
         width: 100%;
     }
 }
 
 @media (max-width:315px) {
     .find_id .find_id_wrap .find_id_title .find_id_btn,
-    .find_id .find_id_wrap .find_id_title .find_idpw_btn .find_pw_btn {
+    .find_id .find_id_wrap .find_id_title .find_idpw_btn .find_idpg_pw_btn {
         font-size: 0.70rem;
     }
 }

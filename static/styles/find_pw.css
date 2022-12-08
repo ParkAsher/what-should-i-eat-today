@@ -114,6 +114,10 @@
     .find_pw .find_pw_wrap .find_pw_title .find_pw_btn {
         width: 100%;
     }
+
+    .find_pw .find_pw_wrap .find_pw_title .name_id_email .find_pw_id_box {
+        margin-top: 10px;
+    }
 }
 
 @media (max-width:315px) {

@@ -15,6 +15,8 @@
 @media (max-width: 768px) {
     .mypage_bg .mypage_wrap {
         width: 100%;
+        padding: 25px 5px 15px 5px;
+        margin: 10px 5px 10px 5px;
     }
 
     .mypage_bg .mypage_wrap .mypage_title {
@@ -27,6 +29,10 @@
     .mypage_bg .mypage_wrap .pw,
     .mypage_bg .mypage_wrap .name,
     .mypage_bg .mypage_wrap .email {
+        width: 100%;
+    }
+
+    .mypage_bg .mypage_wrap .mypage_title .d-grid {
         width: 100%;
     }
 
@@ -44,7 +50,8 @@
     height: 1000px;
     background-color: #ffeacd;
     padding: 50px 50px 50px 50px;
-    margin: 0 auto;
+
+    
 
     border-radius: 25px;
 }
@@ -72,8 +79,8 @@
 
     display: block;
 
-    margin: 100px auto;
-    padding: 100px 40px 100px 40px;
+    margin: 40px auto;
+    padding: 60px 40px 100px 40px;
     
     font-weight: normal;
     font-family: "ONE-Mobile-POP";
