@@ -172,6 +172,7 @@ def mypage():
         print(session['user-info'])
         return render_template('index.html', component_name='mypage')
 
+
 #######################
 # my_like_post mapping #
 #######################
@@ -731,16 +732,6 @@ def post_edit():
     post_title = request.form['title']
     post_thumbnail = request.form['thumbnail']
     post_content = request.form['content']
-
-    sql="""
-            UPDATE Posts 
-            SET title = %s, thumbnail = %s, content = %s 
-            WHERE id = %s
-        """
-    
-    app.database.execute(sql, (post_title, post_thumbnail, post_content, post_id))
-
-    return jsonify({'msg': '수정성공!'})
 
 
 if __name__ == '__main__':
