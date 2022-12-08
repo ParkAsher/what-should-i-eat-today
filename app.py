@@ -29,6 +29,13 @@ def s3_connection():
 
 @app.route('/')
 def home():    
+    # 정렬 종류
+    sort = request.args.get('sort')
+
+    # 첫 로딩 시 최신순으로
+    if sort == "" :
+        sort = "newest"
+
     # 전체 게시글 수 넘겨주기
     sql="""
             SELECT count(*) FROM Posts
@@ -45,7 +52,7 @@ def home():
     else :
         post_page = math.ceil(post_list_count / 8)    
 
-    return render_template('index.html', component_name='postlist', post_page=post_page)
+    return render_template('index.html', component_name='postlist', post_page=post_page, sort=sort)
 
 ######################
 # login.html mapping #
@@ -130,15 +137,6 @@ def post_page():
         comment_page = comment_list_count // 5
     else :
         comment_page = math.ceil(comment_list_count / 5)
-        
-    """
-    if comment_list_count % 5 == 0 :
-        comment_page = comment_list_count / 5
-    elif comment_list_count == 0 :
-        comment_page = 0
-    else :
-        comment_page = math.ceil(comment_list_count / 5)
-    """
 
     return render_template('index.html', component_name='post', post_id=post_id, comment_page=comment_page)
 
@@ -475,19 +473,32 @@ def comment_delete():
 @app.route("/api/post-list", methods=['GET'])
 def get_post_list():
     page = request.args.get('page')
-    
+    sort = request.args.get('sort')
 
     post_count = (int(page)-1) * 8
-
-    sql="""
-            SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at
+    
+    if sort == "recommend":
+        # 추천순
+        sql="""
+            SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at, p.recommend
+            FROM Posts as p
+            LEFT JOIN Users as u
+            ON p.author = u.id
+            ORDER BY recommend DESC, created_at DESC
+            LIMIT %s, 8
+        """
+        rows = app.database.execute(sql, (post_count))
+    else :
+        # 최신순
+        sql="""
+            SELECT p.id, p.title, u.user_id, u.user_nickname, p.content, p.thumbnail, p.created_at, p.recommend
             FROM Posts as p
             LEFT JOIN Users as u
             ON p.author = u.id
             ORDER BY created_at DESC
             LIMIT %s, 8
         """
-    rows = app.database.execute(sql, (post_count))
+        rows = app.database.execute(sql, (post_count))
 
     post_list=[]
     for record in rows:
@@ -499,6 +510,7 @@ def get_post_list():
             'post_content' : record[4],
             'post_thumbnail' : record[5],
             'created_at' : record[6].strftime("%Y-%m-%d %H:%M:%S"),
+            'post_recommend' : record[7]
         }
         post_list.append(temp)
 
