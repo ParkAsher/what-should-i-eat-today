@@ -693,6 +693,55 @@ def update_pw():
 
     return jsonify({'msg': "변경 성공!"})
 
+############################
+# edit post detail get api #
+############################
+@app.route('/api/edit-detail', methods=['GET'])
+def edit_detail():
+    post_id = request.args.get('postid')
+
+    sql="""
+            SELECT title, thumbnail, content
+            FROM Posts
+            WHERE id = %s
+        """
+    rows = app.database.execute(sql, (post_id))
+
+    post_detail_list = []
+    for record in rows:
+        print(record)
+        temp = {
+            'post_title' : record[0],
+            'post_thumbnail' : record[1],
+            'post_content' : record[2],
+        }
+        post_detail_list.append(temp)
+
+    if len(post_detail_list) == 0 :
+        return jsonify({'success' : False, 'msg' : '글이 존재하지 않습니다.'})
+    else :
+        return jsonify({'success' : True, 'post_detail' : post_detail_list})
+
+#################
+# edit post api #
+#################
+@app.route("/api/post-edit", methods=['PATCH'])
+def post_edit():
+    post_id = request.form['postid']
+    post_title = request.form['title']
+    post_thumbnail = request.form['thumbnail']
+    post_content = request.form['content']
+
+    sql="""
+            UPDATE Posts 
+            SET title = %s, thumbnail = %s, content = %s 
+            WHERE id = %s
+        """
+    
+    app.database.execute(sql, (post_title, post_thumbnail, post_content, post_id))
+
+    return jsonify({'msg': '수정성공!'})
+
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
