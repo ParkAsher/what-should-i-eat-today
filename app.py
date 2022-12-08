@@ -153,6 +153,7 @@ def mypage():
         print(session['user-info'])
         return render_template('index.html', component_name='mypage')
 
+
 #######################
 # my_like_post mapping #
 #######################
