@@ -91,7 +91,7 @@ function edit_submit() {
     // 글 제목
     let title = $('#edit-title').val();
     // 썸네일
-    let thumbnail = $('#thumbnail-img').val();
+    let thumbnail = $('#edit-image').val();
     // 글 내용
     let content = $('#edit-content').val();
 
