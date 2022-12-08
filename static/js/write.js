@@ -84,7 +84,7 @@ function upload_image(e) {
             $('.thumbnail-wrap').css('display', 'block');
             $('#thumbnail-img').attr('src', img_url);
 
-            document.getElementById("post-thumbnail").value = img_url;
+            $("#post-thumbnail").attr('value', img_url);
         }
     })
 }
