@@ -15,19 +15,37 @@
 @media (max-width: 768px) {
     .register_bg .register_wrap {
         width: 100%;
+        padding: 25px 5px 15px 5px;
     }
 
     .register_bg .register_wrap .register_title {
         width: 80%;
+        margin: 0px;
+        padding: 15px 5px 15px 5px;
+    }
+
+    .register_bg .register_wrap .register_title .nickname .btn_bg,
+    .register_bg .register_wrap .register_title .id .btn_bg,
+    .register_bg .register_wrap .register_title .d-grid .btn {
+        width: 100%;
+    }
+
+    .register_bg .register_wrap .register_title .nickname .nickname-check-msg,
+    .register_bg .register_wrap .register_title .id .id-check-msg,
+    .register_bg .register_wrap .register_title .d-grid .btn {
+        margin-bottom: 0px;
+        padding: 0px;
     }
 
     .register_bg .register_wrap .nickname,
     .register_bg .register_wrap .btn,
     .register_bg .register_wrap .id,
     .register_bg .register_wrap .pw,
+    .register_bg .register_wrap .pw_check,
     .register_bg .register_wrap .name,
     .register_bg .register_wrap .email {
         width: 100%;
+        margin: 0px;
     }
 
 }
@@ -43,8 +61,12 @@
     width: 750px;
     height: 1100px;
     background-color: #ffeacd;
-    padding: 50px 50px 50px 50px;
-    margin: 0 auto;
+    padding: 40px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: auto;
 
     border-radius: 25px;
 }
