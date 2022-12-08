@@ -66,7 +66,8 @@
             component_name == 'find_id' %} {% include "./components/find_id.html" %} {% elif
             component_name == 'find_pw' %} {% include "./components/find_pw.html" %} {% elif
             component_name == 'post' %} {% include "./components/post.html" %} {% elif
-            component_name == 'mypage', 'my_like_post' %} {% include "./components/mypage/my_like_post.html" %} {% elif
+            component_name == 'mypage' %} {% include "./components/mypage/my_like_post.html" %} {% elif
+            component_name == 'my_like_post'  %} {% include "./components/mypage/my_like_post.html" %} {% elif
             component_name == 'my_post' %} {% include "./components/mypage/my_post.html" %} {% elif
             component_name == 'user_update' %} {% include "./components/mypage/user_update.html" %} {% endif %}
         </section>
