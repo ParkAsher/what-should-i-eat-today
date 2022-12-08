@@ -672,18 +672,6 @@ def is_recommended_check():
     return({'is_recommended' : is_recommended})
 
     
-
-if __name__ == '__main__':
-    app.config.from_pyfile("config.py")
-    database = create_engine(
-        app.config['DB_URL'], encoding='utf-8', max_overflow=0)
-    app.database = database
-
-    # aws s3 connected
-    s3 = s3_connection()
-
-    app.run('0.0.0.0', port=5000, debug=True)
-
 #################
 # update_pw api #
 #################
@@ -723,3 +711,48 @@ def update_pw():
 
     return jsonify({'msg': "변경 성공!"})
 
+########################
+# my_like_post GET API #
+########################
+@app.route('/api/my_like_post', methods=['GET'])
+def my_like_post():
+    id = request.args.get('id')
+
+    sql="""
+            SELECT p.id, p.title, u.user_nickname, p.created_at
+            FROM Recommends as r
+            INNER JOIN Posts as p
+            ON r.p_id = p.id
+            INNER JOIN Users as u
+            ON p.author = u.id
+            WHERE r_user = %s;
+        """
+    rows = app.database.execute(sql)
+
+    like_list=[]
+    for record in rows:
+        temp ={
+            'r_id' : record[0],
+            'r_title' : record[1],
+            'r_user_nickname' : record[2],
+            'r_create_at' : record[3] 
+        }
+        like_list.append(temp)
+
+
+
+    return  jsonify({'success': True, 'like_list' : like_list})
+
+
+
+
+if __name__ == '__main__':
+    app.config.from_pyfile("config.py")
+    database = create_engine(
+        app.config['DB_URL'], encoding='utf-8', max_overflow=0)
+    app.database = database
+
+    # aws s3 connected
+    s3 = s3_connection()
+
+    app.run('0.0.0.0', port=5000, debug=True)

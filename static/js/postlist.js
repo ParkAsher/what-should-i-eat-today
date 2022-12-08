@@ -6,7 +6,6 @@ $(document).ready(function () {
     }
     $('.main-menu-left button[sort-type=' + sort + ']').addClass('main-menu-selected')
 
-
     get_post_list(1, sort);
 })
 
