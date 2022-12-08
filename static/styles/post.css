@@ -251,6 +251,10 @@
     .detail-info-wrap {
         padding: 0 1rem;
     }
+    .detail-info-wrap p {
+        font-size: 0.625rem;
+    }
+
     .detail-content-wrap {
         padding: 5rem 1rem;
     }
