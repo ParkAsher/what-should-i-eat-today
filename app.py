@@ -733,6 +733,50 @@ def post_edit():
     post_thumbnail = request.form['thumbnail']
     post_content = request.form['content']
 
+    sql="""
+            UPDATE Posts 
+            SET title = %s, thumbnail = %s, content = %s 
+            WHERE id = %s
+        """
+
+    app.database.execute(sql, (post_title, post_thumbnail, post_content, post_id))
+
+    return jsonify({'msg': '수정성공!'})
+
+########################
+# my like post get api #
+########################
+@app.route("/api/my-like-post", methods=['GET'])
+def get_like_post():
+    user_num = request.args.get('id')
+
+    sql="""
+            SELECT p.id, p.title, u.user_nickname, p.created_at
+            FROM Recommends as r
+            INNER JOIN Posts as p
+            on r.p_id = p.id
+            INNER JOIN Users as u
+            on p.author = u.id
+            WHERE r_user = %s
+        """
+    rows = app.database.execute(sql, user_num)
+
+    recommend_list = []
+    for record in rows:
+        print(record)
+        temp = {
+            'post_id' : record[0],
+            'post_title' : record[1],
+            'post_author_nickname' : record[2],
+            'post_created_at' : record[3].strftime("%Y-%m-%d %H:%M:%S")
+        }
+        recommend_list.append(temp)
+
+    if len(recommend_list) == 0:
+        return jsonify({'success': False, 'msg': "추천한 글이 없습니다."})
+    else:
+        return jsonify({'success': True, 'recommend_list': recommend_list})   
+
 
 if __name__ == '__main__':
     app.config.from_pyfile("config.py")
