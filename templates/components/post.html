@@ -5,7 +5,11 @@
     value="{% if 'user-info' in session %}{{session['user-info']['user_id']}}{% endif %}"
 />
 <!-- 댓글 작성자(로그인 유저) 의 유저 번호 -->
-<input id="logined-user-num" type="hidden" value="{{session['user-info']['id']}}" />
+<input
+    id="logined-user-num"
+    type="hidden"
+    value="{% if 'user-info' in session %}{{session['user-info']['id']}}{% endif %}"
+/>
 
 <div class="detail-wrap">
     <div class="detail-title-wrap">
