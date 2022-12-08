@@ -12,8 +12,6 @@ app.secret_key = "session_test"
 ##################
 # aws s3 connect #
 ##################
-
-
 def s3_connection():
     try:
         s3 = boto3.client(
@@ -59,8 +57,6 @@ def home():
 ######################
 # login.html mapping #
 ######################
-
-
 @app.route('/login')
 def login_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -73,8 +69,6 @@ def login_page():
 ##################
 # logout mapping #
 ##################
-
-
 @app.route('/logout')
 def logout():
     session.clear()
@@ -83,8 +77,6 @@ def logout():
 #########################
 # find_id.html mapping #
 #########################
-
-
 @app.route('/find_id')
 def find_id_page():
     return render_template('index.html', component_name='find_id', user_lists="", len=0)
@@ -92,8 +84,6 @@ def find_id_page():
 #########################
 # find_pw.html mapping #
 #########################
-
-
 @app.route('/find_pw')
 def find_pw_page():
     return render_template('index.html', component_name='find_pw')
@@ -101,8 +91,6 @@ def find_pw_page():
 #########################
 # update_pw.html mapping #
 #########################
-
-
 @app.route('/update_pw')
 def update_pw_page():
     return render_template('index.html', component_name='update_pw')
@@ -110,8 +98,6 @@ def update_pw_page():
 #########################
 # register.html mapping #
 #########################
-
-
 @app.route('/register')
 def register_page():
     # 세션에 로그인 한 유저의 정보가 있다면? 루트로
@@ -124,8 +110,6 @@ def register_page():
 ######################
 # write.html mapping #
 ######################
-
-
 @app.route('/write')
 def write_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -138,8 +122,6 @@ def write_page():
 #####################
 # edit.html mapping #
 #####################
-
-
 @app.route('/edit')
 def edit_page():
     # 세션에 로그인 한 유저의 정보가 없다면? 로그인 페이지로
@@ -152,8 +134,6 @@ def edit_page():
 #####################
 # post.html mapping #
 #####################
-
-
 @app.route('/post')
 def post_page():
     post_id = request.args.get('postid')
@@ -240,7 +220,7 @@ def user_login():
             "user_name": record[3],
             "user_nickname": record[4],
             "user_email": record[5],
-            "signup_at": record[6],
+            "signup_at": record[6].strftime("%Y-%m-%d %H:%M:%S"),
         }
         user_data.append(temp)
 
@@ -266,8 +246,6 @@ def user_login():
 ###############
 # find id api #
 ###############
-
-
 @app.route('/api/find-user-id', methods=['POST'])
 def find_id():
     userName = request.form['name']
@@ -292,8 +270,6 @@ def find_id():
 ###############
 # find pw api #
 ###############
-
-
 @app.route('/api/find-user-pw', methods=['POST'])
 def find_pw():
     userName = request.form['name']
@@ -341,8 +317,6 @@ def user_register():
 ######################
 # nickname check api #
 ######################
-
-
 @app.route('/api/check-nickname', methods=['POST'])
 def user_nickname_check():
     userNickname = request.form['nickname']
@@ -367,8 +341,6 @@ def user_nickname_check():
 ################
 # id check api #
 ################
-
-
 @app.route('/api/check-id', methods=['POST'])
 def user_id_check():
     userId = request.form['id']
@@ -392,8 +364,6 @@ def user_id_check():
 ###################
 # post write api #
 ###################
-
-
 @app.route('/api/post-write', methods=['POST'])
 def post_write():
     title = request.form['title']
@@ -432,8 +402,6 @@ def file_upload():
 ##########################
 # image insert to aws s3 #
 ##########################
-
-
 def s3_put_object(s3, bucket, file, filename):
     try:
         s3.put_object(
@@ -451,8 +419,6 @@ def s3_put_object(s3, bucket, file, filename):
 #######################
 # post detail get api #
 #######################
-
-
 @app.route("/api/post-detail", methods=["POST"])
 def post_detail_get():
     post_id = request.form['post_id']
@@ -489,8 +455,6 @@ def post_detail_get():
 ##########################
 # post detail delete api #
 ##########################
-
-
 @app.route("/api/post-detail/delete", methods=["POST"])
 def post_detail_delete():
     post_id = request.form['post_id']
@@ -566,8 +530,6 @@ def get_comment_list():
 ######################
 # comment delete api #
 ######################
-
-
 @app.route("/api/comment-delete", methods=['DELETE'])
 def comment_delete():
     c_id = request.args.get('cid')
@@ -584,8 +546,6 @@ def comment_delete():
 #############################
 # get post list in main api #
 #############################
-
-
 @app.route("/api/post-list", methods=['GET'])
 def get_post_list():
     page = request.args.get('page')
@@ -638,8 +598,6 @@ def get_post_list():
 ####################
 # mypage patch api #
 ####################
-
-
 @app.route("/api/user-info", methods=['PATCH'])
 def patch_user_info():
     userNickname = request.form['nickname']
@@ -679,8 +637,6 @@ def patch_user_info():
 ######################
 # post recommend api #
 ######################
-
-
 @app.route("/api/post-recommend", methods=['POST'])
 def post_recommend():
     post_id = request.form['post_id']
@@ -704,8 +660,6 @@ def post_recommend():
 ############################
 # is recommended check api #
 ############################
-
-
 @app.route("/api/post-recommend/is-recommended-check", methods=['POST'])
 def is_recommended_check():
     post_id = request.form['post_id']
@@ -725,8 +679,6 @@ def is_recommended_check():
 #################
 # update_pw api #
 #################
-
-
 @app.route('/api/find-user-pw/update-pw', methods=['POST'])
 def update_pw():
     newPw = request.form['pw'].encode('utf-8')
@@ -749,8 +701,6 @@ def update_pw():
 ############################
 # edit post detail get api #
 ############################
-
-
 @app.route('/api/edit-detail', methods=['GET'])
 def edit_detail():
     post_id = request.args.get('postid')
@@ -780,8 +730,6 @@ def edit_detail():
 #################
 # edit post api #
 #################
-
-
 @app.route("/api/post-edit", methods=['PATCH'])
 def post_edit():
     post_id = request.form['postid']
@@ -833,9 +781,9 @@ def get_like_post():
     else:
         return jsonify({'success': True, 'recommend_list': recommend_list})  
 
-########################
+###################
 # my post get api #
-########################
+###################
 @app.route("/api/my-post", methods=['GET'])
 def get_my_post():
     user_num = request.args.get('id')
@@ -864,6 +812,51 @@ def get_my_post():
         return jsonify({'success': False, 'msg': "작성한 글이 없습니다."})
     else:
         return jsonify({'success': True, 'post_list': post_list})   
+
+###############
+# get log api #
+###############
+@app.route('/api/get-log', methods=['GET'])
+def get_log():
+    user_num = request.args.get('id')
+ 
+    # 최근 접속일
+    sql="""
+            SELECT max(login_time)
+            FROM Log
+            WHERE user_id = %s
+        """
+    row = app.database.execute(sql, user_num)
+    for record in row:
+        user_login_log = record[0].strftime("%Y-%m-%d %H:%M:%S")
+
+    # 내가 쓴 글 수
+    sql="""
+            SELECT COUNT(*)
+            FROM Posts
+            WHERE author = %s
+        """
+    row = app.database.execute(sql, user_num)
+    for record in row:
+        user_post_count = record[0]
+
+    # 내가 쓴 댓글 수
+    sql="""
+            SELECT COUNT(*)
+            FROM Comments
+            WHERE c_author = %s
+        """
+    row = app.database.execute(sql, user_num)
+    for record in row:
+        user_comment_count = record[0]
+
+    log = {
+        'user_login_log' : user_login_log,
+        'user_post_count' : user_post_count,
+        'user_comment_count' : user_comment_count
+    }
+
+    return jsonify({'log' : log})
 
 
 if __name__ == '__main__':

@@ -1,0 +1,30 @@
+{% if 'user-info' in session %}
+<input type="hidden" id="user_num" value="{{session['user-info']['id']}}" />
+<div class="log-wrap">
+    <div class="user-nickname-wrap">
+        <p class="user-nickname">{{session['user-info']['user_nickname']}}</p>
+    </div>
+    <div class="user-log-wrap">
+        <div class="user-signup-at">
+            <p>회원 가입일</p>
+            <p>{{session['user-info']['signup_at']}}</p>
+        </div>
+        <div class="user-login-at">
+            <p>최근 접속일</p>
+            <p id="user-login-log"></p>
+        </div>
+    </div>
+    <div class="user-log-wrap">
+        <div class="user-post-count">
+            <p>글 작성 수</p>
+            <p id="user-post-count"></p>
+        </div>
+        <div class="user-comment-count">
+            <p>댓글 작성 수</p>
+            <p id="user-comment-count"></p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script defer src="../../static/js/log.js"></script>
